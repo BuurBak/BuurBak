@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=buurbak
+      - POSTGRES_PASSWORD=buurbak
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: buurbak-backend
+    container_name: buurbak-backend
+    build:
+      context: Backend
+    ports:
+      - "3080:3080"
+    depends_on:
+      db:
+        condition: service_healthy
+    # environment:
+    #   - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/buurbak
+    #   - SPRING_DATASOURCE_USERNAME=buurbak
+    #   - SPRING_DATASOURCE_PASSWORD=buurbak
+    #   - SPRING_JPA_HIBERNATE_DDL_AUTO=update
