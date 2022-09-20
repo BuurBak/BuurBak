@@ -1,5 +1,7 @@
-package com.buurbak.api.student;
+package com.buurbak.api.users.application;
 
+import com.buurbak.api.users.data.StudentRepository;
+import com.buurbak.api.users.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

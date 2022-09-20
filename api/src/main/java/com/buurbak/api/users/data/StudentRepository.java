@@ -1,5 +1,6 @@
-package com.buurbak.api.student;
+package com.buurbak.api.users.data;
 
+import com.buurbak.api.users.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

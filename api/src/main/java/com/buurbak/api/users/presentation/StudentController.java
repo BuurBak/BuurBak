@@ -1,5 +1,7 @@
-package com.buurbak.api.student;
+package com.buurbak.api.users.presentation;
 
+import com.buurbak.api.users.application.StudentService;
+import com.buurbak.api.users.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("students")
 public class StudentController {
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(StudentService studentService) {

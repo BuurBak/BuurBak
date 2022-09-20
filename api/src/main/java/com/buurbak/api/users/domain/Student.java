@@ -1,4 +1,4 @@
-package com.buurbak.api.student;
+package com.buurbak.api.users.domain;
 
 import lombok.*;
 
