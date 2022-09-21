@@ -10,5 +10,5 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Verhuurder extends Person {
+public class Verhuurder extends Huurder {
 }

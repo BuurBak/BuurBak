@@ -16,6 +16,9 @@ If you want to work on a user story you have to create a new branch for it. This
 
 Ik (Luca) gebruik intellij IDEA als mijn IDE. In deze IDE open ik de /api folder, dat zorgt er namelijk voor dat alles zoals code completion/ building en running werkt. 
 
+### JDK
+
+Wij gebruiken temurin 17.0.4.1+1 als JDK. Dit doen wij via docker. 
 
 ### Postgres setup commands
 Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je localhost of ergens draaiende hebt. De commands om een fresh postgres install klaar te maken voor development zijn als volgt. Zorg er wel voor dat je al in de postgres terminal zit met `psql`.
@@ -25,3 +28,4 @@ Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je local
     GRANT ALL PRIVILEGES ON DATABASE buurbak TO buurbak;
 
 Zorg er dan ook voor dat je in de /api/src/main/resources/application.properties file je de juiste url uncomment. Namelijk met `localhost` i.p.v. `db`.
+
