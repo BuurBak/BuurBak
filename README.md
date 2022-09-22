@@ -29,3 +29,6 @@ Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je local
 
 Zorg er dan ook voor dat je in de /api/src/main/resources/application.properties file je de juiste url uncomment. Namelijk met `localhost` i.p.v. `db`.
 
+### Docker 
+
+Onze production environment runt in docker. development doen wij buiten docker. 
