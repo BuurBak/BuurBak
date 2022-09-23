@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
@@ -20,11 +24,15 @@ public abstract class Person {
     @GeneratedValue
     private UUID id;
 
+    @NotBlank(message = "Must include a name")
     private String name;
+    @Email(message = "Must be a valid email")
     private String email;
 
     @Transient
     private int age;
+
+    @Past(message = "Must be born in the past")
     private LocalDate dateOfBirth;
 
     public Person(String name, String email, LocalDate dateOfBirth) {

@@ -1,45 +1,44 @@
 package com.buurbak.api.users.presentation;
 
+import com.buurbak.api.users.application.CustomerService;
 import com.buurbak.api.users.application.PersonService;
-import com.buurbak.api.users.domain.Huurder;
+import com.buurbak.api.users.domain.Customer;
 import com.buurbak.api.users.domain.Person;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("users")
 public class UserController {
     private final PersonService personService;
-
-    @Autowired
-    public UserController(PersonService personService) {
-        this.personService = personService;
-    }
+    private final CustomerService customerService;
 
     @GetMapping
-    public List<Person> getUsers() {
+    public List<Person> getPersons() {
         return personService.getPersons();
     }
 
     @PostMapping
-    public void registerNewUser(@RequestBody Huurder person) {
-        personService.addNewPerson(person);
+    public void registerNewCustomer(@Valid @RequestBody Customer customer) {
+        customerService.addNewCustomer(customer);
     }
 
-    @DeleteMapping(path = "{personId}")
-    public void deleteUser(@PathVariable("personId") UUID id) {
-        personService.deletePerson(id);
-    }
+//    @DeleteMapping(path = "{personId}")
+//    public void deleteUser(@PathVariable("personId") UUID id) {
+//        personService.deletePerson(id);
+//    }
 
-    @PutMapping(path = "{personId}")
-    public Person patchUser(
-            @PathVariable("personId") UUID personId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email
-            ) {
-        return personService.patchPerson(personId, name, email);
-    }
+//    @PutMapping(path = "{personId}")
+//    public Person patchUser(
+//            @PathVariable("personId") UUID personId,
+//            @RequestParam(required = false) String name,
+//            @RequestParam(required = false) String email
+//            ) {
+//        return personService.patchPerson(personId, name, email);
+//    }
+
 }
