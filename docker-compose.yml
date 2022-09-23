@@ -15,18 +15,13 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    image: buurbak-backend
-    container_name: buurbak-backend
+  api:
+    image: buurbak-api
+    container_name: buurbak-api
     build:
-      context: Backend
+      context: api
     ports:
       - "3080:3080"
     depends_on:
       db:
         condition: service_healthy
-    # environment:
-    #   - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/buurbak
-    #   - SPRING_DATASOURCE_USERNAME=buurbak
-    #   - SPRING_DATASOURCE_PASSWORD=buurbak
-    #   - SPRING_JPA_HIBERNATE_DDL_AUTO=update
