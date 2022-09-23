@@ -1,7 +1,6 @@
 package com.buurbak.api.users.application;
 
 import com.buurbak.api.users.data.CustomerRepository;
-import com.buurbak.api.users.data.PersonRepository;
 import com.buurbak.api.users.domain.Customer;
 import com.buurbak.api.users.domain.Person;
 import lombok.AllArgsConstructor;

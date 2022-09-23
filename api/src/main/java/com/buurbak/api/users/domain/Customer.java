@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer extends Person {
-
     @NotBlank(message = "Must include an iban")
     private String iban;
     @NotBlank(message = "Must include an address")

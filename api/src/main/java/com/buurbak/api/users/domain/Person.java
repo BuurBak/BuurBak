@@ -33,7 +33,6 @@ public abstract class Person {
     private int age;
 
     @Past(message = "Must be born in the past")
-
     private LocalDate dateOfBirth;
 
     public Person(String name, String email, LocalDate dateOfBirth) {

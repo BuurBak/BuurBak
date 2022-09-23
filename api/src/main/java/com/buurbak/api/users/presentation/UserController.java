@@ -17,7 +17,6 @@ public class UserController {
     private final PersonService personService;
     private final CustomerService customerService;
 
-
     @GetMapping
     public List<Person> getPersons() {
         return personService.getPersons();
