@@ -1,27 +1,36 @@
 package com.buurbak.api.users.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Transient;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Collection;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends Person {
-    @NotBlank(message = "Must include an iban")
+public class Customer extends User {
+    private String name;
+    private LocalDate dateOfBirth;
     private String iban;
-    @NotBlank(message = "Must include an address")
     private String address;
 
-    public Customer(String name, String email, LocalDate dateOfBirth, String iban, String address) {
-        super(name, email, dateOfBirth);
+    @Transient
+    private int age;
+
+    public int getAge() {
+        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+    }
+
+    public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String address) {
+        super(email, password);
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
         this.iban = iban;
         this.address = address;
     }
