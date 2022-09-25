@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RegistrationService {
 
-    public final CustomerService customerService;
+    public final UserService userService;
 
     public String register(RegistrationRequest request) {
-        return customerService.signUpCustomer(new Customer(request.getEmail(), request.getPassword(), request.getName(), request.getDateOfBirth(), request.getIban(), request.getAddress()));
+        return userService.signUpUser(new Customer(request.getEmail(), request.getPassword(), request.getName(), request.getDateOfBirth(), request.getIban(), request.getAddress()));
     }
 }
