@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.buurbak.api.security.config.AuthenticationConfigConstants.SIGN_IN_URL;
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.SIGN_UP_URL;
 
 @Configuration
 @EnableWebSecurity
@@ -39,9 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers(SIGN_UP_URL).permitAll();
-        http.authorizeRequests().antMatchers(SIGN_IN_URL).permitAll();
-        http.authorizeRequests().antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/auth/**").permitAll();
+//        http.authorizeRequests().antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(jwtAuthenticationFilter);
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
