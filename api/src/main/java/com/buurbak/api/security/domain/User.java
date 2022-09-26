@@ -1,8 +1,9 @@
-package com.buurbak.api.users.domain;
+package com.buurbak.api.security.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 @Table(name = "user_table") // "user" is a protected table name in PostgreSQL
@@ -30,7 +32,8 @@ public class User implements UserDetails {
     private Collection<Role> roles;
 
     // defaults for all accounts
-    private boolean enabled = false;
+//    private boolean enabled = false;
+    private boolean enabled = true;
     private boolean locked = false;
 
     public User(String email, String password) {

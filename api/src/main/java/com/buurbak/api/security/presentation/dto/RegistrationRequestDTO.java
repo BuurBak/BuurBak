@@ -1,4 +1,4 @@
-package com.buurbak.api.registration.presentation.dto;
+package com.buurbak.api.security.presentation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,7 +25,6 @@ public class RegistrationRequestDTO {
     @Email(message = "Email must be valid")
     private final String email;
 
-    @NotBlank(message = "Date of birth may not be blank")
     @Past(message = "Date of birth must be in the past")
     private final LocalDate dateOfBirth;
 

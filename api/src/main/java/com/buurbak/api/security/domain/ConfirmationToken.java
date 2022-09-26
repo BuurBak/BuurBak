@@ -1,6 +1,6 @@
-package com.buurbak.api.registration.domain;
+package com.buurbak.api.security.domain;
 
-import com.buurbak.api.users.domain.User;
+import com.buurbak.api.security.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

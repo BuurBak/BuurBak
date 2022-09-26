@@ -1,7 +1,7 @@
-package com.buurbak.api.users.application;
+package com.buurbak.api.security.application;
 
-import com.buurbak.api.users.data.RoleRepository;
-import com.buurbak.api.users.domain.Role;
+import com.buurbak.api.security.data.RoleRepository;
+import com.buurbak.api.security.domain.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

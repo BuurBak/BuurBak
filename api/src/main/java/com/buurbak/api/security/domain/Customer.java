@@ -1,4 +1,4 @@
-package com.buurbak.api.users.domain;
+package com.buurbak.api.security.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Collection;
 
 @Entity
 @Getter
