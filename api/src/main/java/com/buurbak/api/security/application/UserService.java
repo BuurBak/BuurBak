@@ -1,16 +1,20 @@
 package com.buurbak.api.security.application;
 
+import com.buurbak.api.security.data.RoleRepository;
 import com.buurbak.api.security.data.UserRepository;
+import com.buurbak.api.security.domain.Role;
 import com.buurbak.api.security.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
     private final static int EMAIL_CONFIRMATION_TOKEN_EXPIRATION_TIME_IN_MINUTES = 30;
@@ -18,14 +22,14 @@ public class UserService {
     private final ConfirmationTokenService confirmationTokenService;
     private final UserRepository<User> userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RoleRepository roleRepository;
 
     public String signUpUser(User user) throws IllegalStateException {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new IllegalStateException(String.format(EMAIL_TAKEN_MESSAGE, user.getEmail()));
         }
 
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
 
@@ -41,6 +45,12 @@ public class UserService {
 //        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return user.getId().toString();
+    }
+
+    public void addRoleToUser(UUID userId, String roleName) {
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        Role role = roleRepository.findByName(roleName);
+        user.getRoles().add(role);
     }
 
     public void enableUser(UUID userId) {

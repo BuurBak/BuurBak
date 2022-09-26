@@ -13,13 +13,13 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping(path = "registration")
+@RequestMapping(path = "auth")
 @AllArgsConstructor
-public class RegistrationController {
+public class AuthController {
 
     private RegistrationService registrationService;
 
-    @PostMapping
+    @PostMapping("register")
     public ResponseEntity register(@Valid @RequestBody RegistrationRequestDTO request) {
         String userId = registrationService.register(request);
         return ResponseEntity.created(URI.create("/api/v1/users/" + userId)).build();

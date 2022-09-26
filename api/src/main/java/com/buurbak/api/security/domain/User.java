@@ -1,9 +1,6 @@
 package com.buurbak.api.security.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +12,7 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
+@Data
 @Table(name = "user_table") // "user" is a protected table name in PostgreSQL
 @Inheritance( strategy = InheritanceType.SINGLE_TABLE )
 public class User implements UserDetails {
@@ -29,17 +24,15 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles;
+    private Collection<Role> roles = new ArrayList<>();
 
     // defaults for all accounts
-//    private boolean enabled = false;
-    private boolean enabled = true;
+    private boolean enabled = false;
     private boolean locked = false;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.roles = new ArrayList<>();
     }
 
     public User(String email, String password, Collection<Role> roles) {
