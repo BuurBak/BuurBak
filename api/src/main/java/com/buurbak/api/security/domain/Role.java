@@ -1,16 +1,17 @@
-package com.buurbak.api.users.domain;
+package com.buurbak.api.security.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin extends Person {
+public class Role {
+    @Id
+    private String name;
 }
