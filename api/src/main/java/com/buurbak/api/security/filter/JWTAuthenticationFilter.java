@@ -1,6 +1,6 @@
 package com.buurbak.api.security.filter;
 
-import com.buurbak.api.security.application.TokenService;
+import com.buurbak.api.security.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
