@@ -1,6 +1,6 @@
-package com.buurbak.api.security.application;
+package com.buurbak.api.users.application;
 
-import com.buurbak.api.security.data.CustomerRepository;
+import com.buurbak.api.users.data.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

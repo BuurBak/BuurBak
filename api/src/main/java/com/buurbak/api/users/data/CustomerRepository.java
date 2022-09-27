@@ -1,6 +1,7 @@
-package com.buurbak.api.security.data;
+package com.buurbak.api.users.data;
 
-import com.buurbak.api.security.domain.Customer;
+import com.buurbak.api.security.data.UserRepository;
+import com.buurbak.api.users.domain.Customer;
 import org.springframework.stereotype.Repository;
 
 @Repository
