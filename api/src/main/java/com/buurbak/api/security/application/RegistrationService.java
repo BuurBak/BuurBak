@@ -1,8 +1,8 @@
 package com.buurbak.api.security.application;
 
 import com.buurbak.api.security.domain.ConfirmationToken;
-import com.buurbak.api.security.domain.Customer;
 import com.buurbak.api.security.presentation.dto.RegistrationRequestDTO;
+import com.buurbak.api.users.domain.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,16 +2,12 @@ package com.buurbak.api.security.application;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.buurbak.api.security.config.AuthenticationConfigConstants;
-import com.buurbak.api.security.domain.Role;
-import com.buurbak.api.security.domain.User;
 import com.buurbak.api.security.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TokenService {

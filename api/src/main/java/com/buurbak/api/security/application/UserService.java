@@ -1,6 +1,5 @@
 package com.buurbak.api.security.application;
 
-import com.buurbak.api.security.data.RoleRepository;
 import com.buurbak.api.security.data.UserRepository;
 import com.buurbak.api.security.domain.User;
 import lombok.AllArgsConstructor;
@@ -16,11 +15,9 @@ import java.util.UUID;
 @Transactional
 public class UserService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
-    private final static int EMAIL_CONFIRMATION_TOKEN_EXPIRATION_TIME_IN_MINUTES = 30;
 
     private final UserRepository<User> userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final RoleRepository roleRepository;
 
     public String signUpUser(User user) throws IllegalStateException {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -46,7 +43,7 @@ public class UserService {
     }
 
     public void enableUser(UUID userId) {
-        userRepository.enableUser(userId);
+        userRepository.enableUserById(userId);
     }
 
     public User findByUsername(String email) {

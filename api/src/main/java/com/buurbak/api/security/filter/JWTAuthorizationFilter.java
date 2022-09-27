@@ -21,7 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.*;
+import static com.buurbak.api.security.config.AuthenticationConfigConstants.REFRESH_TOKEN_URL;
+import static com.buurbak.api.security.config.AuthenticationConfigConstants.SIGN_IN_URL;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
