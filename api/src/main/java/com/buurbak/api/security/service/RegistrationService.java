@@ -1,5 +1,7 @@
 package com.buurbak.api.security.service;
 
+import com.buurbak.api.email.service.ConfirmEmailService;
+import com.buurbak.api.email.service.EmailSender;
 import com.buurbak.api.security.controller.dto.RegistrationRequestDTO;
 import com.buurbak.api.security.model.EmailConfirmationToken;
 import com.buurbak.api.security.model.User;
@@ -14,22 +16,30 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-
     public final UserService userService;
     public final EmailConfirmationTokenService confirmationTokenService;
+    private final EmailSender emailSender;
+    private final ConfirmEmailService confirmEmailService;
 
     public String register(RegistrationRequestDTO requestDTO) {
         User user = userService.signUpUser(new Customer(requestDTO.getEmail(), requestDTO.getPassword(), requestDTO.getName(), requestDTO.getDateOfBirth(), requestDTO.getIban(), requestDTO.getAddress()));
 
-        confirmationTokenService.createAndSaveEmailConfirmationToken(user);
+        EmailConfirmationToken token = confirmationTokenService.createAndSaveEmailConfirmationToken(user);
 
-        // TODO: send email confirmation token via email
+        emailSender.send(
+                requestDTO.getEmail(),
+                confirmEmailService.buildEmail(
+                        requestDTO.getName(),
+                        // TODO set to env variable
+                        "http://localhost:3080/api/v1/auth/confirm/" + token.getId().toString()
+                        )
+        );
 
         return user.getId().toString();
     }
 
     @Transactional
-    public String confirmEmail(UUID tokenId) {
+    public void confirmEmail(UUID tokenId) {
         EmailConfirmationToken confirmationToken = confirmationTokenService.findById(tokenId);
 
         if (confirmationToken.getConfirmedAt() != null) {
@@ -42,7 +52,5 @@ public class RegistrationService {
 
         confirmationTokenService.setConfirmedAtToNow(tokenId);
         userService.enableUser(confirmationToken.getUser().getId());
-
-        return "confirmed";
     }
 }

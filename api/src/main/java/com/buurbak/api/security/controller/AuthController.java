@@ -27,8 +27,8 @@ public class AuthController {
     private RegistrationService registrationService;
 
     @PostMapping("register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequestDTO request) {
-        String userId = registrationService.register(request);
+    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequestDTO requestDTO) {
+        String userId = registrationService.register(requestDTO);
         return ResponseEntity.created(URI.create("/api/v1/users/" + userId)).build();
     }
 
@@ -42,6 +42,7 @@ public class AuthController {
     @GetMapping("confirm/{emailTokenUUID}")
     public ResponseEntity<?> confirmEmail(@PathVariable("emailTokenUUID") @NotBlank String emailTokenId) {
         registrationService.confirmEmail(UUID.fromString(emailTokenId));
-        return ResponseEntity.ok().build();
+        // TODO send to success page on frontend
+        return ResponseEntity.ok("Confirmed email");
     }
 }
