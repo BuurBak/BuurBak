@@ -26,10 +26,11 @@ services:
       db:
         condition: service_healthy
     environment:
-      - DATABASE_USERNAME=buurbak
-      - DATABASE_PASSWORD=buurbak
-      - DATABASE_HOST=db
-      - MAIL_HOST=maildev
+      DATABASE_USERNAME: buurbak
+      DATABASE_PASSWORD: buurbak
+      DATABASE_HOST: db
+      MAIL_HOST: maildev
+      JWT_SECRET: secret
 
   maildev:
     image: maildev/maildev
