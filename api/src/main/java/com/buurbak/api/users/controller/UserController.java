@@ -1,7 +1,7 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.security.service.UserService;
 import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
