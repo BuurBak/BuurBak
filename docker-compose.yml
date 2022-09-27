@@ -25,3 +25,14 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - DATABASE_USERNAME=buurbak
+      - DATABASE_PASSWORD=buurbak
+      - DATABASE_HOST=db
+      - MAIL_HOST=maildev
+
+  maildev:
+    image: maildev/maildev
+    container_name: buurbak-maildev
+    ports: 
+      - "1080:1080"

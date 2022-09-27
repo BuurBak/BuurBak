@@ -9,10 +9,10 @@ server:
 
 spring:
   datasource:
-    password: buurbak
-    url: jdbc:postgresql://localhost:5432/buurbak
-#    url: jdbc:postgresql://db:5432/buurbak
-    username: buurbak
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/buurbak
+
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -23,7 +23,7 @@ spring:
     show-sql: true
 
   mail:
-    host: localhost
+    host: ${MAIL_HOST}
     port: 1025
     username: hello
     password: hello
