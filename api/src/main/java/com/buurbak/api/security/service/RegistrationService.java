@@ -22,7 +22,17 @@ public class RegistrationService {
     private final ConfirmEmailService confirmEmailService;
 
     public String register(RegistrationRequestDTO requestDTO) {
-        User user = userService.signUpUser(new Customer(requestDTO.getEmail(), requestDTO.getPassword(), requestDTO.getName(), requestDTO.getDateOfBirth(), requestDTO.getIban(), requestDTO.getAddress()));
+        User user = userService.signUpUser(
+                new Customer(
+                        requestDTO.getEmail(),
+                        requestDTO.getPassword(),
+                        requestDTO.getName(),
+                        requestDTO.getDateOfBirth(),
+                        requestDTO.getIban(),
+                        requestDTO.getAddress()
+                )
+        );
+
 
         EmailConfirmationToken token = confirmationTokenService.createAndSaveEmailConfirmationToken(user);
 
