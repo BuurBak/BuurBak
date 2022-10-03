@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: open_sans_regular;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: open_sans_bold;
+}
+
+b {
+  font-weight: none;
+  font-family: open_sans_bold;
+}
+
+@font-face {
+  font-family: open_sans_light;
+  src: url(./data/fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+  font-family: open_sans_regular;
+  src: url(./data/fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: open_sans_medium;
+  src: url(./data/fonts/OpenSans-Medium.ttf);
+}
+
+@font-face {
+  font-family: open_sans_semibold;
+  src: url(./data/fonts/OpenSans-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: open_sans_bold;
+  src: url(./data/fonts/OpenSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: open_sans_extrabold;
+  src: url(./data/fonts/OpenSans-ExtraBold.ttf);
+}
