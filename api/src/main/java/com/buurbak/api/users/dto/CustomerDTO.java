@@ -1,4 +1,4 @@
-package com.buurbak.api.users.controller.dto;
+package com.buurbak.api.users.dto;
 
 import lombok.Data;
 

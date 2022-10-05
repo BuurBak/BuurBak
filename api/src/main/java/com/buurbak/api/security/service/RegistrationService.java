@@ -2,7 +2,7 @@ package com.buurbak.api.security.service;
 
 import com.buurbak.api.email.service.ConfirmEmailService;
 import com.buurbak.api.email.service.EmailSender;
-import com.buurbak.api.security.controller.dto.RegistrationRequestDTO;
+import com.buurbak.api.security.dto.RegistrationRequestDTO;
 import com.buurbak.api.security.model.EmailConfirmationToken;
 import com.buurbak.api.security.model.User;
 import com.buurbak.api.users.model.Customer;

@@ -1,6 +1,6 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.users.controller.dto.CustomerDTO;
+import com.buurbak.api.users.dto.CustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;

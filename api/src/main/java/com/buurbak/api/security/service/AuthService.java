@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.buurbak.api.security.controller.dto.TokenDTO;
+import com.buurbak.api.security.dto.TokenDTO;
 import com.buurbak.api.security.model.Role;
 import com.buurbak.api.security.model.User;
 import lombok.RequiredArgsConstructor;

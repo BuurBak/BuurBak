@@ -1,7 +1,7 @@
 package com.buurbak.api.security.controller;
 
-import com.buurbak.api.security.controller.dto.RegistrationRequestDTO;
-import com.buurbak.api.security.controller.dto.TokenDTO;
+import com.buurbak.api.security.dto.RegistrationRequestDTO;
+import com.buurbak.api.security.dto.TokenDTO;
 import com.buurbak.api.security.service.AuthService;
 import com.buurbak.api.security.service.RegistrationService;
 import io.swagger.v3.oas.annotations.Operation;

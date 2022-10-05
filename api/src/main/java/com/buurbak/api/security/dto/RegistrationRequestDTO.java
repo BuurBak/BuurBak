@@ -1,4 +1,4 @@
-package com.buurbak.api.security.controller.dto;
+package com.buurbak.api.security.dto;
 
 import lombok.Data;
 
