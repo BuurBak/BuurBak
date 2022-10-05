@@ -21,7 +21,7 @@ public class RegistrationService {
     private final EmailSender emailSender;
     private final ConfirmEmailService confirmEmailService;
 
-    public String register(RegistrationRequestDTO requestDTO) {
+    public UUID register(RegistrationRequestDTO requestDTO) {
         User user = userService.signUpUser(
                 new Customer(
                         requestDTO.getEmail(),
@@ -45,7 +45,7 @@ public class RegistrationService {
                         )
         );
 
-        return user.getId().toString();
+        return user.getId();
     }
 
     @Transactional
