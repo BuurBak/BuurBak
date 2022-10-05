@@ -1,56 +1,72 @@
 package com.buurbak.api.trailers.config;
 
-import com.buurbak.api.trailers.data.TrailerRepository;
+import com.buurbak.api.trailers.data.TrailerOfferRepository;
 import com.buurbak.api.trailers.data.TrailerTypeRepository;
-import com.buurbak.api.trailers.domain.Trailer;
+import com.buurbak.api.trailers.domain.TrailerOffer;
 
 import com.buurbak.api.trailers.domain.TrailerType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalTime;
 import java.util.List;
 
 
 @Configuration
-public class TrailerConfig {
+public class TrailerOfferConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(TrailerRepository repository, TrailerTypeRepository trailerTypeRepository){
+    CommandLineRunner commandLineRunner(TrailerOfferRepository repository, TrailerTypeRepository trailerTypeRepository){
         return args -> {
             TrailerType firstTrailerType = new TrailerType(
                     "Small"
             );
 
-            Trailer firstTrailer = new Trailer(
+            TrailerOffer firstTrailerOffer = new TrailerOffer(
                     firstTrailerType,
                     250,
                     50,
                     100,
                     120,
                     1000,
-                    "67DE1D"
+                    "67DE1D",
+                    LocalTime.of(8,00,00),
+                    LocalTime.of(10,00,00),
+                    LocalTime.of(18,00,00),
+                    LocalTime.of(21,00,00),
+                    "Heidelberglaan",
+                    15,
+                    false
+
             );
 
             TrailerType secondTrailerType = new TrailerType(
                     "Big"
             );
 
-            Trailer secondTrailer = new Trailer(
+            TrailerOffer secondTrailerOffer = new TrailerOffer(
                     secondTrailerType,
                     1,
                     1,
                     1,
                     1,
                     1,
-                    "8234DH"
+                    "8234DH",
+                    LocalTime.of(8,00,00),
+                    LocalTime.of(10,00,00),
+                    LocalTime.of(18,00,00),
+                    LocalTime.of(21,00,00),
+                    "Padualaan",
+                    20,
+                    false
             );
             trailerTypeRepository.saveAll(
                     List.of(firstTrailerType, secondTrailerType)
             );
 
             repository.saveAll(
-                    List.of(firstTrailer, secondTrailer)
+                    List.of(firstTrailerOffer, secondTrailerOffer)
             );
         };
     }

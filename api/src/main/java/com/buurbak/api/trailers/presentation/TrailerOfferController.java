@@ -1,7 +1,7 @@
 package com.buurbak.api.trailers.presentation;
 
-import com.buurbak.api.trailers.application.TrailerService;
-import com.buurbak.api.trailers.domain.Trailer;
+import com.buurbak.api.trailers.application.TrailerOfferService;
+import com.buurbak.api.trailers.domain.TrailerOffer;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,18 +13,18 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("trailer")
+@RequestMapping("traileroffer")
 public class TrailerOfferController {
-    private final TrailerService trailerService;
+    private final TrailerOfferService trailerOfferService;
 
     @GetMapping(path = "/{id}")
-    public Trailer getTrailer(@PathVariable UUID id){
-         return trailerService.getTrailer(id);
+    public TrailerOffer getTrailerOffer(@PathVariable UUID id){
+         return trailerOfferService.getTrailerOffer(id);
     }
 
     @GetMapping
-    public List<Trailer> getAllTrailers(){
-        return trailerService.getAllTrailers();
+    public List<Object> getAllTrailerOffer(){
+        return trailerOfferService.getAllTrailerOffers();
     }
 }
 
