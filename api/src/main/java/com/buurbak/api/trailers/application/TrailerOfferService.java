@@ -2,6 +2,7 @@ package com.buurbak.api.trailers.application;
 
 import com.buurbak.api.trailers.data.TrailerOfferRepository;
 import com.buurbak.api.trailers.domain.TrailerOffer;
+import com.buurbak.api.trailers.dto.TrailerOfferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,10 @@ public class TrailerOfferService {
     }
 
     public TrailerOffer getTrailerOffer(UUID id){
-        return trailerOfferRepository.getOneTrailer(id);
+        return trailerOfferRepository.findByIdOrError(id);
     }
 
-    public List<Object> getAllTrailerOffers(){
-        return trailerOfferRepository.getAllTrailers();
+    public List<TrailerOfferDTO> getAllTrailerOffersInfo(){
+        return trailerOfferRepository.findTrailersInfo();
     }
 }

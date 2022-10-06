@@ -2,6 +2,7 @@ package com.buurbak.api.trailers.presentation;
 
 import com.buurbak.api.trailers.application.TrailerOfferService;
 import com.buurbak.api.trailers.domain.TrailerOffer;
+import com.buurbak.api.trailers.dto.TrailerOfferDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +24,8 @@ public class TrailerOfferController {
     }
 
     @GetMapping
-    public List<Object> getAllTrailerOffer(){
-        return trailerOfferService.getAllTrailerOffers();
+    public List<TrailerOfferDTO> getAllTrailerOffer(){
+        return trailerOfferService.getAllTrailerOffersInfo();
     }
 }
 
