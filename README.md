@@ -11,7 +11,7 @@ Semi-production ready, bugs are allowed but must be fixed before they get pushed
 ### Creating a feature or bugfix branch
 If you want to work on a user story you have to create a new branch for it. This branch must be based on the dev branch. You will name the branch as such:
 
-```#US-XXX-name-of-user-story```
+```US-XXX-name-of-user-story```
 
 Where `XXX` is the number. When you are done working on the user story you must create a merge request back in to dev that has to be reviewed by a team member.
 
