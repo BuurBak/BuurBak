@@ -1,4 +1,4 @@
-package com.buurbak.api.trailers.domain;
+package com.buurbak.api.trailers.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
-package com.buurbak.api.trailers.application;
+package com.buurbak.api.trailers.service;
 
-import com.buurbak.api.trailers.data.TrailerOfferRepository;
-import com.buurbak.api.trailers.domain.TrailerOffer;
+import com.buurbak.api.trailers.repository.TrailerOfferRepository;
+import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.dto.TrailerOfferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

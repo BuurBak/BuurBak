@@ -1,6 +1,6 @@
-package com.buurbak.api.trailers.data;
+package com.buurbak.api.trailers.repository;
 
-import com.buurbak.api.trailers.domain.TrailerOffer;
+import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.dto.TrailerOfferDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

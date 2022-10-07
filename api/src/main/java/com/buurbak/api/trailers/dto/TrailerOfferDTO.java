@@ -1,6 +1,6 @@
 package com.buurbak.api.trailers.dto;
 
-import com.buurbak.api.trailers.domain.TrailerType;
+import com.buurbak.api.trailers.model.TrailerType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
