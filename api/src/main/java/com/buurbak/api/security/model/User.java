@@ -1,5 +1,6 @@
 package com.buurbak.api.security.model;
 
+import com.buurbak.api.files.model.ProfilePicture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +24,9 @@ public class User implements UserDetails {
 
     private String email;
     private String password;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ProfilePicture profilePicture;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();

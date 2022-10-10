@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ProfilePictureDTO {
+public class FileDTO {
     @NotNull
     private UUID id;
     @NotBlank
@@ -18,6 +18,4 @@ public class ProfilePictureDTO {
     private Long size;
     @NotBlank
     private String contentType;
-    @NotBlank
-    private UUID userId;
 }

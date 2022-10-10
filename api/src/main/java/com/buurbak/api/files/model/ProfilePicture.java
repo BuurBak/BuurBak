@@ -1,14 +1,15 @@
 package com.buurbak.api.files.model;
 
 import com.buurbak.api.security.model.User;
+import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ProfilePicture extends Photo {
-    @OneToOne
-    @Column(nullable = false)
+@Data
+public class ProfilePicture extends FileEntity{
+    @OneToOne(fetch = FetchType.EAGER)
     private User user;
 }

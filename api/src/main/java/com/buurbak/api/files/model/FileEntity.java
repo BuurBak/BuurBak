@@ -5,15 +5,26 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Data
-public class File {
+public class FileEntity {
     @Id
     @GeneratedValue
     private UUID id;
 
-    private String extension;
-    private String location;
+    @GeneratedValue
+    private Date created_at;
+
+    private String name;
+
+    private String contentType;
+
+    private Long size;
+
+    @Lob
+    private byte[] data;
 }
