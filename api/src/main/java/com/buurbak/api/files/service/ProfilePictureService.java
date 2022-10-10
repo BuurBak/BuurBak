@@ -24,9 +24,9 @@ public class ProfilePictureService {
             User user = userService.findByUsername(username);
 
             // Make sure only one profile picture exists
-            ProfilePicture existingProfileEntity = user.getProfilePicture();
-            if (existingProfileEntity != null) {
-                fileRepository.delete(existingProfileEntity);
+            ProfilePicture existingProfilePicture = user.getProfilePicture();
+            if (existingProfilePicture != null) {
+                fileRepository.delete(existingProfilePicture);
             }
 
             ProfilePicture profilePicture = new ProfilePicture();
