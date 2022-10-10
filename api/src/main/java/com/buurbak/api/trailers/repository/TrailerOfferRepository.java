@@ -11,11 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface TrailerOfferRepository<T extends TrailerOffer> extends JpaRepository<T, UUID> {
-//    Optional<TrailerOffer> findById(UUID id);
     @Query("SELECT new com.buurbak.api.trailers.dto.TrailerOfferDTO(t.id, t.trailerType, t.location, t.price) FROM TrailerOffer t")
     List<TrailerOfferDTO> findTrailersInfo();
-
-//    Optional<TrailerOffer> findById(UUID id);
-
-
 }
