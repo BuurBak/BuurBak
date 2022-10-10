@@ -12,6 +12,11 @@ spring:
     password: ${DATABASE_PASSWORD}
     url: jdbc:postgresql://${DATABASE_HOST}:5432/buurbak
 
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+
   jpa:
     hibernate:
       ddl-auto: create-drop
