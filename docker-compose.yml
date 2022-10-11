@@ -36,3 +36,15 @@ services:
     container_name: buurbak-maildev
     ports: 
       - "1080:1080"
+    
+  frontend:
+    build: ./buurbak
+    container_name: buurbak_c
+    ports: 
+      - '3000:3000'
+    volumes:
+      - ./buurbak:/app
+      - ./app/node_modules
+    stdin_open: true
+    tty: true
+
