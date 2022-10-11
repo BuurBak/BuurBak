@@ -1,6 +1,8 @@
 package com.buurbak.api.files.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,10 @@ public class FileEntity {
     @GeneratedValue
     private UUID id;
 
-    @GeneratedValue
-    private Date created_at;
+    @CreationTimestamp
+    private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
 
     private String name;
 
