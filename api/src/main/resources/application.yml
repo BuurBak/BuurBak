@@ -12,10 +12,11 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     url: jdbc:postgresql://${DATABASE_HOST}:5432/buurbak
+    initialize: false
 
   jpa:
-    hibernate:
-      ddl-auto: create-drop
+    # hibernate:
+    #   ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
