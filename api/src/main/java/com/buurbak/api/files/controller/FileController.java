@@ -41,7 +41,7 @@ public class FileController {
                     .contentType(MediaType.valueOf(fileEntity.getContentType()))
                     .body(fileEntity.getData());
         } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find file by id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find file by id: " + id, exception);
         }
     }
 }

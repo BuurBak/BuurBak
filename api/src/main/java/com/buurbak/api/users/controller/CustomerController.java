@@ -50,8 +50,8 @@ public class CustomerController {
                 customer.getAddress(),
                 profilePictureId
             );
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", exception);
         }
     }
 }
