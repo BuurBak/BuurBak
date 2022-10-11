@@ -47,3 +47,10 @@ Beiden commands in de terminal uitvoeren.
 ### Docker 
 
 Onze production environment runt in docker. development doen wij buiten docker. 
+
+### Environment variables
+Om ervoor te zorgen dat je de goede environment running hebt in development is het cruciaal dat je de dev environment gebruikt voor Java. Dat doe je als volgt:
+
+1. Edit configurations
+2. Voeg `--spring.profiles.active=dev` toe aan je VM CLI options OF voeg `SPRING_PROFILES_ACTIVE=dev` toe aan je environment variables.
+3. Voeg `JWT_SECRET=secret` aan de environment variables
