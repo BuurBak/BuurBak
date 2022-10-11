@@ -17,7 +17,7 @@ services:
 
   api:
     image: buurbak-api
-    container_name: buurbak-api
+    container_name: api
     build:
       context: api
     ports:
@@ -32,13 +32,10 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     
   frontend:
-    build: ./buurbak
-    container_name: buurbak_c
+    image: buurbak-frontend
+    build:
+      context: frontend
+    container_name: frontend
     ports: 
       - '3000:3000'
-    volumes:
-      - ./buurbak:/app
-      - ./app/node_modules
-    stdin_open: true
-    tty: true
 
