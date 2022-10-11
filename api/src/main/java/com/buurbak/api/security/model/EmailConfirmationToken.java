@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Entity
-public class ConfirmationToken {
+public class EmailConfirmationToken {
     @Id
     @GeneratedValue
     private UUID id;
@@ -29,7 +29,7 @@ public class ConfirmationToken {
     @JoinColumn(nullable = false)
     private User user;
 
-    public ConfirmationToken(LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
+    public EmailConfirmationToken(LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.user = user;

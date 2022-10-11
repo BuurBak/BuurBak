@@ -3,7 +3,7 @@ version: "3.9"
 services:
   traefik:
     image: traefik:v2.4
-    container_name: your-monthly-playlist-traefik-dev
+    container_name: traefik
     command:
       - --api.insecure=true
       - --providers.docker
@@ -16,13 +16,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   db:
+    container_name: database
     image: postgres:latest
     ports:
       - "5432"
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=buurbak
-      - POSTGRES_PASSWORD=buurbak
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: buurbak
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
       interval: 10s
@@ -38,22 +38,31 @@ services:
       db:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/buurbak
-      - SPRING_DATASOURCE_USERNAME=buurbak
-      - SPRING_DATASOURCE_PASSWORD=buurbak
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      DATABASE_USERNAME: buurbak
+      DATABASE_PASSWORD: admin
+      DATABASE_HOST: db
+      MAIL_HOST: maildev
+      JWT_SECRET: secret
     labels: 
       traefik.enable: true
       traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
       traefik.http.services.backend.loadbalancer.server.port: 3080
       # traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
       # traefik.http.routers.backend.middlewares: backendpathstrip@docker
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.maildev.rule: Host(`mail.localhost`)
+      traefik.http.services.maildev.loadbalancer.server.port: 1080
     
   frontend:
     image: buurbak-frontend
+    container_name: frontend
     build:
       context: frontend
-    container_name: frontend
     labels: 
       traefik.enable: true
       traefik.http.routers.frontend.rule: Host(`localhost`)
