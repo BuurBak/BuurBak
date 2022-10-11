@@ -33,7 +33,7 @@ public class SettingsController {
     @PostMapping("profile/picture")
     public ProfilePictureDTO setProfilePicture(Authentication authentication, @RequestParam("file") MultipartFile file) {
         try {
-            ProfilePicture profilePicture = profilePictureService.save(file, authentication.getName());
+            ProfilePicture profilePicture = profilePictureService.setProfilePicture(file, authentication.getName());
             return new ProfilePictureDTO(
                     profilePicture.getId(),
                     profilePicture.getName(),

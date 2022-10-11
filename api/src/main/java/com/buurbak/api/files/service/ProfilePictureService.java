@@ -1,8 +1,7 @@
 package com.buurbak.api.files.service;
 
-import com.buurbak.api.files.model.FileEntity;
 import com.buurbak.api.files.model.ProfilePicture;
-import com.buurbak.api.files.repository.FileRepository;
+import com.buurbak.api.files.repository.ProfilePictureRepository;
 import com.buurbak.api.security.model.User;
 import com.buurbak.api.security.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -17,28 +17,26 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ProfilePictureService {
     private final UserService userService;
-    private final FileRepository fileRepository;
+    private final ProfilePictureRepository profilePictureRepository;
 
-    public ProfilePicture save (MultipartFile file, String username) throws IOException {
+    @Transactional
+    public ProfilePicture setProfilePicture(MultipartFile file, String username) throws IOException {
         try {
             User user = userService.findByUsername(username);
+            ProfilePicture profilePicture = user.getProfilePicture();
 
-            // Make sure only one profile picture exists
-            ProfilePicture existingProfilePicture = user.getProfilePicture();
-            if (existingProfilePicture != null) {
-                fileRepository.delete(existingProfilePicture);
+            if (profilePicture == null) {
+                // profile picture does not exist yet, create it.
+                profilePicture = new ProfilePicture();
+                profilePicture.setUser(user);
             }
 
-            ProfilePicture profilePicture = new ProfilePicture();
             profilePicture.setName(StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
             profilePicture.setContentType(file.getContentType());
             profilePicture.setData(file.getBytes());
             profilePicture.setSize(file.getSize());
-            profilePicture.setUser(user);
 
-            user.setProfilePicture(profilePicture); // FetchType.LAZY on User entity so has to be done manually
-
-            fileRepository.save(profilePicture);
+            profilePictureRepository.save(profilePicture);
 
             return profilePicture;
         } catch (IOException exception) {

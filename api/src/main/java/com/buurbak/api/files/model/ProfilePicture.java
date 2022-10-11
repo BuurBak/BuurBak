@@ -1,15 +1,19 @@
 package com.buurbak.api.files.model;
 
 import com.buurbak.api.security.model.User;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
-@Data
-public class ProfilePicture extends FileEntity{
-    @OneToOne(fetch = FetchType.EAGER)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProfilePicture extends FileEntity {
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 }
