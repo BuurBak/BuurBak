@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -20,4 +21,9 @@ public class ProfilePictureDTO {
     private String contentType;
     @NotBlank
     private UUID userId;
+    @NotBlank
+    private Date createdAt;
+    @NotBlank
+    private Date updatedAt;
+
 }

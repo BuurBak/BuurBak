@@ -39,7 +39,9 @@ public class SettingsController {
                     profilePicture.getName(),
                     profilePicture.getSize(),
                     profilePicture.getContentType(),
-                    profilePicture.getUser().getId()
+                    profilePicture.getUser().getId(),
+                    profilePicture.getCreatedAt(),
+                    profilePicture.getUpdatedAt()
                 );
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
