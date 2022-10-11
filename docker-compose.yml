@@ -25,3 +25,20 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/buurbak
+      - SPRING_DATASOURCE_USERNAME=buurbak
+      - SPRING_DATASOURCE_PASSWORD=buurbak
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    
+  frontend:
+    build: ./buurbak
+    container_name: buurbak_c
+    ports: 
+      - '3000:3000'
+    volumes:
+      - ./buurbak:/app
+      - ./app/node_modules
+    stdin_open: true
+    tty: true
+

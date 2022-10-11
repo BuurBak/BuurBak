@@ -1,0 +1,47 @@
+.footerContainer {
+    width: 100vw;
+    height: fit-content;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 60px 180px;
+    border-top: 1px solid #DDDDDD;
+}
+
+.footerLogo {
+    width: 120px;
+    height: 34px;
+    background-image: url(../../../data/images/logov2.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.footerLinks {
+    flex: 1;
+    height: fit-content;
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.footerGrid {
+    width: 80%;
+    height: fit-content;
+    margin: 20% 0 0 35%;
+}
+
+.footerGrid>p:nth-child(1) {
+    color: #EE7B46;
+    font-family: open_sans_semibold;
+}
+
+.footerLinkContent {
+    font-family: open_sans_medium;
+    margin-top: 15px;
+}
+
+.footerLinkContent:hover {
+    text-decoration: underline;
+}

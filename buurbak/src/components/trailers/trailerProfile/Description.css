@@ -1,0 +1,16 @@
+.detailInfoContainer {
+    width: 97%;
+    box-sizing: border-box;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.detailInfoContainer>b {
+    color: #EE7B46;
+    font-size: 18px;
+}
+
+.detailInfoContainer>p {
+    margin: 15px 0 0 0;
+    font-size: 15px;
+}

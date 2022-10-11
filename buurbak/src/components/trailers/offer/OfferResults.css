@@ -1,0 +1,14 @@
+.offerResultsContainer {
+    width: 100%;
+    max-width: 100%;
+    height: fit-content;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 0 40px 40px 40px;
+    display: grid;
+    /* grid-template-columns: 48.5% 48.5%; */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    column-gap: 21px;
+    row-gap: 12px;
+    position: relative;
+}

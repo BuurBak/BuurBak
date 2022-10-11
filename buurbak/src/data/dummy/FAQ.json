@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "question": "Hoe wordt mijn aanhanger verzekerd als ik verhuur via BuurBak?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    },
+    {
+        "id": 2,
+        "question": "Kan ik nog een 2e aanhanger verhuren op mijn bestaande BuurBak account?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    },
+    {
+        "id": 3,
+        "question": "Wat moet ik doen als ik schade heb aan een aanhanger die ik verhuur?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    },
+    {
+        "id": 4,
+        "question": "Zit er een maximum aan het aantal aanhangers die ik kan verhuren?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    },
+    {
+        "id": 5,
+        "question": "Kan ik ook als bedrijf aanhangers verhuren, of alleen als particulier?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    },
+    {
+        "id": 6,
+        "question": "Welke maatregelen zijn van toepassing als ik een aanhanger annuleer?",
+        "answer": "Wanneer je een aanhanger aanbied bij BuurBak, betaald de huurder de verzekering en gemaakte schade. Als verhuurder moet je wel een degelijke aanhanger aanbieden. Hier wordt op gecontroleerd. Wanneer de aanhanger al schade heeft bij het ophalen, komt deze niet voor rekening van de huurder.",
+        "type": "huurder"
+    }
+]
