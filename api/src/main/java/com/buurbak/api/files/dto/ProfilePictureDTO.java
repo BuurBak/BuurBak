@@ -25,5 +25,4 @@ public class ProfilePictureDTO {
     private Date createdAt;
     @NotBlank
     private Date updatedAt;
-
 }

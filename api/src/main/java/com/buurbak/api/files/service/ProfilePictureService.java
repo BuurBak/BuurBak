@@ -1,5 +1,6 @@
 package com.buurbak.api.files.service;
 
+import com.buurbak.api.files.exception.NotAnImageException;
 import com.buurbak.api.files.model.ProfilePicture;
 import com.buurbak.api.files.repository.ProfilePictureRepository;
 import com.buurbak.api.security.model.User;
@@ -20,8 +21,13 @@ public class ProfilePictureService {
     private final ProfilePictureRepository profilePictureRepository;
 
     @Transactional
-    public ProfilePicture setProfilePicture(MultipartFile file, String username) throws IOException {
+    public ProfilePicture setProfilePicture(MultipartFile file, String username) throws IOException, NotAnImageException {
         try {
+            if (!Objects.requireNonNull(file.getContentType()).split("/")[0].equals("image")) {
+                // not an image deny
+                throw new NotAnImageException();
+            }
+
             User user = userService.findByUsername(username);
             ProfilePicture profilePicture = user.getProfilePicture();
 

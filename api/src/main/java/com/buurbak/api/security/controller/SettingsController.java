@@ -1,6 +1,7 @@
 package com.buurbak.api.security.controller;
 
 import com.buurbak.api.files.dto.ProfilePictureDTO;
+import com.buurbak.api.files.exception.NotAnImageException;
 import com.buurbak.api.files.model.ProfilePicture;
 import com.buurbak.api.files.service.ProfilePictureService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,7 @@ public class SettingsController {
     @Operation(summary = "Set profile picture of self")
     @ApiResponses({
             @ApiResponse(responseCode = "201"),
+            @ApiResponse(responseCode = "400", description = "File should be an image", content = @Content),
             @ApiResponse(responseCode = "500", description = "Could not save profile picture", content = @Content)
     })
     @PostMapping("profile/picture")
@@ -43,8 +45,10 @@ public class SettingsController {
                     profilePicture.getCreatedAt(),
                     profilePicture.getUpdatedAt()
                 );
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (IOException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not save image: " + file.getOriginalFilename(), exception);
+        } catch (NotAnImageException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File: " + file.getOriginalFilename() + " must be an image", exception);
         }
     }
 
