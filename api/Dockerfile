@@ -1,7 +1,9 @@
 FROM eclipse-temurin:17-jdk-jammy as builder
 WORKDIR /opt/app
+RUN apt update && apt install dos2unix
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
+RUN dos2unix mvnw
 RUN ./mvnw dependency:go-offline
 COPY ./src ./src
 RUN ./mvnw clean install
