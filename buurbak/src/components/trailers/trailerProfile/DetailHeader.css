@@ -2,7 +2,7 @@
     width: 100%;
     height: fit-content;
     background-color: white;
-    margin: 0;
+    margin: 20px 0 0 0;
     border-bottom: 1px solid #DDDDDD;
     box-sizing: border-box;
     padding-bottom: 40px;
@@ -20,6 +20,7 @@
     background-color: white;
     height: 48px;
     max-width: 100%;
+    margin-top: 24px;
 }
 
 .flexBoxItem {

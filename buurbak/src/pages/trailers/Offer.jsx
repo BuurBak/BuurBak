@@ -8,11 +8,14 @@ import { IoIosArrowBack, IoIosArrowForward, IoIosMenu } from "react-icons/io";
 import OfferHeader from '../../components/trailers/offer/OfferHeader'
 import OfferRestults from "../../components/trailers/offer/OfferResults.jsx";
 import TrailerCard from "../../components/trailers/trailerCard/TrailerCard.jsx";
+import Filters from "../../components/trailers/filters/Filters.jsx";
 
 export default function Offer() {
     const [trailers, setTrailers] = useState([])
     const [activeTrailer, setActiveTrailer] = useState()
     const [scaleMap, setScaleMap] = useState(false)
+    const [showFilters, setShowFilters] = useState(false)
+    const [filteredTrailers, setFilteredTrailers] = useState([])
     const mapContainerStyle = { width: '100%', height: '100%', borderRadius: 10 }
     const center = ({ lat: 52.090736, lng: 5.121420 })
     const options = ({ styles: mapStyles, disableDefaultUI: true, clickableIcons: false })
@@ -21,11 +24,20 @@ export default function Offer() {
         setTrailers(Data)
     }, [])
 
+    useEffect(() => {
+        setFilteredTrailers(trailers)
+    }, [trailers])
+
     return (
         <div style={{ display: 'flex' }}>
+            {showFilters ? (
+                <Filters setShowFilters={setShowFilters} />
+            ) : (
+                null
+            )}
             <div style={{ width: '43%' }}>
-                <OfferHeader />
-                <OfferRestults />
+                <OfferHeader setShowFilters={setShowFilters} trailers={trailers} filteredTrailers={filteredTrailers} setFilteredTrailers={setFilteredTrailers} />
+                <OfferRestults filteredTrailers={filteredTrailers} />
             </div>
             <div className="map" style={scaleMap ? { width: '100%' } : null}>
                 <GoogleMap zoom={13} center={center} options={options} mapContainerStyle={mapContainerStyle}>
@@ -39,7 +51,7 @@ export default function Offer() {
                         ? <button className="filterButton"><IoIosMenu size="26px" color="white" /></button>
                         : null
                     }
-                    {trailers.map((trailer) => (
+                    {filteredTrailers.map((trailer) => (
                         <MarkerF
                             key={trailer?.id}
                             onClick={() => setActiveTrailer(trailer)}

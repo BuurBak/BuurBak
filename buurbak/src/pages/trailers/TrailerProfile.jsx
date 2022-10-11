@@ -39,7 +39,7 @@ export default function TrailerProfile() {
                     <Reservation id={id} />
                 </div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <b className="subTitle">4.8 Rating op basis van 50 beoordelingen</b>
                 <p className="moreBtn">Lees alle reviews</p>
                 <div className="trailerReviews">

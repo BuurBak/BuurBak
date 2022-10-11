@@ -26,30 +26,30 @@
     box-sizing: border-box;
     padding: 0 15px;
     font-size: open_sans_semibold;
-    color: #FF9933;
+    color: #EE7B46;
 }
 
 .offerHeaderInput>input::placeholder {
     font-family: open_sans_semibold;
-    color: #FF9933;
+    color: #EE7B46;
 }
 
 .searchIcon {
     margin: auto 15px;
     font-size: 22px;
-    color: #FF9933;
+    color: #EE7B46;
 }
 
 .offerHeaderIcon {
     width: 60px;
     height: 100%;
     border-radius: 0 5px 5px 0;
-    background-color: #FF9933;
+    background-color: #EE7B46;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #FF9933;
+    border: 1px solid #EE7B46;
     font-size: 24px;
     cursor: pointer;
 }
@@ -65,7 +65,7 @@
 
 .offerHeaderTitle>p:nth-child(1) {
     margin: 0;
-    color: #FF9933;
+    color: #EE7B46;
     font-family: open_sans_medium;
 }
 
@@ -91,7 +91,7 @@
     height: 100%;
     border: none;
     outline: none;
-    color: #FF9933;
+    color: #EE7B46;
     font-family: open_sans_semibold;
     cursor: pointer;
 }

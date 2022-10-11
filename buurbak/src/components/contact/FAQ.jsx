@@ -36,12 +36,13 @@ export default function FAQ() {
                                 )}
                         </div>
                         {
-                            activeAnswer === question.id ?
+                            activeAnswer === question.id ? (
                                 <div className="answerContainer">
                                     {question.answer}
                                 </div>
-                                : null
-                        }
+                            ) : (
+                                null
+                            )}
                     </div>
                 ))}
             </div>

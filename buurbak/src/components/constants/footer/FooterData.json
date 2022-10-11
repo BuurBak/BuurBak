@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "Home",
+        "links": [
+            {
+                "title": "Hoe het werkt",
+                "to": "/"
+            },
+            {
+                "title": "Aanbod",
+                "to": "/"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Aanbod",
+        "links": [
+            {
+                "title": "Hoe kan ik huren?",
+                "to": "/huren"
+            },
+            {
+                "title": "Lorem ipsum",
+                "to": "/"
+            },
+            {
+                "title": "Aanhanger huren",
+                "to": "/aanbod"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Blog",
+        "links": [
+            {
+                "title": "Updates",
+                "to": "/"
+            },
+            {
+                "title": "Lorem ipsum",
+                "to": ""
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Ik wil verhuren",
+        "links": [
+            {
+                "title": "Alles wat je moet weten?",
+                "to": "/"
+            },
+            {
+                "title": "Aanhanger plaatsen",
+                "to": "/verhuren"
+            }
+        ]
+    },
+
+    {
+        "id": 5,
+        "title": "Account",
+        "links": [
+            {
+                "title": "Inloggen",
+                "to": "/"
+            },
+            {
+                "title": "Mijn account",
+                "to": "/account"
+            }
+        ]
+    },
+
+    {
+        "id": 6,
+        "title": "Contact",
+        "links": [
+            {
+                "title": "FAQ",
+                "to": "/contact"
+            },
+            {
+                "title": "Contact opnemen",
+                "to": "/contact"
+            }
+        ]
+    }
+]

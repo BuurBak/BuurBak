@@ -27,6 +27,7 @@
 .faqHeader>div>p:nth-child(1) {
     font-size: 22px;
     color: white;
+    text-align: right;
     margin: 0;
 }
 

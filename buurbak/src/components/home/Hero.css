@@ -8,7 +8,7 @@
 }
 
 .heroContainer>h1 {
-    margin: 90px 0 0 0;
+    margin: 120px 0 0 0;
     font-family: open_sans_bold;
     color: white;
     font-size: 40px;
@@ -16,7 +16,7 @@
 }
 
 .heroIncluded {
-    margin: 30px 0 0 0;
+    margin: 40px 0 0 0;
 }
 
 .heroIncludedItem {
@@ -25,7 +25,7 @@
     font-size: 20px;
     font-family: open_sans_semibold;
     color: white;
-    margin: 0;
+    margin-top: 30px;
 }
 
 .heroIncludedItem>p {

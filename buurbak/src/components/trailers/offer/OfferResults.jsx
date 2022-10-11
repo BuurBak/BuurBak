@@ -3,16 +3,10 @@ import './OfferResults.css'
 import Data from '../../../data/dummy/trailers.json'
 import TrailerCard from '../trailerCard/TrailerCard'
 
-export default function OfferRestults() {
-    const [trailers, setTrailers] = useState([])
-
-    useEffect(() => {
-        setTrailers(Data)
-    }, [])
-
+export default function OfferRestults({ filteredTrailers }) {
     return (
         <div className="offerResultsContainer">
-            {trailers.map((trailer) => (
+            {filteredTrailers.map((trailer) => (
                 <TrailerCard key={trailer.id} trailer={trailer} />
             ))}
         </div>

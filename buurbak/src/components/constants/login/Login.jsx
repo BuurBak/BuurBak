@@ -61,9 +61,9 @@ export default function Login({ setShowLogin }) {
     }
 
     return (
-        <div className="loginPageContainer">
+        <div className="pageContainer">
             <div className="backgroundBlur" onClick={() => setShowLogin(false)}></div>
-            <div className="loginContainer">
+            <div className="popUpContainer">
                 <p><span>Log in</span> of <span>Meld je aan</span> met je email adres</p>
                 <TextField className='primaryInput' size="large" label="Email" value={email} variant="outlined" onChange={(e) => setEmail(e.target.value)} />
                 {!email ?
@@ -122,7 +122,9 @@ export default function Login({ setShowLogin }) {
                             : null}
                     </>
                 }
-                <IconButton className="closeIcon" onClick={() => setShowLogin(false)}><IoIosClose size="30px" color="black" /></IconButton>
+                <IconButton className="closeIcon" onClick={() => setShowLogin(false)}>
+                    <IoIosClose size="30px" color="black" />
+                </IconButton>
             </div>
         </div>
     )

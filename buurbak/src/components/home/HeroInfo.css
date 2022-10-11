@@ -2,7 +2,7 @@
     width: 100%;
     height: fit-content;
     box-sizing: border-box;
-    padding: 20px 82px;
+    padding: 20px 82px 60px 82px;
     border-bottom: 1px solid #DDDDDD;
     display: flex;
     justify-content: space-between;

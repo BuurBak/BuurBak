@@ -15,11 +15,13 @@ export default function TrailerCard({ trailer }) {
                 <div className="trailerCardContent">
                     <div className="trailerCardContentInfo">
                         <b>{trailer.title}</b>
-                        <p>€{trailer.price},- per dag</p>
-                    </div>
-                    <div className="trailerCardContentLocation">
-                        <IoIosPin />
-                        <p>{trailer.location}</p>
+                        <div>
+                            <p>€{trailer.price},- per dag</p>
+                            <div className="trailerCardContentLocation">
+                                <IoIosPin />
+                                <p>{trailer.location}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Link>

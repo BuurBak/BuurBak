@@ -1,4 +1,4 @@
-.loginPageContainer {
+.pageContainer {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -15,7 +15,7 @@
     animation: appear 0.3s ease;
 }
 
-.loginContainer {
+.popUpContainer {
     width: 600px;
     height: 780px;
     border-radius: 10px;
@@ -29,14 +29,14 @@
     animation: slide 0.3s ease;
 }
 
-.loginContainer>p:nth-child(1) {
+.popUpContainer>p:nth-child(1) {
     font-size: 28px;
     margin: 45px auto 0 auto;
     max-width: 60%;
     text-align: center;
 }
 
-.loginContainer>p>span {
+.popUpContainer>p>span {
     color: #EE7B46;
     font-family: open_sans_semibold;
 }
@@ -47,7 +47,7 @@
     outline: none !important;
 }
 
-.loginContainer>p:nth-child(3) {
+.popUpContainer>p:nth-child(3) {
     margin: 10px 0 0 10%;
     text-align: left;
     max-width: 76%;
