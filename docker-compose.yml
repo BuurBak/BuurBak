@@ -15,7 +15,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  database:
+  db:
     container_name: database
     image: postgres:latest
     ports:
