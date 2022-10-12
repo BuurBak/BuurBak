@@ -1,0 +1,15 @@
+.detailMapContainer {
+    width: 98%;
+    height: 240px;
+    background-color: white;
+    margin-top: 30px;
+    border-radius: 10px;
+    border: 1px solid #DDDDDD;
+}
+
+.detailMapComment {
+    margin-top: 8px !important;
+    color: #747474;
+    font-size: 13px !important;
+    font-family: open_sans_medium;
+}

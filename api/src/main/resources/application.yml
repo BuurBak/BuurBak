@@ -18,14 +18,13 @@ spring:
       max-request-size: 1MB
 
   jpa:
-    hibernate:
-      ddl-auto: update
-#      ddl-auto: create-drop
+    # hibernate:
+    #   ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
+    show-sql: false
 
   mail:
     host: ${MAIL_HOST}

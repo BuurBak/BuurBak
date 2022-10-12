@@ -1,14 +1,28 @@
 version: "3.9"
 
 services:
+  traefik:
+    image: traefik:v2.4
+    container_name: traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false 
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8082:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   db:
+    container_name: database
     image: postgres:latest
     ports:
       - "5432"
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=buurbak
-      - POSTGRES_PASSWORD=buurbak
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: buurbak
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
       interval: 10s
@@ -17,23 +31,43 @@ services:
 
   api:
     image: buurbak-api
-    container_name: buurbak-api
+    container_name: api
     build:
       context: api
-    ports:
-      - "3080:3080"
     depends_on:
       db:
         condition: service_healthy
     environment:
       DATABASE_USERNAME: buurbak
-      DATABASE_PASSWORD: buurbak
+      DATABASE_PASSWORD: admin
       DATABASE_HOST: db
       MAIL_HOST: maildev
       JWT_SECRET: secret
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
+      traefik.http.services.backend.loadbalancer.server.port: 3080
+      # traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
+      # traefik.http.routers.backend.middlewares: backendpathstrip@docker
 
   maildev:
     image: maildev/maildev
-    container_name: buurbak-maildev
-    ports: 
-      - "1080:1080"
+    container_name: maildev
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.maildev.rule: Host(`mail.localhost`)
+      traefik.http.services.maildev.loadbalancer.server.port: 1080
+    
+  frontend:
+    image: buurbak-frontend
+    container_name: frontend
+    build:
+      context: frontend
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.frontend.rule: Host(`localhost`)
+      traefik.http.routers.frontend.entrypoints: web
+      traefik.http.services.frontend.loadbalancer.server.port: 80
+      
+
+

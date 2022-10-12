@@ -1,0 +1,74 @@
+.reservationContainer {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 120px 280px 60px 280px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.reservationForm {
+    width: 50%;
+    height: 100%;
+    background-color: white;
+}
+
+.reservationForm>p {
+    color: #747474;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.reservationForm>p>span {
+    color: #EE7B46;
+    font-family: open_sans_medium;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form {
+    width: 100%;
+    position: relative;
+}
+
+.form>p {
+    color: black;
+    font-size: 15px;
+    max-width: 100%;
+    font-family: open_sans_medium;
+}
+
+.form>div {
+    margin-bottom: 0px;
+}
+
+.textArea {
+    width: 100%;
+    resize: none;
+    min-height: 200px;
+    border-radius: 5px;
+    border: 1px solid #DDDDDD;
+    box-sizing: border-box;
+    padding: 10px;
+    font-family: open_sans_medium;
+    outline: none;
+}
+
+::placeholder {
+    font-family: open_sans_medium;
+}
+
+.termsAndConditions {
+    margin: 6px 0 80px 0;
+}
+
+.cta {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    padding: 12px 30px;
+    border-radius: 5px;
+    background-color: #EE7B46;
+    color: white;
+}
