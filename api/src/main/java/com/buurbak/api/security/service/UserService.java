@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UserService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
 
-    private final UserRepository<User> userRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User signUpUser(User user) throws IllegalStateException {

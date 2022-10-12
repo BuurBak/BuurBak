@@ -1,19 +1,13 @@
-package com.buurbak.api.security.controller.dto;
+package com.buurbak.api.security.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
-@Getter
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 public class RegistrationRequestDTO {
     @NotBlank(message = "Name may not be blank")
     private final String name;
