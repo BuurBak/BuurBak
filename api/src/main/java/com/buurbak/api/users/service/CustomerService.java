@@ -12,7 +12,7 @@ import javax.persistence.EntityNotFoundException;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public Customer findByUsername(String name) {
+    public Customer findByUsername(String name) throws EntityNotFoundException {
         return customerRepository.findByEmail(name).orElseThrow(EntityNotFoundException::new);
     }
 }
