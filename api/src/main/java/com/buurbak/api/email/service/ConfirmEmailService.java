@@ -2,6 +2,7 @@ package com.buurbak.api.email.service;
 
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,15 +15,16 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ConfirmEmailService implements EmailSender {
     private final JavaMailSender javaMailSender;
-    private final static Logger LOGGER = LoggerFactory.getLogger(ConfirmEmailService.class);
     private final static String ENCODING = "utf-8";
 
     @Override
     @Async
     public void send(String to, String email) {
         try {
+            log.info("Sending email to: " + to);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, ENCODING);
 
@@ -32,7 +34,7 @@ public class ConfirmEmailService implements EmailSender {
             mimeMessageHelper.setFrom("noreply@buurbak.nl");
             javaMailSender.send(mimeMessage);
         } catch (MessagingException messagingException) {
-            LOGGER.error("failed to send email", messagingException);
+            log.error("failed to send email", messagingException);
             throw new IllegalStateException("failed to send email");
         }
     }
