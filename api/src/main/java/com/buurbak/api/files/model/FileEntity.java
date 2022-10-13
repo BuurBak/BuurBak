@@ -1,8 +1,6 @@
 package com.buurbak.api.files.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class FileEntity {
     @Id

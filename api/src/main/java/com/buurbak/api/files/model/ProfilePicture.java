@@ -16,4 +16,9 @@ import javax.persistence.OneToOne;
 public class ProfilePicture extends FileEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
+
+    public ProfilePicture(String name, String contentType, Long size, byte[] data, User user) {
+        super(name, contentType, size, data);
+        this.user = user;
+    }
 }
