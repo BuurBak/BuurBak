@@ -23,6 +23,13 @@ Ik (Luca) gebruik intellij IDEA als mijn IDE. In deze IDE open ik de /api folder
 
 Wij gebruiken temurin 17.0.4.1+1 als JDK. Dit doen wij via docker. 
 
+### Environment variables
+Om ervoor te zorgen dat je de goede environment running hebt in development is het cruciaal dat je de dev environment gebruikt voor Java. Dat doe je als volgt:
+
+1. Edit configurations
+2. Voeg `--spring.profiles.active=dev` toe aan je VM CLI options OF voeg `SPRING_PROFILES_ACTIVE=dev` toe aan je environment variables.
+3. Voeg `JWT_SECRET=secret` aan de environment variables
+
 ### Postgres setup commands
 Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je localhost of ergens draaiende hebt. De commands om een fresh postgres install klaar te maken voor development zijn als volgt. Zorg er wel voor dat je al in de postgres terminal zit met `psql`.
 
@@ -42,15 +49,7 @@ Installatie stappen (zorg ervoor dat npm al geinstalleerd is!):
 
 Beiden commands in de terminal uitvoeren.
 
-
-
 ### Docker 
 
 Onze production environment runt in docker. development doen wij buiten docker. 
 
-### Environment variables
-Om ervoor te zorgen dat je de goede environment running hebt in development is het cruciaal dat je de dev environment gebruikt voor Java. Dat doe je als volgt:
-
-1. Edit configurations
-2. Voeg `--spring.profiles.active=dev` toe aan je VM CLI options OF voeg `SPRING_PROFILES_ACTIVE=dev` toe aan je environment variables.
-3. Voeg `JWT_SECRET=secret` aan de environment variables
