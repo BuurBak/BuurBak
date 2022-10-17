@@ -6,6 +6,16 @@ server:
     context-path: /api/v1
   port: 3080
 
+gcp:
+  config:
+    file: gcp-account-file.json
+  project:
+    id: celestial-sonar-365614
+  bucket:
+    id: buurbak_public
+  dir:
+    name: prod
+
 spring:
   datasource:
     username: ${DATABASE_USERNAME}
