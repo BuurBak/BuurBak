@@ -23,5 +23,5 @@ public class ImageDTO {
     @NotBlank
     private String originalFileName;
     @NotBlank
-    private String location;
+    private String publicUrl;
 }

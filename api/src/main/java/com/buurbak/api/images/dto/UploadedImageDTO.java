@@ -18,4 +18,10 @@ public class UploadedImageDTO {
 
     @NotBlank
     private String location;
+
+    @NotBlank
+    private String dirName;
+
+    @NotBlank
+    private String bucketId;
 }

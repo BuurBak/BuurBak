@@ -60,14 +60,14 @@ public class ImageService {
                 images.add(new Image(
                         uploadedImageDTO.getId(),
                         originalFileName,
-                        uploadedImageDTO.getLocation()
+                        uploadedImageDTO.getLocation(),
+                        uploadedImageDTO.getDirName(),
+                        uploadedImageDTO.getBucketId()
                 ));
                 log.debug("File uploaded successfully, id: {}, filename: {} and url: {}", uploadedImageDTO.getId(), originalFileName, uploadedImageDTO.getLocation());
             }
         });
 
-        imageRepository.saveAll(images);
-
-        return images;
+        return imageRepository.saveAll(images);
     }
 }

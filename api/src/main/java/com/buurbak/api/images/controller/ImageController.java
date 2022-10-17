@@ -48,7 +48,7 @@ public class ImageController {
                     image.getCreatedAt(),
                     image.getUpdatedAt(),
                     image.getOriginalFileName(),
-                    image.getLocation()
+                    image.getPublicUrl()
             )));
 
             return uploadedImages;

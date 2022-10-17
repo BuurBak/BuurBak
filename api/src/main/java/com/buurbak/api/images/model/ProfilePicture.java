@@ -12,14 +12,12 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProfilePicture extends Image {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
-    public ProfilePicture(String originalFileName, String location, User user) {
-        super(originalFileName, location);
+    public ProfilePicture(String originalFileName, String location, String dirName, String bucketId, User user) {
+        super(originalFileName, location, dirName, bucketId);
         this.user = user;
     }
 }

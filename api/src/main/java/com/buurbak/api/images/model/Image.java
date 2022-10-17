@@ -1,6 +1,9 @@
 package com.buurbak.api.images.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,13 +14,11 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
 @NoArgsConstructor
 public class Image {
     @Id
-    @GeneratedValue
     private UUID id;
 
     @CreationTimestamp
@@ -27,14 +28,30 @@ public class Image {
 
     private String originalFileName;
     private String location;
-    public Image(String originalFileName, String location) {
-        this.originalFileName = originalFileName;
-        this.location = location;
+    private String dirName;
+    private String bucketId;
+
+    public String getPublicUrl() {
+        return "https://storage.googleapis.com/" + this.bucketId  + "/" + this.dirName + "/" + this.id + this.getFileExtension();
     }
 
-    public Image(UUID id, String originalFileName, String location) {
+    public String getFileExtension() {
+        return "." + this.originalFileName.split("\\.")[1];
+    }
+
+    public Image(String originalFileName, String location, String dirName, String bucketId) {
+        this.id = UUID.randomUUID();
+        this.originalFileName = originalFileName;
+        this.location = location;
+        this.dirName = dirName;
+        this.bucketId = bucketId;
+    }
+
+    public Image(UUID id, String originalFileName, String location, String dirName, String bucketId) {
         this.id = id;
         this.originalFileName = originalFileName;
         this.location = location;
+        this.dirName = dirName;
+        this.bucketId = bucketId;
     }
 }
