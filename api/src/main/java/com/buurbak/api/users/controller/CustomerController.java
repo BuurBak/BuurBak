@@ -36,9 +36,9 @@ public class CustomerController {
             Customer customer = customerService.findByUsername(authentication.getName());
             ProfilePicture profilePicture = customer.getProfilePicture();
 
-            UUID profilePictureId = null;
+            String profilePictureLocation = null;
             if (profilePicture != null) {
-                profilePictureId = profilePicture.getId();
+                profilePictureLocation = profilePicture.getLocation();
             }
 
             return new CustomerDTO(
@@ -48,7 +48,7 @@ public class CustomerController {
                 customer.getDateOfBirth(),
                 customer.getIban(),
                 customer.getAddress(),
-                profilePictureId
+                profilePictureLocation
             );
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", exception);

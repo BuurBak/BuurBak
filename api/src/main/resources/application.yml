@@ -18,8 +18,8 @@ spring:
       max-request-size: 1MB
 
   jpa:
-    # hibernate:
-    #   ddl-auto: create
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

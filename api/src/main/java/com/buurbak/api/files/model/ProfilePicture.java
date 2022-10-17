@@ -7,18 +7,19 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfilePicture extends FileEntity {
+public class ProfilePicture extends ImageEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
-    public ProfilePicture(String name, String contentType, Long size, byte[] data, User user) {
-        super(name, contentType, size, data);
+    public ProfilePicture(Date createdAt, Date updatedAt, String location, User user) {
+        super(createdAt, updatedAt, location);
         this.user = user;
     }
 }

@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FileEntity {
+public class ImageEntity {
     @Id
     @GeneratedValue
     private UUID id;
@@ -26,19 +25,11 @@ public class FileEntity {
     @UpdateTimestamp
     private Date updatedAt;
 
-    private String name;
+    private String location;
 
-    private String contentType;
-
-    private Long size;
-
-    @Lob
-    private byte[] data;
-
-    public FileEntity(String name, String contentType, Long size, byte[] data) {
-        this.name = name;
-        this.contentType = contentType;
-        this.size = size;
-        this.data = data;
+    public ImageEntity(Date createdAt, Date updatedAt, String location) {
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.location = location;
     }
 }

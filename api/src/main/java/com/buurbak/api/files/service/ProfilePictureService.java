@@ -22,37 +22,37 @@ public class ProfilePictureService {
     private final UserService userService;
     private final ProfilePictureRepository profilePictureRepository;
 
-    @Transactional
-    public ProfilePicture setProfilePicture(MultipartFile file, String username) throws IOException, NotAnImageException {
-        try {
-            log.info("Setting profile picture");
-            if (!Objects.requireNonNull(file.getContentType()).split("/")[0].equals("image")) {
-                // not an image deny
-                log.error("Not an image");
-                throw new NotAnImageException();
-            }
-
-            User user = userService.findByUsername(username);
-            ProfilePicture profilePicture = user.getProfilePicture();
-
-            if (profilePicture == null) {
-                log.info("Profile picture does not exist yet, creating it");
-                // profile picture does not exist yet, create it.
-                profilePicture = new ProfilePicture();
-                profilePicture.setUser(user);
-            }
-
-            profilePicture.setName(StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
-            profilePicture.setContentType(file.getContentType());
-            profilePicture.setData(file.getBytes());
-            profilePicture.setSize(file.getSize());
-
-            profilePictureRepository.save(profilePicture);
-
-            return profilePicture;
-        } catch (IOException exception) {
-            log.error("IOException, could not save profile picture to database");
-            throw new IOException("Could not save profile picture to database: " + file.getOriginalFilename(), exception);
-        }
-    }
+//    @Transactional
+//    public ProfilePicture setProfilePicture(MultipartFile file, String username) throws IOException, NotAnImageException {
+//        try {
+//            log.info("Setting profile picture");
+//            if (!Objects.requireNonNull(file.getContentType()).split("/")[0].equals("image")) {
+//                // not an image deny
+//                log.error("Not an image");
+//                throw new NotAnImageException();
+//            }
+//
+//            User user = userService.findByUsername(username);
+//            ProfilePicture profilePicture = user.getProfilePicture();
+//
+//            if (profilePicture == null) {
+//                log.info("Profile picture does not exist yet, creating it");
+//                // profile picture does not exist yet, create it.
+//                profilePicture = new ProfilePicture();
+//                profilePicture.setUser(user);
+//            }
+//
+//            profilePicture.setName(StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
+//            profilePicture.setContentType(file.getContentType());
+//            profilePicture.setData(file.getBytes());
+//            profilePicture.setSize(file.getSize());
+//
+//            profilePictureRepository.save(profilePicture);
+//
+//            return profilePicture;
+//        } catch (IOException exception) {
+//            log.error("IOException, could not save profile picture to database");
+//            throw new IOException("Could not save profile picture to database: " + file.getOriginalFilename(), exception);
+//        }
+//    }
 }

@@ -1,6 +1,6 @@
 package com.buurbak.api.files.service;
 
-import com.buurbak.api.files.repository.FileRepository;
+import com.buurbak.api.files.repository.ImageRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,18 +12,18 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FileServiceTest {
+class ImageServiceTest {
 
     private AutoCloseable autoCloseable;
 
     @Mock
-    private FileRepository fileRepository;
-    private FileService fileService;
+    private ImageRepository imageRepository;
+    private ImageService imageService;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        fileService = new FileService(fileRepository);
+        imageService = new ImageService(imageRepository);
     }
 
     @AfterEach
@@ -38,7 +38,7 @@ class FileServiceTest {
 
         // When
         // Then
-        assertThatThrownBy(() -> fileService.findById(uuid))
+        assertThatThrownBy(() -> imageService.findById(uuid))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 }

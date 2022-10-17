@@ -28,5 +28,5 @@ public class CustomerDTO {
     @NotBlank
     private final String address;
 
-    private final UUID profilePictureId;
+    private final String profilePictureLocation;
 }
