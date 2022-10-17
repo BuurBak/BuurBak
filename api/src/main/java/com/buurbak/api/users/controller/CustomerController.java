@@ -1,6 +1,6 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.files.model.ProfilePicture;
+import com.buurbak.api.images.model.ProfilePicture;
 import com.buurbak.api.users.dto.CustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor

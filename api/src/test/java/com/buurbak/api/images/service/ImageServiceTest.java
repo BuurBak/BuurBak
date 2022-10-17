@@ -1,6 +1,7 @@
-package com.buurbak.api.files.service;
+package com.buurbak.api.images.service;
 
-import com.buurbak.api.files.repository.ImageRepository;
+import com.buurbak.api.images.repository.ImageRepository;
+import com.buurbak.api.images.util.DataBucketUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,12 +19,14 @@ class ImageServiceTest {
 
     @Mock
     private ImageRepository imageRepository;
+    @Mock
+    private DataBucketUtil dataBucketUtil;
     private ImageService imageService;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        imageService = new ImageService(imageRepository);
+        imageService = new ImageService(imageRepository, dataBucketUtil);
     }
 
     @AfterEach

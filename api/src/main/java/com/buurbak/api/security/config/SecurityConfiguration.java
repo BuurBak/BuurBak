@@ -40,7 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/swagger-ui/**", "/swagger-ui.html","/v3/api-docs/**").permitAll();
         http.authorizeRequests().antMatchers("/auth/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/traileroffer", "/traileroffer/*").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/files/*").permitAll();
 //        http.authorizeRequests().antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(jwtAuthenticationFilter);

@@ -1,28 +1,27 @@
-package com.buurbak.api.files.dto;
+package com.buurbak.api.images.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ProfilePictureDTO {
+public class ImageDTO {
     @NotNull
     private UUID id;
-    @NotBlank
-    private String name;
-    @NotNull
-    private Long size;
-    @NotBlank
-    private String contentType;
-    @NotBlank
-    private UUID userId;
-    @NotBlank
+
+    @Past
     private Date createdAt;
-    @NotBlank
+    @Past
     private Date updatedAt;
+
+    @NotBlank
+    private String originalFileName;
+    @NotBlank
+    private String location;
 }

@@ -1,4 +1,4 @@
-package com.buurbak.api.files.model;
+package com.buurbak.api.images.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ImageEntity {
+public class Image {
     @Id
     @GeneratedValue
     private UUID id;
@@ -25,11 +25,16 @@ public class ImageEntity {
     @UpdateTimestamp
     private Date updatedAt;
 
+    private String originalFileName;
     private String location;
+    public Image(String originalFileName, String location) {
+        this.originalFileName = originalFileName;
+        this.location = location;
+    }
 
-    public ImageEntity(Date createdAt, Date updatedAt, String location) {
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public Image(UUID id, String originalFileName, String location) {
+        this.id = id;
+        this.originalFileName = originalFileName;
         this.location = location;
     }
 }

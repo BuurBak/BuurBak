@@ -1,6 +1,6 @@
 package com.buurbak.api.security.model;
 
-import com.buurbak.api.files.model.ProfilePicture;
+import com.buurbak.api.images.model.ProfilePicture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private Collection<Role> roles = new ArrayList<>();
 
     // defaults for all accounts
-    private boolean enabled = false;
+    private boolean enabled = true;
     private boolean locked = false;
 
     public User(String email, String password) {

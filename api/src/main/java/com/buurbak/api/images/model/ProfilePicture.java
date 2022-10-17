@@ -1,4 +1,4 @@
-package com.buurbak.api.files.model;
+package com.buurbak.api.images.model;
 
 import com.buurbak.api.security.model.User;
 import lombok.*;
@@ -14,12 +14,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfilePicture extends ImageEntity {
+public class ProfilePicture extends Image {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
-    public ProfilePicture(Date createdAt, Date updatedAt, String location, User user) {
-        super(createdAt, updatedAt, location);
+    public ProfilePicture(String originalFileName, String location, User user) {
+        super(originalFileName, location);
         this.user = user;
     }
 }

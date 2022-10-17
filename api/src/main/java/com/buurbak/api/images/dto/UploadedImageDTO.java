@@ -1,4 +1,4 @@
-package com.buurbak.api.files.dto;
+package com.buurbak.api.images.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +9,13 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class FileDTO {
+public class UploadedImageDTO {
     @NotNull
     private UUID id;
+
     @NotBlank
-    private String name;
-    @NotNull
-    private Long size;
+    private String originalFileName;
+
     @NotBlank
-    private String contentType;
+    private String location;
 }
