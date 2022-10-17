@@ -1,4 +1,4 @@
-package com.buurbak.api.files.exception;
+package com.buurbak.api.images.exception;
 
 import javax.persistence.EntityNotFoundException;
 
