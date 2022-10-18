@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.time.LocalDate;
 
 @Entity
@@ -13,9 +14,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class Customer extends User {
+    @Lob
     private String name;
     private LocalDate dateOfBirth;
+    @Lob
     private String iban;
+    @Lob
     private String address;
 
     public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String address) {

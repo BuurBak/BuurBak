@@ -25,7 +25,9 @@ public class User implements UserDetails {
     @GeneratedValue
     private UUID id;
 
+    @Lob
     private String email;
+    @Lob
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

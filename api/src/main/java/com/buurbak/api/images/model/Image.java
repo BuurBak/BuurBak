@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,10 +24,13 @@ public class Image {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
-
+    @Lob
     private String originalFileName;
+    @Lob
     private String location;
+    @Lob
     private String dirName;
+    @Lob
     private String bucketId;
 
     public String getPublicUrl() {

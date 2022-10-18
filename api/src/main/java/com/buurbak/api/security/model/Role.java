@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.util.Date;
 
 @Entity
@@ -16,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Role {
     @Id
+    @Lob
     private String name;
     @CreationTimestamp
     private Date createdAt;

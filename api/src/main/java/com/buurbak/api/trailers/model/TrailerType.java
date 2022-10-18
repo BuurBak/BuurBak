@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.util.Date;
 
 @Entity
@@ -18,6 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class TrailerType {
     @Id
+    @Lob
     private String name;
 
     @CreationTimestamp

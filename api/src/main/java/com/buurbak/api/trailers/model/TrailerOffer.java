@@ -34,6 +34,7 @@ public class TrailerOffer {
     private int width;
     private int weight;
     private int capacity;
+    @Lob
     private String licensePlateNumber;
     private LocalTime pickUpTimeStart;
     private LocalTime pickUpTimeEnd;
