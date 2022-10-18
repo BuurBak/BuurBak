@@ -34,13 +34,13 @@ public class TrailerOffer {
     private int width;
     private int weight;
     private int capacity;
-    @Lob
+    @Column(columnDefinition = "text")
     private String licensePlateNumber;
     private LocalTime pickUpTimeStart;
     private LocalTime pickUpTimeEnd;
     private LocalTime dropOffTimeStart;
     private LocalTime dropOffTimeEnd;
-    @Lob
+    @Column(columnDefinition = "text")
     private String location;
     private double price;
     private boolean available;

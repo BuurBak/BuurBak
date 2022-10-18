@@ -24,9 +24,9 @@ public class User implements UserDetails {
     @GeneratedValue
     private UUID id;
 
-    @Lob
+    @Column(columnDefinition = "text")
     private String email;
-    @Lob
+    @Column(columnDefinition = "text")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

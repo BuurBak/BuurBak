@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import java.time.LocalDate;
@@ -14,12 +15,14 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class Customer extends User {
-    @Lob
+    @Column(columnDefinition = "text")
     private String name;
+
     private LocalDate dateOfBirth;
-    @Lob
+
+    @Column(columnDefinition = "text")
     private String iban;
-    @Lob
+    @Column(columnDefinition = "text")
     private String address;
 
     public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String address) {

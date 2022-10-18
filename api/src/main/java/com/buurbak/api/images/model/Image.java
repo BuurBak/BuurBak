@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,11 +23,12 @@ public class Image {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
-    @Lob
+
+    @Column(columnDefinition = "text")
     private String originalFileName;
-    @Lob
+    @Column(columnDefinition = "text")
     private String dirName;
-    @Lob
+    @Column(columnDefinition = "text")
     private String bucketId;
 
     public Image(String originalFileName, String dirName, String bucketId) {
