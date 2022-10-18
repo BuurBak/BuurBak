@@ -7,8 +7,6 @@ import com.buurbak.api.images.repository.ImageRepository;
 import com.buurbak.api.images.util.DataBucketUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
