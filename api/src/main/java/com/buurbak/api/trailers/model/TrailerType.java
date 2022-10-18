@@ -26,6 +26,10 @@ public class TrailerType {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
+
+    public TrailerType(String name) {
+        this.name = name;
+    }
 }
 
 
