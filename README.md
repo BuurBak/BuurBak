@@ -42,7 +42,8 @@ Installatie stappen (zorg ervoor dat npm al geinstalleerd is!):
 
 Beiden commands in de terminal uitvoeren.
 
-
+### Google cloud storage
+Wij gebruiken google cloud storage als object storage voor al onze images/ files. De images worden ook van hun servers opgehaald, waardoor de load op onze api veel lager is dan als het via onze api server/ database moest gaan. Hiervoor moet je een file genaamd, `gcp-account-file.json` hebben en in de map /api/src/main/resources zetten. Deze file is secret omdat het de credentials van onze google cloud bevat. **Deel deze dus niet!**. Vraag de Luca Bergman a.k.a. @spark-156 om deze file.
 
 ### Docker 
 
