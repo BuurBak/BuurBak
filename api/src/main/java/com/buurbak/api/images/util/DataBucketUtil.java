@@ -13,13 +13,13 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 
@@ -35,19 +35,12 @@ public class DataBucketUtil {
     public UploadedImageDTO uploadFile(MultipartFile multipartFile, String fileName, String contentType) throws GCPFileUploadException, NotAnImageException, BadRequestException, FileWriteException {
         try {
             log.debug("Start file uploading process on GCS");
-            byte[] fileData = FileUtils.readFileToByteArray(convertFile(multipartFile));
+            String fileExtension = checkFileExtension(fileName);
 
-            InputStream inputStream = new ClassPathResource(config.getAuthFile()).getInputStream();
-
-            StorageOptions options = StorageOptions.newBuilder().setProjectId(config.getProjectId())
-                    .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-
-            Storage storage = options.getService();
-            Bucket bucket = storage.get(config.getBucketId(), Storage.BucketGetOption.fields());
-
+            byte[] fileData = multipartFile.getBytes();
             UUID id = UUID.randomUUID();
 
-            String fileExtension = checkFileExtension(fileName);
+            Bucket bucket = getBucket();
             Blob blob = bucket.create(config.getDirName() + "/" + id + fileExtension, fileData, contentType);
 
             log.debug("File successfully uploaded to GCS");
@@ -55,24 +48,6 @@ public class DataBucketUtil {
         } catch (IOException e) {
             log.error("An error occurred while uploading data. Exception: ", e);
             throw new GCPFileUploadException("An error occurred while storing data to GCS");
-        }
-    }
-
-
-    private File convertFile(MultipartFile file) throws BadRequestException, FileWriteException {
-        if (file.getOriginalFilename() == null){
-            throw new BadRequestException("Original file name is null");
-        }
-
-        try {
-            File convertedFile = new File(file.getOriginalFilename());
-            FileOutputStream outputStream = new FileOutputStream(convertedFile);
-            outputStream.write(file.getBytes());
-            outputStream.close();
-            log.debug("Converting multipart file : {}", convertedFile);
-            return convertedFile;
-        } catch (Exception e) {
-            throw new FileWriteException("An error has occurred while converting the file");
         }
     }
 
@@ -89,5 +64,16 @@ public class DataBucketUtil {
 
         log.error("Not a permitted file type");
         throw new NotAnImageException("Not a permitted file type. must be one of " + String.join(" ", this.EXTENSION_LIST));
+    }
+
+
+    public Bucket getBucket() throws IOException {
+        InputStream inputStream = new ClassPathResource(config.getAuthFile()).getInputStream();
+
+        StorageOptions options = StorageOptions.newBuilder().setProjectId(config.getProjectId())
+                .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
+
+        Storage storage = options.getService();
+        return storage.get(config.getBucketId(), Storage.BucketGetOption.fields());
     }
 }
