@@ -1,13 +1,11 @@
 package com.buurbak.api.images.util;
 
 import com.buurbak.api.images.config.CgpConfig;
-import com.buurbak.api.images.dto.UploadedImageDTO;
 import com.buurbak.api.images.exception.BadRequestException;
 import com.buurbak.api.images.exception.FileWriteException;
 import com.buurbak.api.images.exception.GCPFileUploadException;
 import com.buurbak.api.images.exception.NotAnImageException;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
@@ -18,8 +16,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.UUID;
 
 
@@ -32,19 +33,18 @@ public class DataBucketUtil {
     @Autowired
     private final CgpConfig config;
 
-    public UploadedImageDTO uploadFile(MultipartFile multipartFile, String fileName, String contentType) throws GCPFileUploadException, NotAnImageException, BadRequestException, FileWriteException {
+    public void uploadFile(MultipartFile multipartFile, UUID id, String fileName) throws GCPFileUploadException, NotAnImageException, BadRequestException, FileWriteException {
         try {
-            log.debug("Start file uploading process on GCS");
+            log.debug("Start file uploading process on GCS for fileName: {}, id: {}", fileName, id);
             String fileExtension = checkFileExtension(fileName);
+            String contentType = getContentType(fileName);
 
             byte[] fileData = multipartFile.getBytes();
-            UUID id = UUID.randomUUID();
 
             Bucket bucket = getBucket();
-            Blob blob = bucket.create(config.getDirName() + "/" + id + fileExtension, fileData, contentType);
+            bucket.create(config.getDirName() + "/" + id + fileExtension, fileData, contentType);
 
             log.debug("File successfully uploaded to GCS");
-            return new UploadedImageDTO(id, blob.getName(), blob.getMediaLink(), config.getDirName(), config.getBucketId());
         } catch (IOException e) {
             log.error("An error occurred while uploading data. Exception: ", e);
             throw new GCPFileUploadException("An error occurred while storing data to GCS");
@@ -64,6 +64,16 @@ public class DataBucketUtil {
 
         log.error("Not a permitted file type");
         throw new NotAnImageException("Not a permitted file type. must be one of " + String.join(" ", this.EXTENSION_LIST));
+    }
+
+
+    public String getContentType(String originalFileName) throws NotAnImageException {
+        Path path = new File(originalFileName).toPath();
+        try {
+            return Files.probeContentType(path);
+        } catch (IOException e) {
+            throw new NotAnImageException("Could not get content type from file");
+        }
     }
 
 

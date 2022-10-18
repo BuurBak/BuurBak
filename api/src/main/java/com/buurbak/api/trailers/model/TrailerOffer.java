@@ -3,9 +3,12 @@ package com.buurbak.api.trailers.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -21,16 +24,23 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private TrailerType trailerType;
 
+    @CreationTimestamp
+    private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
+
     private int length;
     private int height;
     private int width;
     private int weight;
     private int capacity;
+    @Column(columnDefinition = "text")
     private String licensePlateNumber;
     private LocalTime pickUpTimeStart;
     private LocalTime pickUpTimeEnd;
     private LocalTime dropOffTimeStart;
     private LocalTime dropOffTimeEnd;
+    @Column(columnDefinition = "text")
     private String location;
     private double price;
     private boolean available;

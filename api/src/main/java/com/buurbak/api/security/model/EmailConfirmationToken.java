@@ -3,9 +3,12 @@ package com.buurbak.api.security.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -17,8 +20,10 @@ public class EmailConfirmationToken {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @CreationTimestamp
+    private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
 
     @Column(nullable = false)
     private LocalDateTime expiresAt;
@@ -29,8 +34,7 @@ public class EmailConfirmationToken {
     @JoinColumn(nullable = false)
     private User user;
 
-    public EmailConfirmationToken(LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
-        this.createdAt = createdAt;
+    public EmailConfirmationToken(LocalDateTime expiresAt, User user) {
         this.expiresAt = expiresAt;
         this.user = user;
     }
