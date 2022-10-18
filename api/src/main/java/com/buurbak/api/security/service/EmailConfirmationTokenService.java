@@ -18,7 +18,6 @@ public class EmailConfirmationTokenService {
     public static final int EMAIL_TOKEN_DURATION = 24 * 60 * 60; // 24 hours in seconds
     public EmailConfirmationToken createAndSaveEmailConfirmationToken (User user) {
         EmailConfirmationToken token = new EmailConfirmationToken(
-                LocalDateTime.now(),
                 LocalDateTime.now().plusSeconds(EMAIL_TOKEN_DURATION),
                 user
         );
