@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class TrailerOfferService {
-    final TrailerOfferRepository<TrailerOffer> trailerOfferRepository;
+    final TrailerOfferRepository trailerOfferRepository;
 
     public TrailerOffer getTrailerOffer(UUID id) throws EntityNotFoundException {
         return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
@@ -21,5 +21,9 @@ public class TrailerOfferService {
 
     public List<TrailerOfferDTO> getAllTrailerOffersInfo(){
         return trailerOfferRepository.findTrailersInfo();
+    }
+
+    public void addTrailerOffer(TrailerOffer trailerOffer) {
+        trailerOfferRepository.save(trailerOffer);
     }
 }

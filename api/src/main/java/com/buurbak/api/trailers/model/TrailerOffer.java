@@ -36,7 +36,6 @@ public class TrailerOffer {
     private double price;
     private boolean available;
 
-
     public TrailerOffer(TrailerType trailerType, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
