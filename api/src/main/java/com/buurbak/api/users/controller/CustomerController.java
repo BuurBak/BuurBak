@@ -1,6 +1,5 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.images.model.ProfilePicture;
 import com.buurbak.api.users.dto.CustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
@@ -33,12 +32,6 @@ public class CustomerController {
     public CustomerDTO getCustomerSelf(Authentication authentication) {
         try {
             Customer customer = customerService.findByUsername(authentication.getName());
-            ProfilePicture profilePicture = customer.getProfilePicture();
-
-            String profilePictureLocation = null;
-            if (profilePicture != null) {
-                profilePictureLocation = profilePicture.getLocation();
-            }
 
             return new CustomerDTO(
                 customer.getId(),
@@ -46,8 +39,7 @@ public class CustomerController {
                 customer.getName(),
                 customer.getDateOfBirth(),
                 customer.getIban(),
-                customer.getAddress(),
-                profilePictureLocation
+                customer.getAddress()
             );
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", exception);

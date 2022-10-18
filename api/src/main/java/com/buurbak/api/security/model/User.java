@@ -1,6 +1,5 @@
 package com.buurbak.api.security.model;
 
-import com.buurbak.api.images.model.ProfilePicture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,9 +28,6 @@ public class User implements UserDetails {
     private String email;
     @Lob
     private String password;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ProfilePicture profilePicture;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
