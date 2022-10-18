@@ -40,6 +40,7 @@ public class TrailerOffer {
     private LocalTime pickUpTimeEnd;
     private LocalTime dropOffTimeStart;
     private LocalTime dropOffTimeEnd;
+    @Lob
     private String location;
     private double price;
     private boolean available;
