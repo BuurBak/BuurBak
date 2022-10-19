@@ -40,6 +40,7 @@ public class User implements UserDetails {
     // defaults for all accounts
     private boolean enabled = true;
     private boolean locked = false;
+    private boolean verifiedEmail = false;
 
     public User(String email, String password) {
         this.email = email;

@@ -31,8 +31,8 @@ public class UserService {
         return user;
     }
 
-    public void enableUser(UUID userId) {
-        userRepository.enableUserById(userId);
+    public void verifyEmailOfUserById(UUID userId) {
+        userRepository.verifyEmailOfUserById(userId);
     }
 
     public User findByUsername(String email) throws EntityNotFoundException {
