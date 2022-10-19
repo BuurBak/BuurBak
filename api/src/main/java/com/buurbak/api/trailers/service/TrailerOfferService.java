@@ -22,4 +22,13 @@ public class TrailerOfferService {
     public List<TrailerOfferDTO> getAllTrailerOffersInfo(){
         return trailerOfferRepository.findTrailersInfo();
     }
+
+    public void deleteTrailerOffer(UUID trailerId) {
+        trailerOfferRepository.findById(trailerId);
+        boolean exists = trailerOfferRepository.existsById(trailerId);
+        if(!exists) {
+            throw new IllegalStateException("Trailer with id " + trailerId + " does not exist");
+        }
+        trailerOfferRepository.deleteById(trailerId);
+    }
 }
