@@ -1,7 +1,6 @@
 package com.buurbak.api.users.controller;
 
 import com.buurbak.api.images.exception.ImageNotFoundException;
-import com.buurbak.api.images.model.Image;
 import com.buurbak.api.users.dto.GetPrivateCustomerDTO;
 import com.buurbak.api.users.dto.PatchCustomerProfilePictureDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
@@ -20,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
