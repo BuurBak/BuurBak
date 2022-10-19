@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +28,21 @@ public class CustomerController {
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
     public CustomerDTO getCustomerSelf(Authentication authentication) {
         try {
             Customer customer = customerService.findByUsername(authentication.getName());
-            return new CustomerDTO(customer.getId(), customer.getEmail(), customer.getName(), customer.getDateOfBirth(), customer.getIban(), customer.getAddress());
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } catch (AccessDeniedException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+            return new CustomerDTO(
+                customer.getId(),
+                customer.getEmail(),
+                customer.getName(),
+                customer.getDateOfBirth(),
+                customer.getIban(),
+                customer.getAddress()
+            );
+        } catch (EntityNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", exception);
         }
     }
 }

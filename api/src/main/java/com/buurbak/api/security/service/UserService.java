@@ -35,7 +35,7 @@ public class UserService {
         userRepository.enableUserById(userId);
     }
 
-    public User findByUsername(String email) {
+    public User findByUsername(String email) throws EntityNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
     }
 }
