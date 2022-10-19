@@ -2,7 +2,7 @@
     width: 100%;
     min-height: 800px;
     height: fit-content;
-    background-color: #EE7B46;
+    background-color: var(--primary);
     box-sizing: border-box;
     padding: 80px 0;
     display: flex;
@@ -13,7 +13,7 @@
     width: 20%;
     height: 50px;
     font-size: 36px;
-    color: white;
+    color: var(--white);
 }
 
 .faqHeader {
@@ -26,20 +26,20 @@
 
 .faqHeader>div>p:nth-child(1) {
     font-size: 22px;
-    color: white;
+    color: var(--white);
     text-align: right;
     margin: 0;
 }
 
 .faqHeader>div>p:nth-child(2) {
-    color: white;
+    color: var(--white);
     text-align: right;
     margin: 2px 0 0 0;
 }
 
 .faqHeader>div>p:nth-child(2)>span {
-    font-family: open_sans_semibold;
-    cursor: pointer;
+font-weight: var(--semibold);
+cursor: pointer;
 }
 
 .faqHeader>div>p:nth-child(2)>span:hover {
@@ -59,9 +59,9 @@
 }
 
 .category>p {
-    color: white;
+    color: #FFFFFF;
     margin: 0 20px 0 0;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -70,7 +70,7 @@
     width: 100%;
     min-height: 50px;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background);
     border-radius: 5px;
     margin-top: 30px;
     display: flex;
@@ -83,7 +83,7 @@
 
 .questionContainer>p {
     margin-left: 20px;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
     max-width: 80%;
 }
 
@@ -95,11 +95,11 @@
 
 .arrowDown {
     font-size: 22px;
-    color: #EE7B46;
+    color: var(--primary);
 } 
 
 .answerContainer {
-    background-color: white;
+    background-color: var(--background);
     box-sizing: border-box;
     padding: 15px;
     margin-top: 15px;

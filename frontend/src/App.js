@@ -22,7 +22,8 @@ function App() {
           <Route path="/aanbod" element={<Offer />}></Route>
           <Route path="/aanbod/:id" element={<TrailerProfile />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/reserveren/:id" element={<ReservationForm />}></Route>
+          <Route path="/reserveren/:id" element={<ReservationForm />}
+          />
         </Routes>
       </Router>
     </div>

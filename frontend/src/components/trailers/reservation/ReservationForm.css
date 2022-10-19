@@ -1,9 +1,10 @@
 .reservationContainer {
     width: 100vw;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100vh;
     box-sizing: border-box;
     padding: 120px 280px 60px 280px;
-    background-color: white;
+    background-color: var(--background);
     display: flex;
     justify-content: center;
 }
@@ -11,18 +12,18 @@
 .reservationForm {
     width: 50%;
     height: 100%;
-    background-color: white;
+    background-color: var(--background);
 }
 
 .reservationForm>p {
-    color: #747474;
+    color: var(--subheader);
     font-size: 14px;
     margin-top: 6px;
 }
 
 .reservationForm>p>span {
-    color: #EE7B46;
-    font-family: open_sans_medium;
+    color: var(--primary);
+    font-weight: var(--medium);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -33,10 +34,10 @@
 }
 
 .form>p {
-    color: black;
+    color: var(--text);
     font-size: 15px;
     max-width: 100%;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
 }
 
 .form>div {
@@ -48,15 +49,15 @@
     resize: none;
     min-height: 200px;
     border-radius: 5px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     box-sizing: border-box;
     padding: 10px;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
     outline: none;
 }
 
 ::placeholder {
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
 }
 
 .termsAndConditions {
@@ -69,6 +70,6 @@
     bottom: 0px;
     padding: 12px 30px;
     border-radius: 5px;
-    background-color: #EE7B46;
-    color: white;
+    background-color: var(--primary);
+    color: var(--white);
 }

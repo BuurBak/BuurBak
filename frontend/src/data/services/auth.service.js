@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:3080/api/v1/auth"
 
-const signUp = (email, password, firstName, lastName, number, address) => {
+const signUp = async(email, password, firstName, lastName, number, address) => {
     const name = firstName + " " + lastName
     return axios
         .post(API_URL + '/register', {
@@ -20,7 +20,7 @@ const signUp = (email, password, firstName, lastName, number, address) => {
         })
 }
 
-const login = (email, password) => {
+const login = async(email, password) => {
     return axios
         .post(API_URL + '/login', {
             email,

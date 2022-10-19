@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 100%;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background);
     box-sizing: border-box;
     padding: 0 40px 40px 40px;
     display: grid;

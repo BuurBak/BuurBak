@@ -2,7 +2,7 @@
     width: 100%;
     height: fit-content;
     min-height: 60px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     border-radius: 8px;
     box-sizing: border-box;
     padding: 12px 15px;
@@ -21,8 +21,8 @@
 
 .ownerContainerHeaderInfo>p {
     margin: 0;
-    color: #EE7B46;
-    font-family: open_sans_semibold;
+    color: var(--primary);
+    font-weight: var(--semibold);
     font-size: 15px;
 }
 
@@ -36,7 +36,7 @@
     width: 50px;
     height: 50px;
     border-radius: 100px;
-    background-color: #dddddd;
+    background-color: var(--border);
 }
 
 .ownerContainerStats {
@@ -49,11 +49,11 @@
     display: flex;
     align-items: center;
     font-size: 15px;
-    color: #747474;
+    color: var(--subheader);
 }
 
 .ownerContainerStats>div>p {
     font-size: 13px;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
     margin: 0 0 0 8px;
 }

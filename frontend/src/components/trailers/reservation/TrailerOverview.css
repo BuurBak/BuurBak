@@ -3,7 +3,7 @@
     margin: 6.8% 0 0 5%;
     min-height: 300px;
     height: fit-content;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     border-radius: 10px;
     box-sizing: border-box;
     padding: 20px;
@@ -24,15 +24,17 @@
 
 .reserveTrailerHeader>div>p {
     margin-left: 15px;
-    font-family: open_sans_bold;
+    font-weight: var(--bold);
+    color: var(--primary);
 }
 
 .reservationTrailerLocation {
     display: flex;
     align-items: center;
-    margin: 8px 0 0 16px;
-    color: #747474;
+    margin: 5px 0 0 16px;
+    color: var(--secondary);
     font-size: 14px;
+    font-weight: var(--semibold);
 }
 
 .reservationTrailerDate {
@@ -43,7 +45,7 @@
 
 .reservationTrailerDate>p {
     margin-left: 10px;
-    font-family: open_sans_semibold;
+    font-weight: var(--semibold);
     font-size: 14px;
 }
 
@@ -52,18 +54,18 @@
     justify-content: space-between;
     margin-top: 20px;
     font-size: 14px;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
 }
 
 .reservationFlex>p:nth-child(2) {
-    color: black;
-    font-family: open_sans_semibold;
+    color: var(--text);
+    font-weight: var(--semibold);
 }
 
 .reservationTotal {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #EE7B46;
-    font-family: open_sans_bold;
+    color: var(--primary);
+    font-weight: var(--bold);
 }

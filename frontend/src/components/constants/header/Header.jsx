@@ -1,5 +1,5 @@
 import './Header.css'
-import Logo from '../../../data/images/logov2.svg';
+import Logo from '../../../data/images/logo.svg';
 import { Link } from 'react-router-dom'
 import { IoIosClose, IoIosMenu } from 'react-icons/io';
 import { IconButton } from '@mui/material';

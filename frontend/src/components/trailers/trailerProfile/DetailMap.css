@@ -1,15 +1,15 @@
 .detailMapContainer {
     width: 98%;
     height: 240px;
-    background-color: white;
+    background-color: var(--background);
     margin-top: 30px;
     border-radius: 10px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
 }
 
 .detailMapComment {
     margin-top: 8px !important;
-    color: #747474;
+    color: var(--subheader);
     font-size: 13px !important;
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
 }

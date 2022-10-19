@@ -1,8 +1,8 @@
 .headerContainer {
     width: 100vw;
     height: 80px;
-    background-color: white;
-    border-bottom: 1px solid #DDDDDD;
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -14,8 +14,8 @@
 }
 
 .headerLogo {
-    width: 140px;
-    height: 40px;
+    width: 160px;
+    height: 60px;
 }
 
 .headerContent {
@@ -23,8 +23,8 @@
     width: fit-content;
     justify-content: space-between;
     align-items: center;
-    font-family: open_sans_medium;
     visibility: hidden;
+    font-weight: var(--subheader);
     opacity: 0;
     display: none;
 }
@@ -32,8 +32,8 @@
 .headerAction {
     padding: 14px 20px;
     border-radius: 6px;
-    background-color: #EE7B46;
-    color: white;
+    background-color: var(--primary);
+    color: var(--white);
 }
 
 .menuBtn {
@@ -57,7 +57,7 @@
 .sidebarBlur {
     flex: 1;
     height: 100%;
-    background-color: black;
+    background-color: var(--darkBackground);
     opacity: 0.5;
     animation: appear 0.3s ease;
 }
@@ -68,7 +68,7 @@
     width: 330px;
     z-index: 99;
     min-height: 100%;
-    background-color: #EE7B46;
+    background-color: var(--primary);
     animation: slide_in 0.3s ease;
     position: absolute;
 }
@@ -88,9 +88,9 @@
     box-sizing: border-box;
     padding: 80px 28px;
     text-align: right;
-    color: white !important;
+    color: var(--white) !important;
     font-size: 18px;
-    font-family: open_sans_semibold;
+    font-weight: var(--subheader);
     height: 100%;
 }
 
