@@ -19,7 +19,6 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class ImageService {
     private final ImageRepository imageRepository;
     private final DataBucketUtil dataBucketUtil;
@@ -30,6 +29,7 @@ public class ImageService {
         return imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
     }
 
+    @Transactional
     public List<Image> uploadImages(MultipartFile[] files) throws NotAnImageException, GCPFileUploadException, BadRequestException, FileWriteException {
         // This method has two for loops because it is faster to have one call to the database to save multiple entities
         // than to have one for loop and multiple calls to the database.

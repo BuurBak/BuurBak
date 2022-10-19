@@ -1,4 +1,4 @@
-package com.buurbak.api.images.exception;
+package com.buurbak.api.users.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,10 +7,10 @@ import javax.persistence.EntityNotFoundException;
 
 @Data
 @NoArgsConstructor
-public class ImageNotFoundException extends EntityNotFoundException {
+public class CustomerNotFoundException extends EntityNotFoundException {
     private String message;
 
-    public ImageNotFoundException(String message) {
+    public CustomerNotFoundException(String message) {
         super(message);
         this.message = message;
     }

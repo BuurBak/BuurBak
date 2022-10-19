@@ -1,5 +1,6 @@
 package com.buurbak.api.users.service;
 
+import com.buurbak.api.images.service.ImageService;
 import com.buurbak.api.users.repository.CustomerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +18,15 @@ class CustomerServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
+    @Mock
+    private ImageService imageService;
+
     private CustomerService customerService;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        customerService = new CustomerService(customerRepository);
+        customerService = new CustomerService(customerRepository, imageService);
     }
 
     @AfterEach

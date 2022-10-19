@@ -61,6 +61,6 @@ public class RegistrationService {
         }
 
         confirmationTokenService.setConfirmedAtToNow(tokenId);
-        userService.enableUser(confirmationToken.getUser().getId());
+        userService.verifyEmailOfUserById(confirmationToken.getUser().getId());
     }
 }

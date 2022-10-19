@@ -1,20 +1,23 @@
 package com.buurbak.api.images.model;
 
+import com.buurbak.api.security.model.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Polymorphism;
+import org.hibernate.annotations.PolymorphismType;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Data
+@Polymorphism(type = PolymorphismType.IMPLICIT)
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Image {
@@ -33,6 +36,9 @@ public class Image {
     private String dirName;
     @Column(columnDefinition = "text")
     private String bucketId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Image(String originalFileName, String dirName, String bucketId) {
         this.originalFileName = originalFileName;
