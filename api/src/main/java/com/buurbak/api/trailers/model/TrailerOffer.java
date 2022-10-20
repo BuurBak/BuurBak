@@ -6,7 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 @Entity
@@ -37,8 +38,8 @@ public class TrailerOffer {
     private double price;
     private boolean available;
 
-    @ManyToMany
-    private Set<Accessoire> accessoire;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Accessoire> accessoire =  new ArrayList<>();
 
 
     public TrailerOffer(TrailerType trailerType, int length, int height,

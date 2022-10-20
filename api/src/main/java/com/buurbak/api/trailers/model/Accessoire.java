@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,8 +19,15 @@ import java.util.Set;
 @AllArgsConstructor
 public class Accessoire {
     @Id
+    @Column(columnDefinition = "text")
     private String name;
 
-    @ManyToMany(mappedBy = "accessoire")
-    Set<TrailerOffer> trailerOffers;
+    @CreationTimestamp
+    private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
+
+    public Accessoire(String name){
+        this.name = name;
+    }
 }
