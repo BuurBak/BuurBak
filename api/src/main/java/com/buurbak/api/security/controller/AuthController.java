@@ -1,21 +1,22 @@
 package com.buurbak.api.security.controller;
 
+import com.buurbak.api.security.dto.RegistrationRequestDTO;
+import com.buurbak.api.security.dto.TokenDTO;
 import com.buurbak.api.security.service.AuthService;
 import com.buurbak.api.security.service.RegistrationService;
-import com.buurbak.api.security.controller.dto.RegistrationRequestDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Map;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "auth")
@@ -24,16 +25,46 @@ public class AuthController {
     private final AuthService authService;
     private RegistrationService registrationService;
 
+    @Operation(summary = "Register new Customer")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+    })
     @PostMapping("register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequestDTO request) {
-        String userId = registrationService.register(request);
-        return ResponseEntity.created(URI.create("/api/v1/users/" + userId)).build();
+    public UUID register(@Valid @RequestBody RegistrationRequestDTO requestDTO) {
+        return registrationService.register(requestDTO);
     }
 
-    @GetMapping("refresh")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, String> tokens = authService.refreshToken(request, response);
-        response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+    @Operation(summary = "Refresh access token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
+    @GetMapping(path = "refresh")
+    public TokenDTO refreshToken(HttpServletRequest request) {
+        try {
+            return this.authService.refreshToken(request);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @Operation(summary = "Confirm email and activate user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Token not found", content = @Content)
+    })
+    @GetMapping("confirm/{emailTokenUUID}")
+    public String confirmEmail(@PathVariable String emailTokenUUID) {
+        try {
+            registrationService.confirmEmail(UUID.fromString(emailTokenUUID));
+            // TODO send to success page on frontend
+            return "Confirmed email";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

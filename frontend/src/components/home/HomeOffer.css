@@ -1,0 +1,35 @@
+.homeOfferContainer {
+    width: 100%;
+    max-width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 50px 82px;
+    display: flex;
+    flex-direction: column;
+}
+
+.homeOfferContainer>h2 {
+    margin: 0 auto;
+    font-family: open_sans_bold;
+    color: #EE7B46;
+    text-align: center;
+}
+
+.homeOfferContainer>p {
+    margin: 6px auto;
+    color: #EE7B46;
+    font-family: open_sans_medium;
+    text-align: center;
+}
+
+.homeOfferGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    width: fit-content;
+    max-width: 100%;
+    column-gap: 0px;
+    margin: 15px auto 0 auto;
+    grid-gap: 30px;
+    row-gap: 20px;
+    flex-wrap: wrap;
+}

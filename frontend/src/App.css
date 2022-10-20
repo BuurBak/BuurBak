@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: open_sans_regular;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: open_sans_bold;
+}
+
+b {
+  font-weight: none;
+  font-family: open_sans_bold;
+}
+
+p {
+  margin: 0;
+}
+
+h3 {
+  font-family: open_sans_bold;
+  color: #398D89;
+  margin: 0;
+  font-size: 24px;
+}
+
+.iconInputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.iconInputContainer>span {
+  font-size: 14px;
+  font-family: open_sans_semiBold;
+  margin: 20px 0 15px 0;
+}
+
+.iconInput {
+  display: flex;
+  align-items: center;
+}
+
+.iconContainer {
+  width: 54px;
+  height: 50px;
+  min-width: 54px;
+  min-height: 50px;
+  background-color: #EE7B46;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  border-radius: 5px 0 0 5px;
+}
+
+.iconInput>input {
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #DDDDDD;
+  border-left: none;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 0 0 15px;
+  width: 100%;
+  outline: none;
+}
+
+@font-face {
+  font-family: open_sans_light;
+  src: url(./data/fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+  font-family: open_sans_regular;
+  src: url(./data/fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: open_sans_medium;
+  src: url(./data/fonts/OpenSans-Medium.ttf);
+}
+
+@font-face {
+  font-family: open_sans_semibold;
+  src: url(./data/fonts/OpenSans-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: open_sans_bold;
+  src: url(./data/fonts/OpenSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: open_sans_extrabold;
+  src: url(./data/fonts/OpenSans-ExtraBold.ttf);
+}

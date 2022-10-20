@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <filter id="Rectangle_454" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_630" data-name="Rectangle 630" width="32" height="15.934" transform="translate(0 0)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="marker" transform="translate(-846 -934)">
+    <g transform="matrix(1, 0, 0, 1, 846, 934)" filter="url(#Rectangle_454)">
+      <rect id="Rectangle_454-2" data-name="Rectangle 454" width="62" height="62" rx="31" transform="translate(9 6)" fill="#f93"/>
+    </g>
+    <text id="_58" data-name="$58" transform="translate(873 985.348)" fill="#fff" font-size="14" font-family="Futura-Medium, Futura" font-weight="500"><tspan x="0" y="0">$58</tspan></text>
+    <g id="Group_303" data-name="Group 303" transform="translate(870 952.652)" clip-path="url(#clip-path)">
+      <path id="Path_209" data-name="Path 209" d="M2.132,7.3a4.83,4.83,0,1,0,4.83-4.83A4.829,4.829,0,0,0,2.132,7.3" transform="translate(14.786 3.807)" fill="#fff"/>
+      <path id="Path_210" data-name="Path 210" d="M1.544,0h25.1a1.545,1.545,0,0,1,1.544,1.544V9.677a1.545,1.545,0,0,1-1.544,1.544h-2.6a6.162,6.162,0,0,0-12.325,0H1.544A1.545,1.545,0,0,1,0,9.677V1.544A1.545,1.545,0,0,1,1.544,0" transform="translate(3.812 0)" fill="#fff"/>
+      <path id="Path_211" data-name="Path 211" d="M10.885,5.639h5.026a1.3,1.3,0,0,0,0-2.6H10.885a1.3,1.3,0,1,0,0,2.6" transform="translate(-9.586 4.684)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

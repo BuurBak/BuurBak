@@ -1,0 +1,118 @@
+.headerContainer {
+    width: 100vw;
+    height: 80px;
+    background-color: white;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 44px 0 44px;
+    justify-content: space-between;
+    position: fixed;
+    top: 0px;
+    z-index: 98;
+}
+
+.headerLogo {
+    width: 140px;
+    height: 40px;
+}
+
+.headerContent {
+    min-width: 44%;
+    width: fit-content;
+    justify-content: space-between;
+    align-items: center;
+    font-family: open_sans_medium;
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+}
+
+.headerAction {
+    padding: 14px 20px;
+    border-radius: 6px;
+    background-color: #EE7B46;
+    color: white;
+}
+
+.menuBtn {
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+    right: 0px;
+}
+
+.sidebarHeaderContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+    z-index: 98;
+    display: flex;
+}
+
+.sidebarBlur {
+    flex: 1;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    animation: appear 0.3s ease;
+}
+
+.sidebarHeader {
+    top: 0px;
+    right: 0px;
+    width: 330px;
+    z-index: 99;
+    min-height: 100%;
+    background-color: #EE7B46;
+    animation: slide_in 0.3s ease;
+    position: absolute;
+}
+
+.headerMenuVertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.closeMenuBtn {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+}
+
+.headerMenuVertical {
+    box-sizing: border-box;
+    padding: 80px 28px;
+    text-align: right;
+    color: white !important;
+    font-size: 18px;
+    font-family: open_sans_semibold;
+    height: 100%;
+}
+
+@media only screen and (min-width: 1380px) {
+    .headerContent {
+        visibility: visible;
+        opacity: 1;
+        display: flex;
+    }
+
+    .menuBtn {
+        visibility: hidden;
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes slide_in {
+    0% {
+        right: -330px;
+    }
+    100% {
+        right: 0px;
+    }
+}

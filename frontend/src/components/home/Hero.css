@@ -1,0 +1,105 @@
+.heroContainer {
+    width: 100%;
+    height: fit-content;
+    min-height: 860px;
+    background-color: #3B8B87;
+    box-sizing: border-box;
+    padding: 100px 8%;
+}
+
+.heroContainer>h1 {
+    margin: 120px 0 0 0;
+    font-family: open_sans_bold;
+    color: white;
+    font-size: 40px;
+    max-width: 40%;
+}
+
+.heroIncluded {
+    margin: 40px 0 0 0;
+}
+
+.heroIncludedItem {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-family: open_sans_semibold;
+    color: white;
+    margin-top: 30px;
+}
+
+.heroIncludedItem>p {
+    margin-left: 20px;
+}
+
+.heroCta {
+    align-items: center;
+    margin: 50px auto 0 auto;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 29.5% 29.5% 29.5% 11.5%;
+}
+
+.heroCtaItem>span {
+    font-family: open_sans_bold;
+    color: white;
+    font-size: 14px;
+}
+
+.inputContainer {
+    margin-top: 10px;
+    background-color: white;
+    width: 94%;
+    height: 48px;
+    border: 1.5px solid #EE7B46;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputContainer>input,
+.inputContainer>select {
+    height: 100%;
+    padding: 0px;
+    border: none;
+    outline: none;
+    flex: 0.96;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 0 14px;
+    margin: 0px;
+    background-color: white;
+}
+
+.inputContainer>input::placeholder,
+.inputContainer>select {
+    color: #EE7B46;
+    font-family: open_sans_semibold;
+    font-size: 15px;
+}
+
+.inputContainer>select {
+    cursor: pointer;
+}
+
+.inputContainerIcon {
+    width: 64px;
+    height: 48px;
+    background-color: #EE7B46;
+    border-radius: 0 3px 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 26px;
+}
+
+.ctaAction {
+    height: 50px;
+    margin-top: 31px;
+    background-color: #EE7B46;
+    color: white;
+    border-radius: 5px;
+    padding: 0 20px;
+}

@@ -2,7 +2,7 @@ package com.buurbak.api.security.config;
 
 public class AuthenticationConfigConstants {
     // TODO Get from env variables
-    public static final String SECRET = "SECRET";
+    public static final String SECRET = System.getenv("JWT_SECRET");
 
     // Note to self: don't get from env variables
     public static final String TOKEN_PREFIX = "Bearer ";

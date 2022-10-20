@@ -1,0 +1,27 @@
+.warningContainer {
+    width: 100%;
+    height: fit-content;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 12px 15px;
+}
+
+.warningContainer>div {
+    margin-left: 20px;
+}
+
+.warningContainer>div>p:nth-child(1) {
+    margin: 0;
+    font-family: open_sans_semibold;
+    font-size: 14px;
+}
+
+.warningContainer>div>p:nth-child(2) {
+    margin: 3px 0 0 0;
+    color: #747474;
+    font-size: 14px;
+}

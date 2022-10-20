@@ -1,7 +1,7 @@
 package com.buurbak.api.security.service;
 
-import com.buurbak.api.security.repository.UserRepository;
 import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.UUID;
 public class UserService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
 
-    private final UserRepository<User> userRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public String signUpUser(User user) throws IllegalStateException {
+    public User signUpUser(User user) throws IllegalStateException {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new IllegalStateException(String.format(EMAIL_TAKEN_MESSAGE, user.getEmail()));
         }
@@ -28,25 +28,14 @@ public class UserService {
 
         userRepository.save(user);
 
-        // TODO: create email confirmation token
-        // TODO: save email confirmation token
-        // TODO: send email confirmation token via email
-
-//        ConfirmationToken confirmationToken = new ConfirmationToken(
-//                LocalDateTime.now(),
-//                LocalDateTime.now().plusMinutes(EMAIL_CONFIRMATION_TOKEN_EXPIRATION_TIME_IN_MINUTES),
-//                user
-//        );
-//        confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        return user.getId().toString();
+        return user;
     }
 
     public void enableUser(UUID userId) {
         userRepository.enableUserById(userId);
     }
 
-    public User findByUsername(String email) {
+    public User findByUsername(String email) throws EntityNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
     }
 }
