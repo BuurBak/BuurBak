@@ -7,10 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface AccessoireRepository<T extends Accessoire> extends JpaRepository<T, UUID> {
+public interface AccessoireRepository extends JpaRepository<Accessoire, String> {
 //    @Query("DELETE FROM TrailerOfferAccessoire t WHERE t.trailerId = :trailerId AND t.accessoireName = :accessoireName")
 //    void deleteAccessoire(UUID trailerId, String accessoireName);
 

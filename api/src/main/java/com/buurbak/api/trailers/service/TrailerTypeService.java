@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class TrailerTypeService {
-    final TrailerTypeRepository<TrailerType> trailerTypeRepository;
+    final TrailerTypeRepository trailerTypeRepository;
 
     public TrailerType findByName(String name){
         return trailerTypeRepository.findByName(name);

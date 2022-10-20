@@ -1,13 +1,14 @@
 package com.buurbak.api.trailers.controller;
 
 import com.buurbak.api.trailers.dto.AccessoireNameDTO;
+import com.buurbak.api.trailers.exeption.TrailerAccessoireAlreadyExistsException;
+import com.buurbak.api.trailers.exeption.TrailerAccessoireNotFoundException;
 import com.buurbak.api.trailers.service.AccessoireService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("traileraccessoires")
 public class AccessoireController {
-    private AccessoireService accessoireService;
+    private final AccessoireService accessoireService;
 //    @PostMapping
 //    public void postAccessoire(@Valid @RequestBody AccessoireDTO requestDTO){
 //        System.out.println(requestDTO);
@@ -23,8 +24,12 @@ public class AccessoireController {
 //    }
 
     @PostMapping
-    public void postAccessoire(@Valid @RequestBody AccessoireNameDTO accessoireNameDTO){
-        accessoireService.saveAccessoire(accessoireNameDTO);
+    public void postAccessoire(@Valid @RequestBody AccessoireNameDTO accessoireNameDTO) {
+        try {
+            accessoireService.saveAccessoire(accessoireNameDTO);
+        } catch (TrailerAccessoireAlreadyExistsException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+        }
     }
 
     @GetMapping
@@ -33,10 +38,10 @@ public class AccessoireController {
     }
 
     @DeleteMapping(path = "/{identifier}")
-    public void deleteAccessoire(@PathVariable String identifier){
+    public void deleteAccessoire(@PathVariable String identifier) {
         try {
             accessoireService.deleteAccessoire(identifier);
-        } catch (EntityNotFoundException e) {
+        } catch (TrailerAccessoireNotFoundException e) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
