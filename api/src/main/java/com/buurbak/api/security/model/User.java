@@ -1,6 +1,7 @@
 package com.buurbak.api.security.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,14 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "user_table") // "user" is a protected table name in PostgreSQL
 public class User implements UserDetails {
     @Id
@@ -32,9 +34,9 @@ public class User implements UserDetails {
     private Collection<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDate createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     // defaults for all accounts
     private boolean enabled = true;
