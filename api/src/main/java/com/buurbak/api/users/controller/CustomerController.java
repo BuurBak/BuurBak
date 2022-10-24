@@ -1,6 +1,8 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.users.dto.CustomerDTO;
+import com.buurbak.api.users.converter.CustomerConverter;
+import com.buurbak.api.users.dto.PrivateCustomerDTO;
+import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +24,7 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping(path = "customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final CustomerConverter customerConverter;
 
     @GetMapping("self")
     @Operation(summary = "Get self")
@@ -29,18 +32,10 @@ public class CustomerController {
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content),
     })
-    public CustomerDTO getCustomerSelf(Authentication authentication) {
+    public PrivateCustomerDTO getCustomerSelf(Authentication authentication) {
         try {
             Customer customer = customerService.findByUsername(authentication.getName());
-
-            return new CustomerDTO(
-                customer.getId(),
-                customer.getEmail(),
-                customer.getName(),
-                customer.getDateOfBirth(),
-                customer.getIban(),
-                customer.getAddress()
-            );
+            return customerConverter.convertCustomerToPrivateCustomerDTO(customer);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", exception);
         }
