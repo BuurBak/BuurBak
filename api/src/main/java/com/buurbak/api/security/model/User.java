@@ -39,6 +39,7 @@ public class User implements UserDetails {
     // defaults for all accounts
     private boolean enabled = true;
     private boolean locked = false;
+    private boolean deleted = false;
 
     public User(String email, String password) {
         this.email = email;
@@ -49,6 +50,10 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 
     @Override
