@@ -3,6 +3,7 @@ package com.buurbak.api.users.model;
 import com.buurbak.api.security.model.Role;
 import com.buurbak.api.security.model.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Customer extends User {
     @Column(columnDefinition = "text")
     private String name;
