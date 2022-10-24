@@ -15,10 +15,9 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "user_table") // "user" is a protected table name in PostgreSQL
-@Inheritance( strategy = InheritanceType.SINGLE_TABLE )
 public class User implements UserDetails {
     @Id
     @GeneratedValue
