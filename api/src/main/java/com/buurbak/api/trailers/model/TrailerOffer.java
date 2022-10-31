@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,9 +19,13 @@ public class TrailerOffer {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private TrailerType trailerType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Customer user;
 
     private int length;
     private int height;

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface TrailerTypeRepository<T extends TrailerType> extends JpaRepository<T, UUID> {
+public interface TrailerTypeRepository extends JpaRepository<TrailerType, UUID> {
     TrailerType findByName(String name);
 }
