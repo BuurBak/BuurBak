@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public Customer findByUsername(String name) throws EntityNotFoundException {
+    public Customer findByUsername(String name) throws CustomerNotFoundException {
         return customerRepository.findByEmail(name).orElseThrow(CustomerNotFoundException::new);
     }
 
