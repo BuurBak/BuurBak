@@ -1,8 +1,8 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.trailers.dto.AccessoireNameDTO;
-import com.buurbak.api.trailers.exeption.TrailerAccessoireAlreadyExistsException;
-import com.buurbak.api.trailers.exeption.TrailerAccessoireNotFoundException;
+import com.buurbak.api.trailers.exception.TrailerAccessoireAlreadyExistsException;
+import com.buurbak.api.trailers.exception.TrailerAccessoireNotFoundException;
 import com.buurbak.api.trailers.model.Accessoire;
 import com.buurbak.api.trailers.repository.AccessoireRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AccessoireService {
     public void saveAccessoire(AccessoireNameDTO accessoireNameDTO) throws TrailerAccessoireAlreadyExistsException{
         boolean exists =  accessoireRepository.existsById(accessoireNameDTO.getName());
         if(exists){
-            throw new TrailerAccessoireAlreadyExistsException("Trailer accesoire by id: " + accessoireNameDTO.getName() + " already exists!");
+            throw new TrailerAccessoireAlreadyExistsException("Trailer accessoire by id: " + accessoireNameDTO.getName() + " already exists!");
         }
         accessoireRepository.save(new Accessoire(accessoireNameDTO.getName()));
     }
@@ -39,7 +39,7 @@ public class AccessoireService {
     public void deleteAccessoire(String identifier) throws TrailerAccessoireNotFoundException {
             boolean exists =  accessoireRepository.existsById(identifier);
             if(!exists){
-                throw new TrailerAccessoireNotFoundException("Trailer accesoire by id: " + identifier + " not found!");
+                throw new TrailerAccessoireNotFoundException("Trailer accessoire by id: " + identifier + " not found!");
             }
             accessoireRepository.deleteById(identifier);
     }
