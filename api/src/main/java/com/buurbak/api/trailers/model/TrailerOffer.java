@@ -25,7 +25,7 @@ public class TrailerOffer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private Customer user;
+    private Customer owner;
 
     private int length;
     private int height;
@@ -41,12 +41,13 @@ public class TrailerOffer {
     private double price;
     private boolean available;
 
-    public TrailerOffer(TrailerType trailerType, int length, int height,
+    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
                         LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
                         String location, double price, boolean available) {
         this.trailerType = trailerType;
+        this.owner = owner;
         this.length = length;
         this.height = height;
         this.width = width;

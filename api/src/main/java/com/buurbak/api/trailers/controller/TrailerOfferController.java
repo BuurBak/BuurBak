@@ -3,12 +3,16 @@ package com.buurbak.api.trailers.controller;
 import com.buurbak.api.trailers.dto.TrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.service.TrailerOfferService;
-import com.buurbak.api.users.model.Customer;
-import com.buurbak.api.users.service.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +21,6 @@ import java.util.UUID;
 @RequestMapping("traileroffer")
 public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
-    private final CustomerService customerService;
 
     @GetMapping(path = "/{id}")
     public TrailerOffer getTrailerOffer(@PathVariable UUID id){
@@ -29,11 +32,16 @@ public class TrailerOfferController {
         return trailerOfferService.getAllTrailerOffersInfo();
     }
 
+    @Operation(summary = "Add new trailerOffer")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
     @PostMapping
-    public void addTrailerOffer(@RequestBody TrailerOffer trailerOffer, Authentication authentication) {
-        Customer customer = customerService.findByUsername(authentication.getName());
-        trailerOffer.setUser(customer);
-        trailerOfferService.addTrailerOffer(trailerOffer);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addTrailerOffer(@Valid @RequestBody TrailerOfferDTO trailerOfferDTO, Authentication authentication) {
+            trailerOfferService.addTrailerOffer(trailerOfferDTO, authentication);
     }
 }
 
