@@ -30,6 +30,13 @@ Om ervoor te zorgen dat je de goede environment running hebt in development is h
 2. Voeg `--spring.profiles.active=dev` toe aan je VM CLI options OF voeg `SPRING_PROFILES_ACTIVE=dev` toe aan je environment variables.
 3. Voeg `JWT_SECRET=secret` aan de environment variables
 
+### Google cloud storage
+Wij gebruiken google cloud storage als object storage voor al onze images/ files. De images worden ook van hun servers opgehaald, waardoor de load op onze api veel lager is dan als het via onze api server/ database moest gaan. Hiervoor moet je een file genaamd, `gcp-account-file.json` hebben en in de map /api/src/main/resources zetten. Deze file is secret omdat het de credentials van onze google cloud bevat. **Deel deze dus niet!**. Vraag de Luca Bergman a.k.a. @spark-156 om deze file.
+
+## Docker
+`docker compose -f docker-compose.dev.yml up -d` om onze dev environment (PostgreSQL en de mail server) op te starten. De front en back-end zitten hier niet bij en moeten zoals hierboven beschreven is nog goed opgezet worden.
+
+## Local
 ### Postgres setup commands
 Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je localhost of ergens draaiende hebt. De commands om een fresh postgres install klaar te maken voor development zijn als volgt. Zorg er wel voor dat je al in de postgres terminal zit met `psql`.
 
@@ -49,7 +56,8 @@ Installatie stappen (zorg ervoor dat npm al geinstalleerd is!):
 
 Beiden commands in de terminal uitvoeren.
 
-### Docker 
+
+### Production 
 
 Onze production environment runt in docker. development doen wij buiten docker. 
 

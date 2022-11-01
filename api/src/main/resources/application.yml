@@ -6,16 +6,33 @@ server:
     context-path: /api/v1
   port: 3080
 
+gcp:
+  auth-file: gcp-account-file.json
+  project-id: celestial-sonar-365614
+  bucket-id: buurbak_public
+  dir-name: prod
+
+
 spring:
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 100
+
   datasource:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     url: jdbc:postgresql://${DATABASE_HOST}:5432/buurbak
-    initialize: false
+
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
 
   jpa:
-    # hibernate:
-    #   ddl-auto: create
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

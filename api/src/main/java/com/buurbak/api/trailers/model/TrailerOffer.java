@@ -4,9 +4,12 @@ import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class TrailerOffer {
     @Id
-
     @GeneratedValue
     private UUID id;
 
@@ -32,14 +34,21 @@ public class TrailerOffer {
     private int width;
     private int weight;
     private int capacity;
+    @Column(columnDefinition = "text")
     private String licensePlateNumber;
     private LocalTime pickUpTimeStart;
     private LocalTime pickUpTimeEnd;
     private LocalTime dropOffTimeStart;
     private LocalTime dropOffTimeEnd;
+    @Column(columnDefinition = "text")
     private String location;
     private double price;
     private boolean available;
+
+	@CreationTimestamp
+	private Date createdAt;
+	@UpdateTimestamp
+	private Date updatedAt;
 
     public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
