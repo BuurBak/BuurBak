@@ -33,6 +33,5 @@ public class TrailerOfferService {
             throw new TrailerOfferNotFoundException("Trailer with id " + trailerId + " does not exist");
         } else trailerOfferRepository.deleteById(trailerId);
         log.info("Traileroffer with id " + trailerId + " has been deleted");
-        throw new TrailerOfferNotFoundException("cum");
     }
 }

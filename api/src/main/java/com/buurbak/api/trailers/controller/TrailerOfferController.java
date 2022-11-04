@@ -35,7 +35,6 @@ public class TrailerOfferController {
     @Operation(summary = "Delete traileroffer")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Traileroffer deleted"),
-            @ApiResponse(responseCode = "400", description = "The request was not valid"),
             @ApiResponse(responseCode = "404", description = "Traileroffer not found"),
             @ApiResponse(responseCode = "500", description = "Could not delete traileroffer")
     })
@@ -46,7 +45,7 @@ public class TrailerOfferController {
             trailerOfferService.deleteTrailerOffer(id);
         }
         catch (TrailerOfferNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
 
     }
