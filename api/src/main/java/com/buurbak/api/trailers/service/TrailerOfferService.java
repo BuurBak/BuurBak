@@ -1,7 +1,8 @@
 package com.buurbak.api.trailers.service;
 
-import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.dto.TrailerInfoDTO;
+import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
@@ -10,6 +11,7 @@ import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +20,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class TrailerOfferService {
     private final TrailerOfferRepository trailerOfferRepository;
     private final CustomerService customerService;
@@ -53,5 +56,13 @@ public class TrailerOfferService {
                 createTrailerOfferDTO.available());
         trailerOfferRepository.save(trailerOffer);
         return trailerOffer;
+    }
+
+    public void deleteTrailerOffer(UUID trailerId) {
+        boolean exists = trailerOfferRepository.existsById(trailerId);
+        if(!exists) {
+            throw new TrailerOfferNotFoundException("Trailer with id " + trailerId + " does not exist");
+        } else trailerOfferRepository.deleteById(trailerId);
+        log.info("Traileroffer with id " + trailerId + " has been deleted");
     }
 }
