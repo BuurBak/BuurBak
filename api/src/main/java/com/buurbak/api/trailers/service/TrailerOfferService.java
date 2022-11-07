@@ -55,9 +55,10 @@ public class TrailerOfferService {
                 createTrailerOfferDTO.price(),
                 createTrailerOfferDTO.available());
         trailerOfferRepository.save(trailerOffer);
+        return trailerOffer;
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
+    public TrailerOffer updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
 
@@ -86,6 +87,6 @@ public class TrailerOfferService {
         }
 
         trailerOfferRepository.deleteById(trailerId);
-        log.info("Traileroffer with id " + trailerId + " has been deleted");
+        log.info("TrailerOffer with id " + trailerId + " has been deleted");
     }
 }

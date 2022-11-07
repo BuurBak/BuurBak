@@ -6,6 +6,15 @@ server:
     context-path: /api/v1
   port: 3080
 
+web:
+  cors:
+    allowed-origins: "https://www.buurbak.nl"
+    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
+    max-age: 3600
+    allowed-headers: "*"
+    exposed-headers: "*"
+
+
 gcp:
   auth-file: gcp-account-file.json
   project-id: celestial-sonar-365614
