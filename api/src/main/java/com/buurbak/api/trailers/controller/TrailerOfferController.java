@@ -45,9 +45,10 @@ public class TrailerOfferController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTrailerOffer(@Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
+    public String addTrailerOffer(@Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
         try {
-            trailerOfferService.addTrailerOffer(createTrailerOfferDTO, authentication.getName());
+            TrailerOffer trailerOffer = trailerOfferService.addTrailerOffer(createTrailerOfferDTO, authentication.getName());
+            return trailerOffer.getId().toString();
         } catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", e);
         } catch (TrailerTypeNotFoundException e) {
