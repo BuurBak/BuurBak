@@ -21,7 +21,7 @@ public class TrailerOffer {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private TrailerType trailerType;
 

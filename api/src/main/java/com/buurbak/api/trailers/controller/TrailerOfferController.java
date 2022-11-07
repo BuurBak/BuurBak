@@ -48,9 +48,10 @@ public class TrailerOfferController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTrailerOffer(@Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
+    public String addTrailerOffer(@Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
         try {
-            trailerOfferService.addTrailerOffer(createTrailerOfferDTO, authentication.getName());
+            TrailerOffer trailerOffer = trailerOfferService.addTrailerOffer(createTrailerOfferDTO, authentication.getName());
+            return trailerOffer.getId().toString();
         } catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", e);
         } catch (TrailerTypeNotFoundException e) {
@@ -81,7 +82,6 @@ public class TrailerOfferController {
             @ApiResponse(responseCode = "404", description = "Traileroffer not found"),
             @ApiResponse(responseCode = "500", description = "Could not delete traileroffer")
     })
-
     @DeleteMapping("/{id}")
     public void deleteTrailerOffer(@PathVariable UUID id) {
         try {
