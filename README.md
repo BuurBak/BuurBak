@@ -31,6 +31,9 @@ Om ervoor te zorgen dat je de goede environment running hebt in development is h
 3. Voeg `JWT_SECRET=secret` aan de environment variables
 4. Voeg `RANDOM_DATA=true` aan de environment variables toe als je random data wilt of `RANDOM_DATA=false` als je geen random data wilt.
 
+RANDOM_DATA also standard generates a customer with username/email=`lucabergman@yahoo.com` and password=`hallo123`
+
+
 ### Google cloud storage
 Wij gebruiken google cloud storage als object storage voor al onze images/ files. De images worden ook van hun servers opgehaald, waardoor de load op onze api veel lager is dan als het via onze api server/ database moest gaan. Hiervoor moet je een file genaamd, `gcp-account-file.json` hebben en in de map /api/src/main/resources zetten. Deze file is secret omdat het de credentials van onze google cloud bevat. **Deel deze dus niet!**. Vraag de Luca Bergman a.k.a. @spark-156 om deze file.
 
