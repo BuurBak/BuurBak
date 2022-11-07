@@ -1,5 +1,5 @@
-import { Checkbox, FormControlLabel, makeStyles, TextareaAutosize, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
+import { Checkbox, FormControlLabel, TextareaAutosize } from '@mui/material'
+import { useEffect, useState } from 'react'
 import LicenseWarning from '../trailerProfile/LicenseWarnign'
 import './ReservationForm.css'
 import { useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import Data from '../../../data/dummy/trailers.json'
 import TrailerOverview from './TrailerOverview';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi'
 import { IoIosStar } from 'react-icons/io';
+import Footer from '../../constants/footer/Footer';
 
 export default function ReservationForm() {
     const [firstName, setFirstName] = useState("")
@@ -89,6 +90,7 @@ export default function ReservationForm() {
                 </form>
                 <TrailerOverview trailerDetails={trailerDetails} />
             </div>
+            <Footer />
         </div>
     )
 } 

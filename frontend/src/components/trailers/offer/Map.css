@@ -5,7 +5,7 @@
     top: 50%;
     transform: translateY(-50%);
     left: 15px;
-    background-color: #EE7B46;
+    background-color: var(--primary);
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
 .map {
     width: 57%;
     height: 100vh;
-    background-color: #DDDDDD;
+    background-color: var(--border);
     position: fixed;
     right: 0;
 }
@@ -25,7 +25,7 @@
     position: fixed;
     top: 100px;
     left: 20px;
-    background-color: #EE7B46;
+    background-color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;

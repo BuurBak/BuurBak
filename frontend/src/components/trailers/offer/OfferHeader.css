@@ -1,7 +1,7 @@
 .offerHeaderContainer {
     width: 100%;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background);
     box-sizing: border-box;
     padding: 80px 40px 20px 40px;
 }
@@ -9,10 +9,10 @@
 .offerHeaderInput {
     width: 100%;
     height: 48px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     border-radius: 5px;
     margin-top: 40px;
-    background-color: white;
+    background-color: var(--background);
     display: flex;
     align-items: center;
 }
@@ -25,31 +25,31 @@
     border-radius: 5px;
     box-sizing: border-box;
     padding: 0 15px;
-    font-size: open_sans_semibold;
-    color: #EE7B46;
+    font-weight: var(--semibold);
+    color: var(--primary);
 }
 
 .offerHeaderInput>input::placeholder {
-    font-family: open_sans_semibold;
-    color: #EE7B46;
+    font-weight: var(--semibold);
+    color: var(--primary);
 }
 
 .searchIcon {
     margin: auto 15px;
     font-size: 22px;
-    color: #EE7B46;
+    color: var(--primary);
 }
 
 .offerHeaderIcon {
     width: 60px;
     height: 100%;
     border-radius: 0 5px 5px 0;
-    background-color: #EE7B46;
-    color: white;
+    background-color: var(--primary);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #EE7B46;
+    border: 1px solid var(--primary);
     font-size: 24px;
     cursor: pointer;
 }
@@ -65,14 +65,14 @@
 
 .offerHeaderTitle>p:nth-child(1) {
     margin: 0;
-    color: #EE7B46;
-    font-family: open_sans_medium;
+    color: var(--primary);
+    font-weight: var(--medium);
 }
 
 .offerHeaderTitle>p:nth-child(2) {
     margin: 10px 0 0 0;
-    color: #747474;
-    font-family: open_sans_medium;
+    color: var(--subheader);
+    font-weight: var(--medium);
     font-size: 15px;
 }
 
@@ -80,7 +80,7 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     border-radius: 5px;
     box-sizing: border-box;
     padding: 4px 6px 6px 4px;
@@ -91,7 +91,7 @@
     height: 100%;
     border: none;
     outline: none;
-    color: #EE7B46;
-    font-family: open_sans_semibold;
+    color: var(--primary);
     cursor: pointer;
+    font-weight: var(--semibold);
 }

@@ -3,7 +3,7 @@ import { BsFilterRight } from 'react-icons/bs'
 import { IoIosSearch } from 'react-icons/io'
 import './OfferHeader.css'
 
-export default function OfferHeader({ setShowFilters, trailers, setFilteredTrailers, filteredTrailers }) {
+export default function OfferHeader({ setShowFilters, trailers, setFilteredTrailers, filteredTrailers, setSortType }) {
     const [searchText, setSearchText] = useState("");
 
     const handleChange = value => {
@@ -24,7 +24,7 @@ export default function OfferHeader({ setShowFilters, trailers, setFilteredTrail
           });
           setFilteredTrailers(filteredData);
         }
-      }
+      } 
 
     return (
         <div className="offerHeaderContainer">
@@ -41,9 +41,12 @@ export default function OfferHeader({ setShowFilters, trailers, setFilteredTrail
                     <p>Bekijk het volledige aanhanger aanbod</p>
                 </div>
                 <div className="offerHeaderOrderBy">
-                    <select>
-                        <option>Sorteren</option>
-                        <option>Nieuwste eerst</option>
+                    <select onChange={(e) => setSortType(e.target.value)}>
+                        <option value="standard">Sorteren</option>
+                        <option value="newFirst">Datum (nieuw-oud)</option>
+                        <option value="oldFirst">Datum (oud-nieuw)</option>
+                        <option value="priceLowToHigh">Prijs (laag-hoog)</option>
+                        <option value="priceHighToLow">Prijs (Hoog-laag)</option>
                     </select>
                 </div>
             </div>

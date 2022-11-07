@@ -3,7 +3,7 @@
     height: fit-content;
     box-sizing: border-box;
     padding: 20px 82px 60px 82px;
-    border-bottom: 1px solid #DDDDDD;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     display: grid;
@@ -18,7 +18,7 @@
 }
 
 .heroInfoIcon {
-    border: 2.5px solid #3B8B87;
+    border: 2.5px solid var(--secondary);
     width: 70px;
     height: 70px;
     border-radius: 100px;
@@ -26,18 +26,18 @@
     align-items: center;
     justify-content: center;
     font-size: 32px;
-    color: #3B8B87;
+    color: var(--secondary);
     margin-top: 30px;
 }
 
 .heroInfoItem>b {
     margin-top: 15px;
-    color: #3B8B87;
+    color: var(--secondary);
 }
 
 .heroInfoItem>p {
     max-width: 80%;
     text-align: center;
     margin-top: 10px;
-    font-family: open_sans_medium;
+    font-weight: normal;
 }

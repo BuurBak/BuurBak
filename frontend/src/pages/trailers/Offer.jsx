@@ -9,16 +9,30 @@ import OfferHeader from '../../components/trailers/offer/OfferHeader'
 import OfferRestults from "../../components/trailers/offer/OfferResults.jsx";
 import TrailerCard from "../../components/trailers/trailerCard/TrailerCard.jsx";
 import Filters from "../../components/trailers/filters/Filters.jsx";
+import useAxios from "../../data/useAxios.jsx";
 
 export default function Offer() {
-    const [trailers, setTrailers] = useState([])
+    const [trailers, setTrailers] = useState()
     const [activeTrailer, setActiveTrailer] = useState()
     const [scaleMap, setScaleMap] = useState(false)
     const [showFilters, setShowFilters] = useState(false)
     const [filteredTrailers, setFilteredTrailers] = useState([])
+    const [sortType, setSortType] = useState({ sorted: "id", reversed: false });
     const mapContainerStyle = { width: '100%', height: '100%', borderRadius: 10 }
     const center = ({ lat: 52.090736, lng: 5.121420 })
     const options = ({ styles: mapStyles, disableDefaultUI: true, clickableIcons: false })
+    // const [data, setData] = useState([]);
+    // const { response, loading, error } = useAxios({
+    //     method: 'get',
+    //     url: '/get',
+    //     headers: JSON.stringify({ accept: '*/*' }),
+    // });
+
+    // useEffect(() => {
+    //     if (response !== null) {
+    //         setTrailers(response);
+    //     }
+    // }, [response]);
 
     useEffect(() => {
         setTrailers(Data)
@@ -28,6 +42,26 @@ export default function Offer() {
         setFilteredTrailers(trailers)
     }, [trailers])
 
+    useEffect(() => {
+        let filterTrailers = filteredTrailers
+        if (sortType === "standard") {
+            filterTrailers = filteredTrailers
+        }
+        if (sortType === "priceLowtoHigh") {
+            filterTrailers = [...filterTrailers]?.sort((a, b) => (a.price > b.price ? 1 : -1))
+        }
+        if (sortType === "priceHighToLow") {
+            filterTrailers = [...filterTrailers]?.sort((a, b) => (a.price > b.price ? -1 : 1))
+        }
+        if (sortType === "oldFirst") {
+            filterTrailers = [...filterTrailers]?.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+        }
+        if (sortType === "newFirst") {
+            filterTrailers = [...filterTrailers]?.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        }
+        setFilteredTrailers(filterTrailers)
+    }, [sortType])
+
     return (
         <div style={{ display: 'flex' }}>
             {showFilters ? (
@@ -36,7 +70,13 @@ export default function Offer() {
                 null
             )}
             <div style={{ width: '43%' }}>
-                <OfferHeader setShowFilters={setShowFilters} trailers={trailers} filteredTrailers={filteredTrailers} setFilteredTrailers={setFilteredTrailers} />
+                <OfferHeader
+                    setShowFilters={setShowFilters}
+                    trailers={trailers}
+                    filteredTrailers={filteredTrailers}
+                    setFilteredTrailers={setFilteredTrailers}
+                    setSortType={setSortType}
+                />
                 <OfferRestults filteredTrailers={filteredTrailers} />
             </div>
             <div className="map" style={scaleMap ? { width: '100%' } : null}>

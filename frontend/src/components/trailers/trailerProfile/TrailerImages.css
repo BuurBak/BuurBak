@@ -1,18 +1,17 @@
 .trailerImagesContainer {
     width: 77vw;
     height: 500px;
-    background-color: white;
+    background-color: var(--background);
     padding: 100px 200px 0px 200px;
     display: flex;
     flex-direction: column;
-    background-color: white;
 }
 
 .imagesGrid {
     display: flex;
     height: 100%;
     width: 86%;
-    background-color: white;
+    background-color: var(--background);
     margin: 0 auto;
 }
 
@@ -20,7 +19,7 @@
     width: 60%;
     height: 90%;
     border-radius: 10px 0 0 10px;
-    background-color: blue;
+    background-color: var(--secondary);
     margin: auto 0;
     background-repeat: no-repeat;
     background-size: cover;
@@ -30,7 +29,7 @@
 .imageGridContainer {
     width: 20%;
     height: 90%;
-    background-color: white;
+    background-color: var(--background);
     margin: auto 0 auto 15px;
     position: relative;
 }

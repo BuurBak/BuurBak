@@ -1,9 +1,36 @@
 body {
   margin: 0;
-  font-family: open_sans_regular;
+  font-family: 'Open sans';
+  font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
+}
+
+:root {
+  /* Color variables */
+  --primary: #EE7B46;
+  --secondary: #43938F;
+  --white: #FFFFFF;
+  --error: #ED6C6C;
+  --border: #DDDDDD;
+  --text: #000000;
+  --subheader: #747474;
+  --background: #FFFFFF;
+  --darkBackground: #000000;
+
+  /* Font weight variables */
+  --medium: 500;
+  --semibold: 600;
+  --bold: 700;
+
+  /* Padding & margins */
+  --basePadding: ;
+  --baseMaring: ;
+}
+
+* {
+  font-family: 'Open sans';
 }
 
 code {
@@ -15,21 +42,24 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
-  font-family: open_sans_bold;
+  font-weight: var(--bold);
 }
 
 b {
-  font-weight: none;
-  font-family: open_sans_bold;
+  font-weight: var(--bold);
 }
 
 p {
   margin: 0;
 }
 
+span {
+  font-weight: var(--semibold);
+}
+
 h3 {
-  font-family: open_sans_bold;
-  color: #398D89;
+  font-weight: bold;
+  color: var(--secondary);
   margin: 0;
   font-size: 24px;
 }
@@ -42,7 +72,7 @@ h3 {
 
 .iconInputContainer>span {
   font-size: 14px;
-  font-family: open_sans_semiBold;
+  font-weight: 600;
   margin: 20px 0 15px 0;
 }
 
@@ -56,52 +86,22 @@ h3 {
   height: 50px;
   min-width: 54px;
   min-height: 50px;
-  background-color: #EE7B46;
+  background-color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--white);
   font-size: 22px;
   border-radius: 5px 0 0 5px;
 }
 
 .iconInput>input {
   border-radius: 0 5px 5px 0;
-  border: 1px solid #DDDDDD;
+  border: 1px solid var(--border);
   border-left: none;
   height: 50px;
   box-sizing: border-box;
   padding: 0 0 0 15px;
   width: 100%;
   outline: none;
-}
-
-@font-face {
-  font-family: open_sans_light;
-  src: url(./data/fonts/OpenSans-Light.ttf);
-}
-
-@font-face {
-  font-family: open_sans_regular;
-  src: url(./data/fonts/OpenSans-Regular.ttf);
-}
-
-@font-face {
-  font-family: open_sans_medium;
-  src: url(./data/fonts/OpenSans-Medium.ttf);
-}
-
-@font-face {
-  font-family: open_sans_semibold;
-  src: url(./data/fonts/OpenSans-SemiBold.ttf);
-}
-
-@font-face {
-  font-family: open_sans_bold;
-  src: url(./data/fonts/OpenSans-Bold.ttf);
-}
-
-@font-face {
-  font-family: open_sans_extrabold;
-  src: url(./data/fonts/OpenSans-ExtraBold.ttf);
 }

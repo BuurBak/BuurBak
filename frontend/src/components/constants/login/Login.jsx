@@ -82,6 +82,7 @@ export default function Login({ setShowLogin }) {
                 {userExists?.length > 0
                     ? <form className="loginContent" onSubmit={handleLogin}>
                         <TextField className='primaryInput' type="password" value={password} size="large" label="Wachtwoord" variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+                        <p>Wachtwoord vergeten? <span>Klik hier</span></p>
                         <button type="submit" className="loginCta">Inloggen</button>
                     </form>
                     : <>

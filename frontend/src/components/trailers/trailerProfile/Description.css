@@ -2,11 +2,11 @@
     width: 97%;
     box-sizing: border-box;
     padding-bottom: 30px;
-    border-bottom: 1px solid #DDDDDD;
+    border-bottom: 1px solid var(--border);
 }
 
 .detailInfoContainer>b {
-    color: #EE7B46;
+    color: var(--primary);
     font-size: 18px;
 }
 

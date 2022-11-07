@@ -2,15 +2,15 @@
     width: 100%;
     height: fit-content;
     min-height: 860px;
-    background-color: #3B8B87;
+    background-color: var(--secondary);
     box-sizing: border-box;
     padding: 100px 8%;
 }
 
 .heroContainer>h1 {
     margin: 120px 0 0 0;
-    font-family: open_sans_bold;
-    color: white;
+    font-weight: var(--bold);
+    color: var(--white);
     font-size: 40px;
     max-width: 40%;
 }
@@ -23,13 +23,13 @@
     display: flex;
     align-items: center;
     font-size: 20px;
-    font-family: open_sans_semibold;
-    color: white;
+    color: var(--white);
     margin-top: 30px;
 }
 
 .heroIncludedItem>p {
     margin-left: 20px;
+    font-weight: var(--semibold);
 }
 
 .heroCta {
@@ -41,17 +41,17 @@
 }
 
 .heroCtaItem>span {
-    font-family: open_sans_bold;
-    color: white;
+    font-weight: var(--bold);
+    color: var(--white);
     font-size: 14px;
 }
 
 .inputContainer {
     margin-top: 10px;
-    background-color: white;
+    background-color: var(--white);
     width: 94%;
     height: 48px;
-    border: 1.5px solid #EE7B46;
+    border: 1.5px solid var(--primary);
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -69,13 +69,13 @@
     box-sizing: border-box;
     padding: 0 14px;
     margin: 0px;
-    background-color: white;
+    background-color: var(--background);
 }
 
 .inputContainer>input::placeholder,
 .inputContainer>select {
-    color: #EE7B46;
-    font-family: open_sans_semibold;
+    color: var(--primary);
+    font-weight: 500;
     font-size: 15px;
 }
 
@@ -86,20 +86,20 @@
 .inputContainerIcon {
     width: 64px;
     height: 48px;
-    background-color: #EE7B46;
+    background-color: var(--primary);
     border-radius: 0 3px 3px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--white);
     font-size: 26px;
 }
 
 .ctaAction {
     height: 50px;
     margin-top: 31px;
-    background-color: #EE7B46;
-    color: white;
+    background-color: var(--primary);
+    color: var(--white);
     border-radius: 5px;
     padding: 0 20px;
 }

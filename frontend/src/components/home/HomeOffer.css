@@ -10,15 +10,15 @@
 
 .homeOfferContainer>h2 {
     margin: 0 auto;
-    font-family: open_sans_bold;
-    color: #EE7B46;
+    font-weight: var(--bold);
+    color: var(--primary);
     text-align: center;
 }
 
 .homeOfferContainer>p {
     margin: 6px auto;
-    color: #EE7B46;
-    font-family: open_sans_medium;
+    color: var(--primary);
+    font-weight: var(--medium);
     text-align: center;
 }
 

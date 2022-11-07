@@ -1,12 +1,12 @@
 .actionContainer>p {
     font-size: 20px;
-    font-family: open_sans_bold;
+    font-weight: var(--bold);
     margin: 0;
-    color: #EE7B46;
+    color: var(--primary);
 }
 
 .actionContainer>span {
-    font-family: open_sans_semibold;
+    font-weight: var(--semibold);
     font-size: 14px;
     margin-top: 20px;
 }
@@ -14,7 +14,7 @@
 .actionInput {
     width: 100%;
     height: 40px;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--border);
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -32,8 +32,8 @@
 }
 
 .actionInput>input::placeholder {
-    color: black;
-    font-family: open_sans_semibold;
+    color: var(--text);
+    font-weight: var(--semibold);
 }
 
 .inputFlexBox {
@@ -43,13 +43,13 @@
 }
 
 .inputFlexBox>p {
-    color: #747474;
+    color: var(--subheader);
 }
 
 .divider {
     width: 100%;
     height: 1px;
-    background-color: #DDDDDD;
+    background-color: var(--border);
     margin: 25px 0;
 }
 
@@ -62,7 +62,7 @@
 .actionContainerTotal>p,
 .actionContainerTotal>b {
     margin: 0;
-    color: #EE7B46;
+    color: var(--primary);
     font-size: 14px;
 }
 
@@ -71,10 +71,10 @@
 }
 
 .actionCta {
-    background-color: #EE7B46;
+    background-color: var(--primary);
     margin-top: 20px;
     padding: 14px 0;
-    color: white;
+    color: var(--white);
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
@@ -83,7 +83,7 @@
 
 .datePicker {
     width: 100% !important;
-    background-color: white;
+    background-color: var(--white);
     margin-top: 15px !important;
     padding: 0 !important;
 }

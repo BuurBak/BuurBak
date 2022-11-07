@@ -1,7 +1,7 @@
 .accessoiresGrid {
     display: grid;
     grid-template-columns: 50% 50%;
-    background-color: white;
+    background-color: var(--background);
     height: fit-content;
     margin: 15px 0 0 0;
 }
@@ -9,11 +9,11 @@
 .accessoireItem {
     display: flex;
     align-items: center;
-    color: #747474;
+    color: var(--subheader);
 }
 
 .accessoireItem>p {
     margin-left: 20px;
     font-size: 15px;
-    color: black;
+    color: var(--text);
 }

@@ -1,12 +1,12 @@
 .footerContainer {
     width: 100vw;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background);
     display: flex;
     align-items: center;
     box-sizing: border-box;
     padding: 60px 180px;
-    border-top: 1px solid #DDDDDD;
+    border-top: 1px solid var(--border);
 }
 
 .footerLogo {
@@ -21,7 +21,7 @@
 .footerLinks {
     flex: 1;
     height: fit-content;
-    background-color: white;
+    background-color: var(--background);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
@@ -33,12 +33,12 @@
 }
 
 .footerGrid>p:nth-child(1) {
-    color: #EE7B46;
-    font-family: open_sans_semibold;
+    color: var(--primary);
+    font-weight: var(--semibold);
 }
 
 .footerLinkContent {
-    font-family: open_sans_medium;
+    font-weight: var(--medium);
     margin-top: 15px;
 }
 
