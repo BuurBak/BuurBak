@@ -32,7 +32,7 @@ public class TrailerOfferService {
         return trailerOfferRepository.findTrailersInfo();
     }
 
-    public void addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
+    public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
         Customer customer = customerService.findByUsername(username);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
         TrailerOffer trailerOffer = new TrailerOffer(
@@ -52,5 +52,6 @@ public class TrailerOfferService {
                 createTrailerOfferDTO.price(),
                 createTrailerOfferDTO.available());
         trailerOfferRepository.save(trailerOffer);
+        return trailerOffer;
     }
 }
