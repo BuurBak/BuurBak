@@ -1,4 +1,4 @@
-package com.buurbak.api.cors.config;
+package com.buurbak.api.config.cors;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
