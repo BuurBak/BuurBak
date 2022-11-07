@@ -5,6 +5,7 @@ import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
+import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.trailers.service.TrailerOfferService;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @RequestMapping("traileroffer")
 public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
+    private final TrailerOfferRepository trailerOfferRepository;
 
     @GetMapping(path = "/{id}")
     public TrailerOffer getTrailerOffer(@PathVariable UUID id){
@@ -52,6 +54,23 @@ public class TrailerOfferController {
             return trailerOffer.getId().toString();
         } catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", e);
+        } catch (TrailerTypeNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
+        }
+    }
+
+    @Operation(summary = "Update trailerOffer")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "No content"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
+    })
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO) {
+        try {
+            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
         }

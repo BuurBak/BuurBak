@@ -55,14 +55,37 @@ public class TrailerOfferService {
                 createTrailerOfferDTO.price(),
                 createTrailerOfferDTO.available());
         trailerOfferRepository.save(trailerOffer);
+    }
+
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
+        TrailerOffer trailerOffer = getTrailerOffer(trailerId);
+        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
+
+        trailerOffer.setTrailerType(trailerType);
+        trailerOffer.setLength(createTrailerOfferDTO.length());
+        trailerOffer.setHeight(createTrailerOfferDTO.height());
+        trailerOffer.setWidth(createTrailerOfferDTO.width());
+        trailerOffer.setWeight(createTrailerOfferDTO.weight());
+        trailerOffer.setCapacity(createTrailerOfferDTO.capacity());
+        trailerOffer.setLicensePlateNumber(createTrailerOfferDTO.licensePlateNumber());
+        trailerOffer.setPickUpTimeStart(createTrailerOfferDTO.pickUpTimeStart());
+        trailerOffer.setPickUpTimeEnd(createTrailerOfferDTO.pickUpTimeEnd());
+        trailerOffer.setDropOffTimeStart(createTrailerOfferDTO.dropOffTimeStart());
+        trailerOffer.setDropOffTimeEnd(createTrailerOfferDTO.dropOffTimeEnd());
+        trailerOffer.setLocation(createTrailerOfferDTO.location());
+        trailerOffer.setPrice(createTrailerOfferDTO.price());
+        trailerOffer.setAvailable(createTrailerOfferDTO.available());
+
+        trailerOfferRepository.save(trailerOffer);
         return trailerOffer;
     }
 
     public void deleteTrailerOffer(UUID trailerId) {
-        boolean exists = trailerOfferRepository.existsById(trailerId);
-        if(!exists) {
+        if(!trailerOfferRepository.existsById(trailerId)) {
             throw new TrailerOfferNotFoundException("Trailer with id " + trailerId + " does not exist");
-        } else trailerOfferRepository.deleteById(trailerId);
+        }
+
+        trailerOfferRepository.deleteById(trailerId);
         log.info("Traileroffer with id " + trailerId + " has been deleted");
     }
 }
