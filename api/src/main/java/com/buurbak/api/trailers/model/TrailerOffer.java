@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,10 +25,9 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private TrailerType trailerType;
 
-    @CreationTimestamp
-    private Date createdAt;
-    @UpdateTimestamp
-    private Date updatedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Customer owner;
 
     private int length;
     private int height;
@@ -45,13 +45,18 @@ public class TrailerOffer {
     private double price;
     private boolean available;
 
+	@CreationTimestamp
+	private Date createdAt;
+	@UpdateTimestamp
+	private Date updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, int length, int height,
+    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
                         LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
                         String location, double price, boolean available) {
         this.trailerType = trailerType;
+        this.owner = owner;
         this.length = length;
         this.height = height;
         this.width = width;
