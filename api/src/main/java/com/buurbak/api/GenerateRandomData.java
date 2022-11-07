@@ -50,13 +50,13 @@ public class GenerateRandomData implements CommandLineRunner {
                 .ignoreRandomizationErrors(true)
                 .bypassSetters(true);
 
-        EasyRandom easyRandom = new EasyRandom(customerParamaters);
+        EasyRandom customerRandom = new EasyRandom(customerParamaters);
 
         // Generate Customers
         log.info("Generating customers");
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < CUSTOMERS_TO_GENERATE; i++) {
-            customers.add(easyRandom.nextObject(Customer.class));
+            customers.add(customerRandom.nextObject(Customer.class));
         }
         customerRepository.saveAll(customers);
     }
