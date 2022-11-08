@@ -29,11 +29,22 @@ public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
     private final TrailerOfferRepository trailerOfferRepository;
 
+    @Operation(summary = "Return all trailerOffers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
+    })
     @GetMapping(path = "/{id}")
     public TrailerOffer getTrailerOffer(@PathVariable UUID id){
          return trailerOfferService.getTrailerOffer(id);
     }
 
+    @Operation(summary = "Return all trailerOffers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+    })
     @GetMapping
     public List<TrailerInfoDTO> getAllTrailerOffer(){
         return trailerOfferService.getAllTrailerOffersInfo();
