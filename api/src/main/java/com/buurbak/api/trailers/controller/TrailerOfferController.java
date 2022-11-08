@@ -1,11 +1,11 @@
 package com.buurbak.api.trailers.controller;
 
+import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
-import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.trailers.service.TrailerOfferService;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,13 +13,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +29,8 @@ import java.util.UUID;
 @RequestMapping("traileroffer")
 public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
-    private final TrailerOfferRepository trailerOfferRepository;
+    private final TrailerOfferConverter trailerOfferConverter;
+
 
     @Operation(summary = "Return all trailerOffers")
     @ApiResponses({
@@ -46,8 +49,9 @@ public class TrailerOfferController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
     })
     @GetMapping
-    public List<TrailerInfoDTO> getAllTrailerOffer(){
-        return trailerOfferService.getAllTrailerOffersInfo();
+    public Page<TrailerInfoDTO> getAllTrailerOffer(@PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+        Page<TrailerOffer> trailerOfferPage = trailerOfferService.getAllTrailerOffersInfo(pageable);
+        return trailerOfferConverter.convertTrailerOfferPageToTrailerOfferDTOPage(trailerOfferPage);
     }
 
     @Operation(summary = "Add new trailerOffer")
