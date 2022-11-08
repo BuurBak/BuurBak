@@ -11,6 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface TrailerOfferRepository extends JpaRepository<TrailerOffer, UUID> {
-    @Query("SELECT new com.buurbak.api.trailers.dto.TrailerInfoDTO(t.id, t.trailerType, t.location, t.price) FROM TrailerOffer t")
+    @Query("SELECT new com.buurbak.api.trailers.dto.TrailerInfoDTO(t.id, t.trailerType.name, t.location, t.price) FROM TrailerOffer t")
     List<TrailerInfoDTO> findTrailersInfo();
 }
