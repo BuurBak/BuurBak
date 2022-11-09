@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("traileroffer")
+@RequestMapping("traileroffers")
 public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
     private final TrailerOfferRepository trailerOfferRepository;
