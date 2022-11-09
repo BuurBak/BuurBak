@@ -1,7 +1,6 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
@@ -12,10 +11,11 @@ import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,8 +31,8 @@ public class TrailerOfferService {
         return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<TrailerInfoDTO> getAllTrailerOffersInfo(){
-        return trailerOfferRepository.findTrailersInfo();
+    public Page<TrailerOffer> getAllTrailerOffersInfo(Pageable pageable){
+        return trailerOfferRepository.findAll(pageable);
     }
 
     public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
@@ -55,9 +55,10 @@ public class TrailerOfferService {
                 createTrailerOfferDTO.price(),
                 createTrailerOfferDTO.available());
         trailerOfferRepository.save(trailerOffer);
+        return trailerOffer;
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
+    public TrailerOffer updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
 
@@ -86,6 +87,6 @@ public class TrailerOfferService {
         }
 
         trailerOfferRepository.deleteById(trailerId);
-        log.info("Traileroffer with id " + trailerId + " has been deleted");
+        log.info("TrailerOffer with id " + trailerId + " has been deleted");
     }
 }

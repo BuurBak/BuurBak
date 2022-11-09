@@ -18,11 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				contact = @Contact(name = "Github", url = "https://github.com/BuurBak/BuurBak")
 		))
 public class Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-
 }
 
