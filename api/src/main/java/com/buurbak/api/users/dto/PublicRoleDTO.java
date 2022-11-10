@@ -1,9 +1,15 @@
 package com.buurbak.api.users.dto;
 
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 
-public record PublicRoleDTO (
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PublicRoleDTO {
     @NotBlank
-    String name
-){
+    private String name;
 }

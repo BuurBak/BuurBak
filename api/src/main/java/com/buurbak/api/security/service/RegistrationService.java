@@ -33,23 +33,23 @@ public class RegistrationService {
 
 
     public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO) throws EmailTakenException {
-        if (appUserService.isEmailTaken(registerNewCustomerDTO.email())) {
-            throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.email()));
+        if (appUserService.isEmailTaken(registerNewCustomerDTO.getEmail())) {
+            throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.getEmail()));
         }
 
         Customer customerToRegister = customerService.saveCustomer(
                 new Customer(
-                    registerNewCustomerDTO.email(),
-                    bCryptPasswordEncoder.encode(registerNewCustomerDTO.password()),
-                    registerNewCustomerDTO.name(),
+                    registerNewCustomerDTO.getEmail(),
+                    bCryptPasswordEncoder.encode(registerNewCustomerDTO.getPassword()),
+                    registerNewCustomerDTO.getName(),
                     null,
                     null,
-                    registerNewCustomerDTO.number(),
+                    registerNewCustomerDTO.getNumber(),
                     new Address(
-                            registerNewCustomerDTO.address().city(),
-                            registerNewCustomerDTO.address().streetName(),
-                            registerNewCustomerDTO.address().number(),
-                            registerNewCustomerDTO.address().postalCode()
+                            registerNewCustomerDTO.getAddress().getCity(),
+                            registerNewCustomerDTO.getAddress().getStreetName(),
+                            registerNewCustomerDTO.getAddress().getNumber(),
+                            registerNewCustomerDTO.getAddress().getPostalCode()
                     )
             )
         );
@@ -59,10 +59,10 @@ public class RegistrationService {
         );
 
         emailSender.send(
-                registerNewCustomerDTO.email(),
+                registerNewCustomerDTO.getEmail(),
                 confirmEmailService.buildEmail(
-                        registerNewCustomerDTO.name(),
-                        System.getenv("EMAIL_LINK") + emailConfirmationToken.getId().toString()
+                        registerNewCustomerDTO.getName(),
+                        System.getenv("HOST") + "/auth/confirm/" + emailConfirmationToken.getId().toString()
                 )
         );
 

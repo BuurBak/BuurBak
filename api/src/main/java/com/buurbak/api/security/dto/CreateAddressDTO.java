@@ -1,17 +1,24 @@
 package com.buurbak.api.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-public record CreateAddressDTO(
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateAddressDTO {
         @NotBlank
-        String city,
+        private String city;
         @NotBlank @JsonProperty("street_name")
-        String streetName,
+        private String streetName;
         @NotBlank
-        String number,
+        private String number;
         @NotBlank @JsonProperty("postal_code")
-        String postalCode
-) {
+        private String postalCode;
 }

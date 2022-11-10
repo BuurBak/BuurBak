@@ -16,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.SIGN_IN_URL;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(authenticationManagerBean());
-        jwtAuthenticationFilter.setFilterProcessesUrl(SIGN_IN_URL);
+        jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

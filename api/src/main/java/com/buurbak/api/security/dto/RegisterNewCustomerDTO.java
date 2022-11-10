@@ -1,19 +1,27 @@
 package com.buurbak.api.security.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-public record RegisterNewCustomerDTO(
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class RegisterNewCustomerDTO {
     @NotBlank @Email
-    String email,
+    private String email;
     @NotBlank
-    String password,
+    private String password;
     @NotBlank
-    String name,
+    private String name;
     @NotBlank
-    String number,
-    @NotNull
-    CreateAddressDTO address
-) {
+    private String number;
+    @Valid
+    private CreateAddressDTO address;
 }

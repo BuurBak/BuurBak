@@ -2,7 +2,12 @@ package com.buurbak.api.users.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,24 +15,27 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-public record PrivateCustomerDTO (
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PrivateCustomerDTO {
         @NotNull
-        UUID id,
+        private UUID id;
 
         @NotBlank
-        String name,
+        private String name;
         @NotBlank
-        String email,
+        private String email;
         @NotNull
-        Collection<PublicRoleDTO> roles,
+        private Collection<PublicRoleDTO> roles;
 
         @Past @JsonProperty("date_of_birth")
-        LocalDate dateOfBirth,
+        private LocalDate dateOfBirth;
         @NotBlank
-        String iban,
+        private String iban;
         @NotBlank
-        String number,
-        @NotNull
-        PrivateAddressDTO address
-) {
+        private String number;
+        @Valid
+        private PrivateAddressDTO address;
 }

@@ -1,19 +1,27 @@
 package com.buurbak.api.users.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.UUID;
 
-public record PublicCustomerDTO (
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PublicCustomerDTO {
         @NotNull
-        UUID id,
+        private UUID id;
 
         @NotBlank
-        String name,
+        private String name;
         @NotBlank
-        String email,
+        private String email;
         @NotNull
-        Collection<PublicRoleDTO> roles
-) {
+        private Collection<PublicRoleDTO> roles;
 }
