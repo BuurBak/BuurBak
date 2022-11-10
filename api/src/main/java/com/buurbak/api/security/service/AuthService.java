@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.SECRET;
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.TOKEN_PREFIX;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
@@ -26,9 +24,9 @@ public class AuthService {
     public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-                String refreshToken = authorizationHeader.substring(TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                String refreshToken = authorizationHeader.substring("Bearer ".length());
+                Algorithm algorithm = Algorithm.HMAC256(System.getenv("JWT_SECRET").getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedjwt = verifier.verify(refreshToken);
                 String username = decodedjwt.getSubject();

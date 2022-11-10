@@ -2,7 +2,7 @@ package com.buurbak.api.security.service;
 
 import com.buurbak.api.security.exception.AppUserNotFoundException;
 import com.buurbak.api.security.model.AppUser;
-import com.buurbak.api.security.repository.UserRepository;
+import com.buurbak.api.security.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 @Transactional
 public class AppUserService {
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
 
     public boolean isEmailTaken(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return appUserRepository.findByEmail(email).isPresent();
     }
 
     public AppUser findByUsername(String email) throws AppUserNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> new AppUserNotFoundException(email));
+        return appUserRepository.findByEmail(email).orElseThrow(() -> new AppUserNotFoundException(email));
     }
 }

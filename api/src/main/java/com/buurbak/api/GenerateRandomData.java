@@ -9,6 +9,7 @@ import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.trailers.repository.TrailerTypeRepository;
+import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -116,7 +117,13 @@ public class GenerateRandomData implements CommandLineRunner {
                 "Luca Bergman",
                 LocalDate.of(2001, 3, 10),
                 "This is an IBAN",
-                "Amsterdam, de Wallen 3"
+                "06-12345678",
+                new Address(
+                        "Amsterdam",
+                        "Oudezijds Voorburgwal",
+                        "258",
+                        "1012 GK"
+                )
         );
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < CUSTOMERS_TO_GENERATE; i++) {

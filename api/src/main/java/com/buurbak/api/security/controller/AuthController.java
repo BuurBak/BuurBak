@@ -35,6 +35,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
     })
     @PostMapping("register")
+    @ResponseStatus(HttpStatus.CREATED)
     public String register(@Valid @RequestBody RegisterNewCustomerDTO registerNewCustomerDTO) {
         try {
             Customer customer = registrationService.registerNewCustomer(registerNewCustomerDTO);
