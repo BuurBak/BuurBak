@@ -1,9 +1,7 @@
 package com.buurbak.api.users.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,28 +10,24 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class PrivateCustomerDTO extends PublicCustomerDTO {
-    @Past
-    private LocalDate dateOfBirth;
+public record PrivateCustomerDTO (
+        @NotNull
+        UUID id,
 
-    @NotBlank
-    private String iban;
+        @NotBlank
+        String name,
+        @NotBlank
+        String email,
+        @NotNull
+        Collection<PublicRoleDTO> roles,
 
-    @NotBlank
-    private String address;
-
-    @Past
-    private LocalDate updatedAt;
-
-    public PrivateCustomerDTO(@NotNull UUID id, @NotBlank String name, @NotBlank String email, @Past LocalDate createdAt, Collection<PublicRoleDTO> roles, LocalDate dateOfBirth, String iban, String address, LocalDate updatedAt) {
-        super(id, name, email, createdAt, roles);
-        this.dateOfBirth = dateOfBirth;
-        this.iban = iban;
-        this.address = address;
-        this.updatedAt = updatedAt;
-    }
+        @Past @JsonProperty("date_of_birth")
+        LocalDate dateOfBirth,
+        @NotBlank
+        String iban,
+        @NotBlank
+        String number,
+        @NotNull
+        PrivateAddressDTO address
+) {
 }
