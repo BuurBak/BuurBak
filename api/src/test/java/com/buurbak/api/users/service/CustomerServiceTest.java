@@ -1,6 +1,6 @@
 package com.buurbak.api.users.service;
 
-import com.buurbak.api.security.exception.AppUserNotFoundException;
+import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
 import org.jeasy.random.EasyRandom;
@@ -44,7 +44,11 @@ class CustomerServiceTest {
         Customer customer = easyRandom.nextObject(Customer.class);
 
         when(customerRepository.findByEmail(customer.getEmail())).thenReturn(Optional.of(customer));
-        verify(customerRepository.findByEmail(customer.getEmail()), times(1));
+
+        Customer result = customerService.findByUsername(customer.getEmail());
+
+        assertEquals(customer, result);
+        verify(customerRepository, times(1)).findByEmail(customer.getEmail());
         verifyNoMoreInteractions(customerRepository);
     }
 
@@ -53,7 +57,7 @@ class CustomerServiceTest {
         String email = "asdf";
         when(customerRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        assertThrows(AppUserNotFoundException.class, () -> customerService.findByUsername(email));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findByUsername(email));
         verify(customerRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(customerRepository);
     }
