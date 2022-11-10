@@ -1,67 +1,51 @@
 # BuurBak
 BuurBak webapp voor het huren en verhuren van aanhangers!
 
-## Git workflow
-### Main branch
-No direct pushes, only MR’s are allowed
-Production ready, no bugs allowed
-### Dev branch
-No direct pushes, only MR’s are allowed
-Semi-production ready, bugs are allowed but must be fixed before they get pushed to the main prod branch.
-### Creating a feature or bugfix branch
-If you want to work on a user story you have to create a new branch for it. This branch must be based on the dev branch. You will name the branch as such:
+Frontend built in [React](https://reactjs.org)
 
-```US-XXX-name-of-user-story```
+Backend built in [Spring Boot](https://spring.io/projects/spring-boot)
 
-Where `XXX` is the number. When you are done working on the user story you must create a merge request back in to dev that has to be reviewed by a team member.
+# Running BuurBak
+## Requirements
+| Category | Name | Version | Link | Description |
+| --- | --- | --- | --- | --- |
+| Dev | Temurin JDK | 17.0.4.1+1 | https://adoptium.net/installation/ | We use Temurin as our JDK for the backend |
+| Dev | Node | 16.8.1 | https://nodejs.org/download/release/v16.18.1/ | Our frontend is developed in React node 16 |
+| Dev | Maildev | 2.0.5 | https://github.com/maildev/maildev | Maildev is used in development to catch all outgoing emails |
+| Dev | PostgreSQL | 14 | https://www.postgresql.org | PostgreSQL is our database for both development as production. |
+| Testing | Docker | 20.10.20 | https://www.docker.com/products/docker-desktop/ | You can use the latest docker desktop to run the application in a mock production environment on your local machine. You can use this environment to test your new features before pushing them to production. |
 
-# Setup dev environment
+## Environment variables
 
-Ik (Luca) gebruik intellij IDEA als mijn IDE. In deze IDE open ik de /api folder, dat zorgt er namelijk voor dat alles zoals code completion/ building en running werkt. 
-
-### JDK
-
-Wij gebruiken temurin 17.0.4.1+1 als JDK. Dit doen wij via docker. 
-
-### Environment variables
-Om ervoor te zorgen dat je de goede environment running hebt in development is het cruciaal dat je de dev environment gebruikt voor Java. Dat doe je als volgt:
-
-1. Edit configurations
-2. Voeg `--spring.profiles.active=dev` toe aan je VM CLI options OF voeg `SPRING_PROFILES_ACTIVE=dev` toe aan je environment variables.
-3. Voeg `JWT_SECRET=secret` aan de environment variables
-4. Voeg `RANDOM_DATA=true` aan de environment variables toe als je random data wilt of `RANDOM_DATA=false` als je geen random data wilt.
-
-RANDOM_DATA also standard generates a customer with username/email=`lucabergman@yahoo.com` and password=`hallo123`
-
-
-### Google cloud storage
+| Location | Name | Example value | Type | Description |
+| ----------- | ----------- | ----------- | ----------- | ----------- |
+| Backend | JWT_SECRET | secret | String | JWT secret for generating access tokens | 
+| Backend | RANDOM_DATA | false | Boolean | Wether or nat the application should randomly generate data, for testing purposes, also generates a standard user in with username/email=`lucabergman@yahoo.com` and password=`hallo123` which you can quickly use for testing purposes |
+| Backend | HOST | http://localhost:3000 | String | Under what url the application is hosted, must **NOT** include a slash (`/`) at the end |
+| Backend | SPRING_PROFILES_ACTIVE | dev | String | Which spring application profile to use, defaults to `prod`, you must set it to dev in your development environment |
+## Google cloud storage
 Wij gebruiken google cloud storage als object storage voor al onze images/ files. De images worden ook van hun servers opgehaald, waardoor de load op onze api veel lager is dan als het via onze api server/ database moest gaan. Hiervoor moet je een file genaamd, `gcp-account-file.json` hebben en in de map /api/src/main/resources zetten. Deze file is secret omdat het de credentials van onze google cloud bevat. **Deel deze dus niet!**. Vraag de Luca Bergman a.k.a. @spark-156 om deze file.
 
-## Docker
-`docker compose -f docker-compose.dev.yml up -d` om onze dev environment (PostgreSQL en de mail server) op te starten. De front en back-end zitten hier niet bij en moeten zoals hierboven beschreven is nog goed opgezet worden.
+## Running development environment locally 
+You can skip the downloading of PostgreSQL and maildev locally by running them inside of docker. To do so please run the commands: `docker compose -f docker-compose.dev.yml up` in your terminal. That will launch all the requirements for the backend. You can access maildev under `http://mail.localhost/` and an instance of adminer under `http://adminer.localhost/`. You can find the hostname, username and password for the database in the `docker-compose.dev.yml` file.
 
-## Local
-### Postgres setup commands
-Als database gebruiken wij nu Postgres, het is belangrijk dat je die op je localhost of ergens draaiende hebt. De commands om een fresh postgres install klaar te maken voor development zijn als volgt. Zorg er wel voor dat je al in de postgres terminal zit met `psql`.
+## Running the production environment locally 
+You can run, build and test the production environment with `docker compose up --build`. This will run all the containers necessary for the backend. You can access maildev under `http://mail.localhost/` and an instance of adminer under `http://adminer.localhost/`. You can find the hostname, username and password for the database in the `docker-compose.yml` file.
 
-    CREATE DATABASE buurbak;
-    CREATE USER buurbak WITH PASSWORD 'buurbak';
-    GRANT ALL PRIVILEGES ON DATABASE buurbak TO buurbak;
+# Contributing to BuurBak
+## We Develop with Github
+We use github to host code, to track issues and feature requests, as well as accept pull requests.
 
-Zorg er dan ook voor dat je in de /api/src/main/resources/application.properties file je de juiste url uncomment. Namelijk met `localhost` i.p.v. `db`.
- 
- ### Mail server
- Tijdens het registreren van een nieuwe gebruiker moet zijn/ haar email geconfirmed worden voordat het account enabled is. Hiervoor moet een mail verstuurd worden. In onze dev environment gebruiken wij daar [MailDev](https://maildev.github.io/maildev/) voor. Deze is via npm geinstalleerd en wordt ook via npm gerund op onze lokale dev environment.
+## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
+Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
-Installatie stappen (zorg ervoor dat npm al geinstalleerd is!):
+1. Clone the repo and create your branch from `dev`.
+2. Name the branch in the following format: ```US-XXX-name-of-user-story```.
+2. If you've added code that should be tested, add tests.
+3. If you've changed APIs, update the documentation.
+4. Ensure the test suite passes.
+5. Make sure your code lints.
+6. Issue that pull request and make sure to merge into the `dev` branch!
 
-1. Om te installeren: `npm i -g maildev`
-2. Om te runnen: `maildev`
-
-Beiden commands in de terminal uitvoeren.
-
-
-### Production 
-
-Onze production environment runt in docker. development doen wij buiten docker. 
-
+## Report bugs using Github's [issues]https://github.com/BuurBak/BuurBak/issues)
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/BuurBak/BuurBak/issues/new); it's that easy!
