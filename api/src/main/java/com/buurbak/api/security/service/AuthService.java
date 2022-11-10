@@ -5,8 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.buurbak.api.security.dto.TokenDTO;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.model.Role;
-import com.buurbak.api.security.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +33,8 @@ public class AuthService {
                 DecodedJWT decodedjwt = verifier.verify(refresh_token);
                 String username = decodedjwt.getSubject();
 
-                User user = userService.findByUsername(username);
-                String access_token = tokenService.generateAccessToken(request, username, user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+                AppUser appUser = userService.findByUsername(username);
+                String access_token = tokenService.generateAccessToken(request, username, appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
 
                 return new TokenDTO(access_token, refresh_token);
         } else {

@@ -3,8 +3,8 @@ package com.buurbak.api.security.service;
 import com.buurbak.api.email.service.ConfirmEmailService;
 import com.buurbak.api.email.service.EmailSender;
 import com.buurbak.api.security.dto.RegistrationRequestDTO;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.model.EmailConfirmationToken;
-import com.buurbak.api.security.model.User;
 import com.buurbak.api.users.model.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class RegistrationService {
     private final ConfirmEmailService confirmEmailService;
 
     public UUID register(RegistrationRequestDTO requestDTO) {
-        User user = userService.signUpUser(
+        AppUser appUser = userService.signUpUser(
                 new Customer(
                         requestDTO.getEmail(),
                         requestDTO.getPassword(),
@@ -34,7 +34,7 @@ public class RegistrationService {
         );
 
 
-        EmailConfirmationToken token = confirmationTokenService.createAndSaveEmailConfirmationToken(user);
+        EmailConfirmationToken token = confirmationTokenService.createAndSaveEmailConfirmationToken(appUser);
 
         emailSender.send(
                 requestDTO.getEmail(),
@@ -45,7 +45,7 @@ public class RegistrationService {
                         )
         );
 
-        return user.getId();
+        return appUser.getId();
     }
 
     @Transactional
@@ -61,6 +61,6 @@ public class RegistrationService {
         }
 
         confirmationTokenService.setConfirmedAtToNow(tokenId);
-        userService.enableUser(confirmationToken.getUser().getId());
+        userService.enableUser(confirmationToken.getAppUser().getId());
     }
 }

@@ -1,7 +1,7 @@
 package com.buurbak.api.security.service;
 
 import com.buurbak.api.security.model.EmailConfirmationToken;
-import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.repository.EmailConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.UUID;
 public class EmailConfirmationTokenService {
     private final EmailConfirmationTokenRepository emailConfirmationTokenRepository;
     public static final int EMAIL_TOKEN_DURATION = 24 * 60 * 60; // 24 hours in seconds
-    public EmailConfirmationToken createAndSaveEmailConfirmationToken (User user) {
+    public EmailConfirmationToken createAndSaveEmailConfirmationToken (AppUser appUser) {
         EmailConfirmationToken token = new EmailConfirmationToken(
                 LocalDateTime.now().plusSeconds(EMAIL_TOKEN_DURATION),
-                user
+                appUser
         );
         emailConfirmationTokenRepository.save(token);
         return token;

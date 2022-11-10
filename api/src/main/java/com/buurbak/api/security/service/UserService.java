@@ -1,6 +1,6 @@
 package com.buurbak.api.security.service;
 
-import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,23 +19,23 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User signUpUser(User user) throws IllegalStateException {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalStateException(String.format(EMAIL_TAKEN_MESSAGE, user.getEmail()));
+    public AppUser signUpUser(AppUser appUser) throws IllegalStateException {
+        if (userRepository.findByEmail(appUser.getEmail()).isPresent()) {
+            throw new IllegalStateException(String.format(EMAIL_TAKEN_MESSAGE, appUser.getEmail()));
         }
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
 
-        userRepository.save(user);
+        userRepository.save(appUser);
 
-        return user;
+        return appUser;
     }
 
     public void enableUser(UUID userId) {
         userRepository.enableUserById(userId);
     }
 
-    public User findByUsername(String email) throws EntityNotFoundException {
+    public AppUser findByUsername(String email) throws EntityNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
     }
 }

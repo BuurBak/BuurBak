@@ -1,6 +1,6 @@
 package com.buurbak.api.security.repository;
 
-import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByEmail(String email);
+public interface UserRepository extends JpaRepository<AppUser, UUID> {
+    Optional<AppUser> findByEmail(String email);
 
     @Transactional
     @Modifying

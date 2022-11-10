@@ -4,7 +4,7 @@ import com.buurbak.api.config.randomizers.Hallo123PasswordRandomizer;
 import com.buurbak.api.config.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.config.randomizers.TrailerOwnerRandomizer;
 import com.buurbak.api.config.randomizers.TrailerTypeRandomizer;
-import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
@@ -68,13 +68,13 @@ public class GenerateRandomData implements CommandLineRunner {
                 )
                 .randomize(
                         FieldPredicates.named("email")
-                                .and(FieldPredicates.inClass(User.class)),
+                                .and(FieldPredicates.inClass(AppUser.class)),
                         new EmailRandomizer()
                 )
                 .randomize(
                         FieldPredicates.named("password")
                                 .and(FieldPredicates.ofType(String.class))
-                                .and(FieldPredicates.inClass(User.class)),
+                                .and(FieldPredicates.inClass(AppUser.class)),
                         new Hallo123PasswordRandomizer()
                 )
                 .randomize(
@@ -84,11 +84,11 @@ public class GenerateRandomData implements CommandLineRunner {
                 )
                 .randomize(
                         FieldPredicates.named("deleted")
-                                .and(FieldPredicates.inClass(User.class)),
+                                .and(FieldPredicates.inClass(AppUser.class)),
                         new SkipRandomizer())
                 .randomize(
                         FieldPredicates.named("locked")
-                                .and(FieldPredicates.inClass(User.class)),
+                                .and(FieldPredicates.inClass(AppUser.class)),
                         new SkipRandomizer())
 
                 .seed(123L)
@@ -165,7 +165,7 @@ public class GenerateRandomData implements CommandLineRunner {
                         new TrailerDimensionRandomizer())
                 .randomize(
                         FieldPredicates.named("deleted")
-                                .and(FieldPredicates.inClass(User.class)),
+                                .and(FieldPredicates.inClass(AppUser.class)),
                         new SkipRandomizer())
                 .seed(123L)
                 .objectPoolSize(100)

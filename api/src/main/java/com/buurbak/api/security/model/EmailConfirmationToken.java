@@ -32,10 +32,10 @@ public class EmailConfirmationToken {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private User user;
+    private AppUser appUser;
 
-    public EmailConfirmationToken(LocalDateTime expiresAt, User user) {
+    public EmailConfirmationToken(LocalDateTime expiresAt, AppUser appUser) {
         this.expiresAt = expiresAt;
-        this.user = user;
+        this.appUser = appUser;
     }
 }

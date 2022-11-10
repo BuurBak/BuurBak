@@ -1,6 +1,6 @@
 package com.buurbak.api.security.service;
 
-import com.buurbak.api.security.model.User;
+import com.buurbak.api.security.model.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,17 +18,17 @@ public class AuthenticationUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
-        if (user == null || !user.isEnabled()) {
+        AppUser appUser = userService.findByUsername(username);
+        if (appUser == null || !appUser.isEnabled()) {
             throw new UsernameNotFoundException(username);
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+        appUser.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
+                appUser.getEmail(),
+                appUser.getPassword(),
                 authorities
         );
     }
