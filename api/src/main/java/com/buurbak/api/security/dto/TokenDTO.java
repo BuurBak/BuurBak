@@ -1,13 +1,13 @@
 package com.buurbak.api.security.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
-public class TokenDTO {
-    @NotBlank
-    private final String access_token;
-    @NotBlank
-    private final String refresh_token;
+public record TokenDTO (
+    @NotBlank @JsonProperty("access_token")
+    String accessToken,
+    @NotBlank @JsonProperty("refresh_token")
+    String refreshToken
+) {
 }

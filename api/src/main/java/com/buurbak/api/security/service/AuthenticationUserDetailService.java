@@ -14,11 +14,11 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationUserDetailService implements UserDetailsService {
-    private final UserService userService;
+    private final AppUserService appUserService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = userService.findByUsername(username);
+        AppUser appUser = appUserService.findByUsername(username);
         if (appUser == null || !appUser.isEnabled()) {
             throw new UsernameNotFoundException(username);
         }

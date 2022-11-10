@@ -1,5 +1,6 @@
 package com.buurbak.api.security.model;
 
+import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,22 +20,18 @@ public class EmailConfirmationToken {
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Customer Customer;
+
+    private boolean confirmed = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-
-    private LocalDateTime confirmedAt;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private AppUser appUser;
-
-    public EmailConfirmationToken(LocalDateTime expiresAt, AppUser appUser) {
-        this.expiresAt = expiresAt;
-        this.appUser = appUser;
+    public EmailConfirmationToken(com.buurbak.api.users.model.Customer customer) {
+        Customer = customer;
     }
 }

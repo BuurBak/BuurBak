@@ -1,15 +1,10 @@
-package com.buurbak.api.users.dto;
+package com.buurbak.api.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
-public record PrivateAddressDTO(
-        @NotNull
-        UUID id,
-
+public record CreateAddressDTO(
         @NotBlank
         String city,
         @NotBlank @JsonProperty("street_name")

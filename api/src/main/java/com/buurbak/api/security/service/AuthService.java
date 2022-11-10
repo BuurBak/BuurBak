@@ -20,25 +20,25 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final UserService userService;
+    private final AppUserService appUserService;
     private final TokenService tokenService;
 
-    public TokenDTO refreshToken(HttpServletRequest request) {
+    public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
         if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-                String refresh_token = authorizationHeader.substring(TOKEN_PREFIX.length());
+                String refreshToken = authorizationHeader.substring(TOKEN_PREFIX.length());
                 Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedjwt = verifier.verify(refresh_token);
+                DecodedJWT decodedjwt = verifier.verify(refreshToken);
                 String username = decodedjwt.getSubject();
 
-                AppUser appUser = userService.findByUsername(username);
-                String access_token = tokenService.generateAccessToken(request, username, appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+                AppUser appUser = appUserService.findByUsername(username);
+                String accessToken = tokenService.generateAccessToken(request, username, appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
 
-                return new TokenDTO(access_token, refresh_token);
+                return new TokenDTO(accessToken, refreshToken);
         } else {
-            throw new RuntimeException("refresh token is missing");
+            throw new RuntimeException("Refresh token is missing from Authorization header");
         }
     }
 }
