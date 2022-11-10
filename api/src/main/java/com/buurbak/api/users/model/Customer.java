@@ -25,6 +25,8 @@ public class Customer extends AppUser {
     private String iban;
     @Column(columnDefinition = "text")
     private String address;
+    @Column(columnDefinition = "text")
+    private String number;
 
     public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String address) {
         super(email, password);
