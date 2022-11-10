@@ -8,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -21,9 +20,9 @@ public class EmailConfirmationToken {
     private UUID id;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(nullable = false)
     private LocalDateTime expiresAt;
