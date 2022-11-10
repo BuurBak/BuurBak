@@ -15,7 +15,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 public class Customer extends AppUser {
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(columnDefinition = "text")
     private String name;
     private LocalDate dateOfBirth;
     @Column(columnDefinition = "text")
