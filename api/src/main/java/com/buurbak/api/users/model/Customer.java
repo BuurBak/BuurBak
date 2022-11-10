@@ -24,7 +24,7 @@ public class Customer extends AppUser {
     private String number;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
 
     public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String number, Address address) {

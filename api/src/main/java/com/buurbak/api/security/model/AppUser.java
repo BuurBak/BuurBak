@@ -24,9 +24,9 @@ public class AppUser implements UserDetails {
     @GeneratedValue
     private UUID id;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", nullable = false)
     private String email;
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
