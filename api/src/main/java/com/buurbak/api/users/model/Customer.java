@@ -1,13 +1,12 @@
 package com.buurbak.api.users.model;
 
-import com.buurbak.api.security.model.Role;
 import com.buurbak.api.security.model.AppUser;
+import com.buurbak.api.security.model.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -16,31 +15,33 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 public class Customer extends AppUser {
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", nullable = false)
     private String name;
-
     private LocalDate dateOfBirth;
-
     @Column(columnDefinition = "text")
     private String iban;
     @Column(columnDefinition = "text")
-    private String address;
-    @Column(columnDefinition = "text")
     private String number;
 
-    public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String address) {
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressId", referencedColumnName = "id", nullable = false)
+    private Address address;
+
+    public Customer(String email, String password, String name, LocalDate dateOfBirth, String iban, String number, Address address) {
         super(email, password);
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.iban = iban;
+        this.number = number;
         this.address = address;
     }
 
-    public Customer(String email, String password, Collection<Role> roles, String name, LocalDate dateOfBirth, String iban, String address) {
+    public Customer(String email, String password, Collection<Role> roles, String name, LocalDate dateOfBirth, String iban, String number, Address address) {
         super(email, password, roles);
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.iban = iban;
+        this.number = number;
         this.address = address;
     }
 }
