@@ -25,10 +25,6 @@ public class CustomerService {
         return customerRepository.findByEmail(name).orElseThrow(() -> new CustomerNotFoundException(name));
     }
 
-    public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
-    }
-
     public Page<Customer> findAll(Specification<Customer> specification, Pageable pageable) {
         return customerRepository.findAll(specification, pageable);
     }

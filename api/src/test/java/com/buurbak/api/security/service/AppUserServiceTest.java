@@ -66,11 +66,11 @@ class AppUserServiceTest {
 
     @Test
     void should_not_find_by_username() {
-        String EMAIL = "asdf";
-        when(appUserRepository.findByEmail(EMAIL)).thenReturn(Optional.empty());
+        String email = "asdf";
+        when(appUserRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        assertThrows(AppUserNotFoundException.class, () -> appUserService.findByUsername(EMAIL));
-        verify(appUserRepository, times(1)).findByEmail(EMAIL);
+        assertThrows(AppUserNotFoundException.class, () -> appUserService.findByUsername(email));
+        verify(appUserRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(appUserRepository);
     }
 }
