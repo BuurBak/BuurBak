@@ -47,5 +47,5 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 5. Make sure your code lints.
 6. Issue that pull request and make sure to merge into the `dev` branch!
 
-## Report bugs using Github's [issues]https://github.com/BuurBak/BuurBak/issues)
+## Report bugs using Github's [issues](https://github.com/BuurBak/BuurBak/issues)
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/BuurBak/BuurBak/issues/new); it's that easy!
