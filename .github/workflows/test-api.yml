@@ -24,10 +24,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Build
-        run: mvn -f api/src/main/resources/application.yml --batch-mode -DskipTests package
+        run: mvn -f api/pom.xml --batch-mode -DskipTests package
 
       - name: Test
-        run: mvn -f api/src/test/resources/application.yml --batch-mode -Dmaven.test.failure.ignore=true test
+        run: mvn -f api/pom.xml --batch-mode -Dmaven.test.failure.ignore=true test
 
       - name: Report
         uses: dorny/test-reporter@v1
