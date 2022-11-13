@@ -9,7 +9,7 @@ Backend built in [Spring Boot](https://spring.io/projects/spring-boot)
 ## Requirements
 | Category | Name | Version | Link | Description |
 | --- | --- | --- | --- | --- |
-| Dev | Temurin JDK | 17.0.4.1+1 | https://adoptium.net/installation/ | We use Temurin as our JDK for the backend |
+| Dev | Temurin JDK | 17.0.4.1 | https://adoptium.net/installation/ | We use Temurin as our JDK for the backend |
 | Dev | Node | 16.8.1 | https://nodejs.org/download/release/v16.18.1/ | Our frontend is developed in React node 16 |
 | Dev | Maildev | 2.0.5 | https://github.com/maildev/maildev | Maildev is used in development to catch all outgoing emails |
 | Dev | PostgreSQL | 14 | https://www.postgresql.org | PostgreSQL is our database for both development as production. |
