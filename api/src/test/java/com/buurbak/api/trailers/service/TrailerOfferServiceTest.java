@@ -31,6 +31,9 @@ class TrailerOfferServiceTest {
 
     @Test
     void addTrailerOffer() {
+//        EasyRandom easyRandom = new EasyRandom();
+//        TrailerType trailerType = easyRandom.nextObject(TrailerType.class);
+
         CreateTrailerOfferDTO trailerOffer = new CreateTrailerOfferDTO(
                 "Small",
                 120,
@@ -44,7 +47,7 @@ class TrailerOfferServiceTest {
                 LocalTime.of(17, 0),
                 LocalTime.of(18, 0),
                 "Amersfoort",
-                20,
+                20.00,
                 true);
 
         trailerOfferService.addTrailerOffer(trailerOffer, "lucabergman@yahoo.com");
@@ -54,9 +57,24 @@ class TrailerOfferServiceTest {
         verify(trailerOfferRepository).save(trailerOfferArgumentCaptor.capture());
         TrailerOffer capturedTrailerOffer = trailerOfferArgumentCaptor.getValue();
 
-        // Only test licensePlate, because the actual TrailerOffer gets made in the service, so I can not test the entire TrailerOffer object in the test
-        assertThat(capturedTrailerOffer.getLicensePlateNumber()).isEqualTo(trailerOffer.licensePlateNumber());
-
+        assertThat(capturedTrailerOffer).hasFieldOrProperty("id");
+        assertThat(capturedTrailerOffer).hasFieldOrProperty("trailerType");
+        assertThat(capturedTrailerOffer).hasFieldOrProperty("owner");
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("length", 120);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("height", 245);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("width", 650);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("weight", 1000);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("capacity", 300);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("licensePlateNumber", "AB-C12-34");
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("pickUpTimeStart", LocalTime.of(8, 0));
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("pickUpTimeEnd", LocalTime.of(9, 0));
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("dropOffTimeStart", LocalTime.of(17, 0));
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("dropOffTimeEnd", LocalTime.of(18, 0));
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("location", "Amersfoort");
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("price", 20.00);
+        assertThat(capturedTrailerOffer).hasFieldOrPropertyWithValue("available", true);
+        assertThat(capturedTrailerOffer).hasFieldOrProperty("createdAt");
+        assertThat(capturedTrailerOffer).hasFieldOrProperty("updatedAt");
     }
 
     @Test
