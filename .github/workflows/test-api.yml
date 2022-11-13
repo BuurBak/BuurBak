@@ -24,16 +24,16 @@ jobs:
           distribution: 'temurin'
 
       - name: Build
-        run: mvn --batch-mode -DskipTests api/src/main
+        run: mvn -f api/src/main/resources/application.yml --batch-mode -DskipTests package
 
       - name: Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true api/src/test
+        run: mvn -f api/src/test/resources/application.yml --batch-mode -Dmaven.test.failure.ignore=true test
 
       - name: Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maven Tests
-          path: api/target/surefire-reports/*.xml
+          path: target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
