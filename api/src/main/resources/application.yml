@@ -4,7 +4,7 @@ server:
     include-binding-errors: always
   servlet:
     context-path: /api/v1
-  port: 3080
+  port: 80
 
 web:
   cors:
