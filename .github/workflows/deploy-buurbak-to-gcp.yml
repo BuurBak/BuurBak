@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-deploy-api:
-    name: Cloud Run Deployment
+    name: Cloud Run Deployment api
     runs-on: ubuntu-latest  
     permissions:
       contents: 'read'
@@ -52,7 +52,7 @@ jobs:
           --project ${{ secrets.GCP_PROJECT_ID }}
 
   build-deploy-frontend:
-    name: Cloud Run Deployment
+    name: Cloud Run Deployment frontend
     runs-on: ubuntu-latest  
     permissions:
       contents: 'read'
