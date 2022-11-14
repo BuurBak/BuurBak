@@ -8,6 +8,7 @@ import com.buurbak.api.security.dto.TokenDTO;
 import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.model.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +22,15 @@ public class AuthService {
     private final AppUserService appUserService;
     private final TokenService tokenService;
 
+    @Value("jwt.secret")
+    private String JWT_SECRET;
+
     public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256(System.getenv("JWT_SECRET").getBytes());
+                Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET.getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedjwt = verifier.verify(refreshToken);
                 String username = decodedjwt.getSubject();

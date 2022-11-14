@@ -12,7 +12,7 @@ import com.buurbak.api.trailers.repository.TrailerTypeRepository;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -21,11 +21,11 @@ import org.jeasy.random.randomizers.CreditCardNumberRandomizer;
 import org.jeasy.random.randomizers.EmailRandomizer;
 import org.jeasy.random.randomizers.FullNameRandomizer;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Null;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class GenerateRandomData implements CommandLineRunner {
     private static final int CUSTOMERS_TO_GENERATE = 50;
@@ -46,10 +46,11 @@ public class GenerateRandomData implements CommandLineRunner {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TrailerTypeRepository trailerTypeRepository;
 
+    @Value("${data.generate-random-data:false}")
+    private boolean GENERATE_RANDOM_DATA;
 
     public void run(String... args) {
-        String RANDOM_DATA = System.getenv("RANDOM_DATA");
-        if (RANDOM_DATA == null || !RANDOM_DATA.equals("true")) {
+        if (!GENERATE_RANDOM_DATA) {
             return;
         }
 

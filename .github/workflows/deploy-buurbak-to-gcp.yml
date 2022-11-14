@@ -49,8 +49,8 @@ jobs:
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-api \
           --platform managed \
           --allow-unauthenticated \
-          --project ${{ secrets.GCP_PROJECT_ID }}
-          --max-instances 2
+          --project ${{ secrets.GCP_PROJECT_ID }} \
+          --max-instances 2 \
           --port 80
 
   build-deploy-frontend:
@@ -92,6 +92,6 @@ jobs:
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-frontend \
           --platform managed \
           --allow-unauthenticated \
-          --project ${{ secrets.GCP_PROJECT_ID }}
-          --max-instances 2
+          --project ${{ secrets.GCP_PROJECT_ID }} \
+          --max-instances 2 \
           --port 80

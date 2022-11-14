@@ -1,6 +1,5 @@
 package com.buurbak.api.images.util;
 
-import com.buurbak.api.images.config.CgpConfig;
 import com.buurbak.api.images.exception.BadRequestException;
 import com.buurbak.api.images.exception.FileWriteException;
 import com.buurbak.api.images.exception.GCPFileUploadException;
@@ -11,11 +10,11 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +29,17 @@ import java.util.UUID;
 public class DataBucketUtil {
     private final String[] EXTENSION_LIST = {".png", ".jpeg"};
 
-    @Autowired
-    private final CgpConfig config;
+    @Value("${gcp.auth-file}")
+    private String AUTH_FILE;
+
+    @Value("${gcp.project-id}")
+    private String PROJECT_ID;
+
+    @Value("${gcp.bucket-id}")
+    private String BUCKET_ID;
+
+    @Value("${gcp.dir-name}")
+    private String DIR_NAME;
 
     public void uploadFile(MultipartFile multipartFile, UUID id, String fileName) throws GCPFileUploadException, NotAnImageException, BadRequestException, FileWriteException {
         try {
@@ -42,7 +50,7 @@ public class DataBucketUtil {
             byte[] fileData = multipartFile.getBytes();
 
             Bucket bucket = getBucket();
-            bucket.create(config.getDirName() + "/" + id + fileExtension, fileData, contentType);
+            bucket.create(DIR_NAME + "/" + id + fileExtension, fileData, contentType);
 
             log.debug("File successfully uploaded to GCS");
         } catch (IOException e) {
@@ -78,12 +86,12 @@ public class DataBucketUtil {
 
 
     public Bucket getBucket() throws IOException {
-        InputStream inputStream = new ClassPathResource(config.getAuthFile()).getInputStream();
+        InputStream inputStream = new ByteArrayInputStream(AUTH_FILE.getBytes());
 
-        StorageOptions options = StorageOptions.newBuilder().setProjectId(config.getProjectId())
+        StorageOptions options = StorageOptions.newBuilder().setProjectId(PROJECT_ID)
                 .setCredentials(GoogleCredentials.fromStream(inputStream)).build();
 
         Storage storage = options.getService();
-        return storage.get(config.getBucketId(), Storage.BucketGetOption.fields());
+        return storage.get(BUCKET_ID, Storage.BucketGetOption.fields());
     }
 }

@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: jdbc:postgresql:///${SPRING_DATASOURCE_DATABASE_NAME}?cloudSqlInstance=${SPRING_DATASOURCE_INSTANCE_CONNECTION_NAME}&socketFactory=com.google.cloud.sql.postgres.SocketFactory
