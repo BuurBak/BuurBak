@@ -37,45 +37,45 @@ public class TrailerOfferService {
 
     public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
         Customer customer = customerService.findByUsername(username);
-        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
+        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
         TrailerOffer trailerOffer = new TrailerOffer(
                 trailerType,
                 customer,
-                createTrailerOfferDTO.length(),
-                createTrailerOfferDTO.height(),
-                createTrailerOfferDTO.width(),
-                createTrailerOfferDTO.weight(),
-                createTrailerOfferDTO.capacity(),
-                createTrailerOfferDTO.licensePlateNumber(),
-                createTrailerOfferDTO.pickUpTimeStart(),
-                createTrailerOfferDTO.pickUpTimeEnd(),
-                createTrailerOfferDTO.dropOffTimeStart(),
-                createTrailerOfferDTO.dropOffTimeEnd(),
-                createTrailerOfferDTO.location(),
-                createTrailerOfferDTO.price(),
-                createTrailerOfferDTO.available());
+                createTrailerOfferDTO.getLength(),
+                createTrailerOfferDTO.getHeight(),
+                createTrailerOfferDTO.getWidth(),
+                createTrailerOfferDTO.getWeight(),
+                createTrailerOfferDTO.getCapacity(),
+                createTrailerOfferDTO.getLicensePlateNumber(),
+                createTrailerOfferDTO.getPickUpTimeStart(),
+                createTrailerOfferDTO.getPickUpTimeEnd(),
+                createTrailerOfferDTO.getDropOffTimeStart(),
+                createTrailerOfferDTO.getDropOffTimeEnd(),
+                createTrailerOfferDTO.getLocation(),
+                createTrailerOfferDTO.getPrice(),
+                createTrailerOfferDTO.isAvailable());
         trailerOfferRepository.save(trailerOffer);
         return trailerOffer;
     }
 
     public TrailerOffer updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
-        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
+        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
         trailerOffer.setTrailerType(trailerType);
-        trailerOffer.setLength(createTrailerOfferDTO.length());
-        trailerOffer.setHeight(createTrailerOfferDTO.height());
-        trailerOffer.setWidth(createTrailerOfferDTO.width());
-        trailerOffer.setWeight(createTrailerOfferDTO.weight());
-        trailerOffer.setCapacity(createTrailerOfferDTO.capacity());
-        trailerOffer.setLicensePlateNumber(createTrailerOfferDTO.licensePlateNumber());
-        trailerOffer.setPickUpTimeStart(createTrailerOfferDTO.pickUpTimeStart());
-        trailerOffer.setPickUpTimeEnd(createTrailerOfferDTO.pickUpTimeEnd());
-        trailerOffer.setDropOffTimeStart(createTrailerOfferDTO.dropOffTimeStart());
-        trailerOffer.setDropOffTimeEnd(createTrailerOfferDTO.dropOffTimeEnd());
-        trailerOffer.setLocation(createTrailerOfferDTO.location());
-        trailerOffer.setPrice(createTrailerOfferDTO.price());
-        trailerOffer.setAvailable(createTrailerOfferDTO.available());
+        trailerOffer.setLength(createTrailerOfferDTO.getLength());
+        trailerOffer.setHeight(createTrailerOfferDTO.getHeight());
+        trailerOffer.setWidth(createTrailerOfferDTO.getWidth());
+        trailerOffer.setWeight(createTrailerOfferDTO.getWeight());
+        trailerOffer.setCapacity(createTrailerOfferDTO.getCapacity());
+        trailerOffer.setLicensePlateNumber(createTrailerOfferDTO.getLicensePlateNumber());
+        trailerOffer.setPickUpTimeStart(createTrailerOfferDTO.getPickUpTimeStart());
+        trailerOffer.setPickUpTimeEnd(createTrailerOfferDTO.getPickUpTimeEnd());
+        trailerOffer.setDropOffTimeStart(createTrailerOfferDTO.getDropOffTimeStart());
+        trailerOffer.setDropOffTimeEnd(createTrailerOfferDTO.getDropOffTimeEnd());
+        trailerOffer.setLocation(createTrailerOfferDTO.getLocation());
+        trailerOffer.setPrice(createTrailerOfferDTO.getPrice());
+        trailerOffer.setAvailable(createTrailerOfferDTO.isAvailable());
 
         trailerOfferRepository.save(trailerOffer);
         return trailerOffer;
