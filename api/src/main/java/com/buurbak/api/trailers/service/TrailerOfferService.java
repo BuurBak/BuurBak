@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.service;
 
+import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -26,7 +27,6 @@ public class TrailerOfferService {
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
 
-
     public TrailerOffer getTrailerOffer(UUID id) throws EntityNotFoundException {
         return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
@@ -38,22 +38,11 @@ public class TrailerOfferService {
     public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
         Customer customer = customerService.findByUsername(username);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
-        TrailerOffer trailerOffer = new TrailerOffer(
-                trailerType,
-                customer,
-                createTrailerOfferDTO.getLength(),
-                createTrailerOfferDTO.getHeight(),
-                createTrailerOfferDTO.getWidth(),
-                createTrailerOfferDTO.getWeight(),
-                createTrailerOfferDTO.getCapacity(),
-                createTrailerOfferDTO.getLicensePlateNumber(),
-                createTrailerOfferDTO.getPickUpTimeStart(),
-                createTrailerOfferDTO.getPickUpTimeEnd(),
-                createTrailerOfferDTO.getDropOffTimeStart(),
-                createTrailerOfferDTO.getDropOffTimeEnd(),
-                createTrailerOfferDTO.getLocation(),
-                createTrailerOfferDTO.getPrice(),
-                createTrailerOfferDTO.isAvailable());
+
+        TrailerOffer trailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
+        trailerOffer.setTrailerType(trailerType);
+        trailerOffer.setOwner(customer);
+
         trailerOfferRepository.save(trailerOffer);
         return trailerOffer;
     }
