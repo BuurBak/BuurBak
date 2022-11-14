@@ -1,0 +1,66 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+  # TODO remove after testing is done
+  pull_request:
+      - dev
+jobs:
+  build:
+    name: Cloud Run Deployment
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Setup GCP Service Account
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: 'latest'
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker
+
+      # Deploy api
+      - name: Build buurbak-api
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-api:latest api
+
+      - name: Push buurbak-api
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-api:latest
+
+      - name: Deploy buurbak-api
+        run: |
+          gcloud run deploy buurbak-api \
+          --region europe-west1 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-api \
+          --platform managed \
+          --allow-unauthenticated \
+          --project ${{ secrets.GCP_PROJECT_ID }}
+
+      # Deploy frontend
+      - name: Build buurbak-frontend
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-frontend:latest frontend
+
+      - name: Push buurbak-frontend
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-frontend:latest
+
+      - name: Deploy buurbak-frontend
+        run: |
+          gcloud run deploy buurbak-frontend \
+          --region europe-west1 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/buurbak-frontend \
+          --platform managed \
+          --allow-unauthenticated \
+          --project ${{ secrets.GCP_PROJECT_ID }}
+

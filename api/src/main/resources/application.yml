@@ -16,6 +16,7 @@ web:
 
 
 gcp:
+  # TODO better way to hide project id and gcp account file.json 
   auth-file: gcp-account-file.json
   project-id: celestial-sonar-365614
   bucket-id: buurbak_public
