@@ -1,5 +1,7 @@
 package com.buurbak.api.users.service;
 
+import com.buurbak.api.users.dto.PublicCustomerDTO;
+import com.buurbak.api.users.dto.UpdateUserDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
@@ -10,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -27,5 +30,9 @@ public class CustomerService {
 
     public Page<Customer> findAll(Specification<Customer> specification, Pageable pageable) {
         return customerRepository.findAll(specification, pageable);
+    }
+
+    public void updateUser(UUID id, UpdateUserDTO updateUserDTO) throws CustomerNotFoundException {
+
     }
 }

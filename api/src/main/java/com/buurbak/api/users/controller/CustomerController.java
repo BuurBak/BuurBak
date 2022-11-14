@@ -4,6 +4,8 @@ import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecifica
 import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
+import com.buurbak.api.users.dto.UpdateUserDTO;
+import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,12 +23,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -74,5 +76,16 @@ public class CustomerController {
     ) {
         Page<Customer> customerPage = customerService.findAll(specification, pageable);
         return customerConverter.convertCustomerPageToPublicCustomerDTOPage(customerPage);
+    }
+
+    @PutMapping(path = "{/id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
+        try {
+            customerService.updateUser(id, updateUserDTO);
+        }
+        catch (CustomerNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
+        }
     }
 }
