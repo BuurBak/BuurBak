@@ -72,7 +72,7 @@ class TrailerOfferServiceTest {
         CreateTrailerOfferDTO newTrailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 
         when(trailerOfferRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldTrailerOffer));
-        
+
         trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO);
 
         ArgumentCaptor<TrailerOffer> trailerOfferArgumentCaptor = ArgumentCaptor.forClass(TrailerOffer.class);

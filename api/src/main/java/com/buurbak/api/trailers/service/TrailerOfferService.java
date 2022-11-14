@@ -13,6 +13,7 @@ import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -51,22 +52,11 @@ public class TrailerOfferService {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
-        trailerOffer.setTrailerType(trailerType);
-        trailerOffer.setLength(createTrailerOfferDTO.getLength());
-        trailerOffer.setHeight(createTrailerOfferDTO.getHeight());
-        trailerOffer.setWidth(createTrailerOfferDTO.getWidth());
-        trailerOffer.setWeight(createTrailerOfferDTO.getWeight());
-        trailerOffer.setCapacity(createTrailerOfferDTO.getCapacity());
-        trailerOffer.setLicensePlateNumber(createTrailerOfferDTO.getLicensePlateNumber());
-        trailerOffer.setPickUpTimeStart(createTrailerOfferDTO.getPickUpTimeStart());
-        trailerOffer.setPickUpTimeEnd(createTrailerOfferDTO.getPickUpTimeEnd());
-        trailerOffer.setDropOffTimeStart(createTrailerOfferDTO.getDropOffTimeStart());
-        trailerOffer.setDropOffTimeEnd(createTrailerOfferDTO.getDropOffTimeEnd());
-        trailerOffer.setLocation(createTrailerOfferDTO.getLocation());
-        trailerOffer.setPrice(createTrailerOfferDTO.getPrice());
-        trailerOffer.setAvailable(createTrailerOfferDTO.isAvailable());
-
-        trailerOfferRepository.save(trailerOffer);
+        ModelMapper modelMapper = new ModelMapper();
+        TrailerOffer newTrailerOffer = modelMapper.map(createTrailerOfferDTO, TrailerOffer.class);
+        newTrailerOffer.setId(trailerId);
+        newTrailerOffer.setTrailerType(trailerType);
+        trailerOfferRepository.save(newTrailerOffer);
     }
 
     public void deleteTrailerOffer(UUID trailerId) {
