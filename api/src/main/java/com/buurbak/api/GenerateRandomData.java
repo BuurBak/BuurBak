@@ -25,6 +25,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Null;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,7 +48,8 @@ public class GenerateRandomData implements CommandLineRunner {
 
 
     public void run(String... args) {
-        if (!System.getenv("RANDOM_DATA").equals("true")) {
+        String RANDOM_DATA = System.getenv("RANDOM_DATA");
+        if (RANDOM_DATA == null || !RANDOM_DATA.equals("true")) {
             return;
         }
 
