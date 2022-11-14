@@ -6,7 +6,9 @@ on:
       - main
   # TODO remove after testing is done
   pull_request:
+    branches:
       - dev
+
 jobs:
   build:
     name: Cloud Run Deployment
