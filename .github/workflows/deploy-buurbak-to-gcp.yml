@@ -50,6 +50,7 @@ jobs:
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
+          --port=80
 
   build-deploy-frontend:
     name: Cloud Run Deployment frontend
@@ -91,4 +92,4 @@ jobs:
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
-
+          --port=80
