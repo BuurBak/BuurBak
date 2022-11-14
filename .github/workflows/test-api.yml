@@ -7,7 +7,8 @@ on:
   pull_request:
     branches:
       - main
-      - dev
+      # TODO UNCOMMENT
+      # - dev
   workflow_dispatch:
 
 jobs:
