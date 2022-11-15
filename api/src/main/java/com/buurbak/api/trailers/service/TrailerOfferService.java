@@ -31,7 +31,7 @@ public class TrailerOfferService {
         return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Page<TrailerOffer> getAllTrailerOffersInfo(Pageable pageable){
+    public Page<TrailerOffer> getAllTrailerOffers(Pageable pageable){
         return trailerOfferRepository.findAll(pageable);
     }
 

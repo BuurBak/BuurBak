@@ -19,9 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +31,7 @@ class TrailerOfferServiceTest {
     private TrailerOfferService trailerOfferService;
 
     @Test
-    void trailerOfferExistsById() {
+    void shouldFindById() {
         // Given
         EasyRandom easyRandom = new EasyRandom();
         TrailerOffer trailerOffer = easyRandom.nextObject(TrailerOffer.class);
@@ -51,62 +49,52 @@ class TrailerOfferServiceTest {
     }
 
     @Test
-    void trailerOfferDoesNotExistsById(){
+    void shouldNotFindById(){
         // Given
         UUID uuid = UUID.randomUUID();
 
         // When
         // Then
-        assertThatThrownBy(() -> trailerOfferService.getTrailerOffer(uuid))
-                .isInstanceOf(EntityNotFoundException.class);
+        assertThrows(EntityNotFoundException.class, () -> trailerOfferService.getTrailerOffer(uuid));
+        verify(trailerOfferRepository, times(1)).findById(uuid);
+        verifyNoMoreInteractions(trailerOfferRepository);
     }
 
     @Test
-    void trailerOffersDoesNotExists() {
+    void shouldReturnEmptyPage() {
         // Given
         List<TrailerOffer> trailerOfferList = new ArrayList<>();
-        // When
-        when(trailerOfferService.getAllTrailerOffersInfo(any())).thenReturn(new PageImpl<>(trailerOfferList));
+        Pageable pageable = PageRequest.of(0, 20);
 
-        Page<TrailerOffer> result = trailerOfferService.getAllTrailerOffersInfo(PageRequest.of(0, 20));
+        // When
+        when(trailerOfferService.getAllTrailerOffers(any())).thenReturn(new PageImpl<>(trailerOfferList));
+
+        Page<TrailerOffer> result = trailerOfferService.getAllTrailerOffers(pageable);
 
         // Then
-
         assertTrue(result.getContent().isEmpty());
+        verify(trailerOfferRepository, times(1)).findAll(pageable);
+        verifyNoMoreInteractions(trailerOfferRepository);
     }
 
     @Test
-    void trailerOffersExists() {
-        //given
+    void shouldReturnTrailerOfferPage() {
+        // Given
         EasyRandom easyRandom = new EasyRandom();
         List<TrailerOffer> trailerOfferList = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             trailerOfferList.add(easyRandom.nextObject(TrailerOffer.class));
         }
+        Pageable pageable = PageRequest.of(0, 20);
 
-        //when
-        when(trailerOfferService.getAllTrailerOffersInfo(any())).thenReturn(new PageImpl<>(trailerOfferList));
+        // When
+        when(trailerOfferService.getAllTrailerOffers(any())).thenReturn(new PageImpl<>(trailerOfferList));
 
-        Page<TrailerOffer> result = trailerOfferService.getAllTrailerOffersInfo(PageRequest.of(0, 20));
+        Page<TrailerOffer> result = trailerOfferService.getAllTrailerOffers(pageable);
 
-        //then
+        // Then
         assertEquals(trailerOfferList, result.getContent());
-    }
-
-    @Test
-    void trailerOfferPagesExists() {
-        //given
-        EasyRandom easyRandom = new EasyRandom();
-        List<TrailerOffer> trailerOfferList = new ArrayList<>();
-        for(int i = 0; i < 100; i++){
-            trailerOfferList.add(easyRandom.nextObject(TrailerOffer.class));
-        }
-
-        //when
-        when(trailerOfferService.getAllTrailerOffersInfo(any())).thenReturn(new PageImpl<>(trailerOfferList));
-
-        Page<TrailerOffer> result = trailerOfferService.getAllTrailerOffersInfo(Pageable.ofSize(20));
-        //then
-        assertEquals(5, result.getTotalPages());
+        verify(trailerOfferRepository, times(1)).findAll(pageable);
+        verifyNoMoreInteractions(trailerOfferRepository);
     }
 }

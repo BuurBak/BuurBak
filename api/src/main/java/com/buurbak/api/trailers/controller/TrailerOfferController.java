@@ -49,9 +49,9 @@ public class TrailerOfferController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
     })
     @GetMapping
-    public Page<TrailerInfoDTO> getAllTrailerOffer(@PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
-        Page<TrailerOffer> trailerOfferPage = trailerOfferService.getAllTrailerOffersInfo(pageable);
-        return trailerOfferConverter.convertTrailerOfferPageToTrailerOfferDTOPage(trailerOfferPage);
+        public Page<TrailerInfoDTO> getAllTrailerOffer(@PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+            Page<TrailerOffer> trailerOfferPage = trailerOfferService.getAllTrailerOffers(pageable);
+            return trailerOfferConverter.convertTrailerOfferPageToTrailerOfferDTOPage(trailerOfferPage);
     }
 
     @Operation(summary = "Add new trailerOffer")
