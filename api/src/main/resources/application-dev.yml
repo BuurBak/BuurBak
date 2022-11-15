@@ -28,6 +28,10 @@ spring:
     host: localhost
     port: 1025
 
+    # Username & Password not used but must be set
+    username: hello
+    password: hello
+
     properties:
       mail:
         smtp:
