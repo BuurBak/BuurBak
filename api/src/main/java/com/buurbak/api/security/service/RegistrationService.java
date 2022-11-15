@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class RegistrationService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
 
 
-    public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO) throws EmailTakenException {
+    public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO, HttpServletRequest request) throws EmailTakenException {
         if (appUserService.isEmailTaken(registerNewCustomerDTO.getEmail())) {
             throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.getEmail()));
         }
@@ -62,7 +63,8 @@ public class RegistrationService {
                 registerNewCustomerDTO.getEmail(),
                 confirmEmailService.buildEmail(
                         registerNewCustomerDTO.getName(),
-                        System.getenv("HOST") + "/auth/confirm/" + emailConfirmationToken.getId().toString()
+                        // Depends on controller, so maybe bit bad, but works really well
+                        request.getRequestURL().toString().replace("register", "confirm") + "/" + emailConfirmationToken.getId().toString()
                 )
         );
 
