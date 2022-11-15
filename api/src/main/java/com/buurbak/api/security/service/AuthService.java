@@ -22,10 +22,10 @@ public class AuthService {
     private final AppUserService appUserService;
     private final TokenService tokenService;
 
-    @Value("jwt.secret")
+    @Value("${jwt-secret}")
     private String JWT_SECRET;
 
-    public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) {
+    public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) throws IllegalStateException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

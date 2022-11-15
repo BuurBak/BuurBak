@@ -36,9 +36,9 @@ public class AuthController {
     })
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@Valid @RequestBody RegisterNewCustomerDTO registerNewCustomerDTO) {
+    public String register(@Valid @RequestBody RegisterNewCustomerDTO registerNewCustomerDTO, HttpServletRequest request) {
         try {
-            Customer customer = registrationService.registerNewCustomer(registerNewCustomerDTO);
+            Customer customer = registrationService.registerNewCustomer(registerNewCustomerDTO, request);
             return customer.getId().toString();
         } catch (EmailTakenException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
