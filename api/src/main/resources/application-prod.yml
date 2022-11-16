@@ -34,10 +34,10 @@ spring:
       show-sql: false
 
   mail:
-    host: localhost
+    host: smtp.google.com
     username: ${MAIL_USERNAME}
     password: ${sm://MAIL_PASSWORD}
-    port: 1025
+    port: 587
 
     properties:
       mail:
