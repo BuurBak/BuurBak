@@ -29,7 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @AllArgsConstructor
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
-    private SecurityUtils securityUtils;
+    private final SecurityUtils securityUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TokenService {
-    private SecurityUtils securityUtils;
+    private final SecurityUtils securityUtils;
 
     public static final int ACCESS_TOKEN_DURATION = 8 * 60 * 60 * 1000;
     public static final int REFRESH_TOKEN_DURATION = ACCESS_TOKEN_DURATION * 3 * 6;
