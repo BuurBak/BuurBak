@@ -6,13 +6,11 @@ server:
     context-path: /api/v1
   port: ${PORT}
 
-web:
-  cors:
-    allowed-origins: ${ALLOWED_ORIGINS}
-    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
-    max-age: 3600
-    allowed-headers: "*"
-    exposed-headers: "*"
+jwt:
+  token-validity: 18000
+  authorities-key: roles
+  token-prefix: Bearer
+  header-string: Authorization
 
 gcp:
   bucket-id: ${GCP_BUCKET_ID}

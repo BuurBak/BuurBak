@@ -6,7 +6,8 @@ data:
 gcp:
   auth-file: ${sm://GCP_AUTH_FILE}
 
-jwt-secret: ${sm://JWT_SECRET}
+jwt:
+  secret-key: ${sm://JWT_SECRET}
 
 spring:
   datasource:
