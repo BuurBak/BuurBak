@@ -44,15 +44,15 @@ spring:
       show-sql: false
 
   mail:
-    host: smtp.google.com
-    username: ${MAIL_USERNAME}
-    password: ${sm://MAIL_PASSWORD}
+    host: smtp.gmail.com
     port: 587
-
-    smtp:
-      auth: true
-      starttls:
-        enable: true
-
-    transport:
-      protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          # tls, port 587
+          starttls:
+            enable: true

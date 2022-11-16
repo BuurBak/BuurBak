@@ -1,7 +1,6 @@
 package com.buurbak.api.security.service;
 
 import com.buurbak.api.email.service.ConfirmEmailService;
-import com.buurbak.api.email.service.EmailSender;
 import com.buurbak.api.security.dto.RegisterNewCustomerDTO;
 import com.buurbak.api.security.exception.EmailConfirmationTokenAlreadyConfirmedException;
 import com.buurbak.api.security.exception.EmailConfirmationTokenNotFoundException;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Collections;
@@ -27,7 +27,7 @@ public class RegistrationService {
     @Autowired
     private EmailConfirmationTokenService emailConfirmationTokenService;
     @Autowired
-    private EmailSender emailSender;
+    private ConfirmEmailService emailSender;
     @Autowired
     private ConfirmEmailService confirmEmailService;
     @Autowired
@@ -40,7 +40,7 @@ public class RegistrationService {
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
 
 
-    public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO, HttpServletRequest request) throws EmailTakenException {
+    public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO, HttpServletRequest request) throws EmailTakenException, MessagingException {
         if (appUserService.isEmailTaken(registerNewCustomerDTO.getEmail())) {
                 throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.getEmail()));
         }
@@ -67,13 +67,11 @@ public class RegistrationService {
                 new EmailConfirmationToken(customerToRegister)
         );
 
-        emailSender.send(
-                registerNewCustomerDTO.getEmail(),
-                confirmEmailService.buildEmail(
-                        registerNewCustomerDTO.getName(),
-                        // Depends on controller, so maybe bit bad, but works really well
-                        request.getRequestURL().toString().replace("register", "confirm") + "/" + emailConfirmationToken.getId().toString()
-                )
+        emailSender.sendConfirmEmailEmail(
+                customerToRegister.getEmail(),
+                customerToRegister.getName(),
+                // Depends on controller, so maybe bit bad, but works really well
+                request.getRequestURL().toString().replace("register", "confirm") + "/" + emailConfirmationToken.getId().toString()
         );
 
         return customerToRegister;

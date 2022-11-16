@@ -1,9 +1,9 @@
-package com.buurbak.api;
+package com.buurbak.api.data;
 
-import com.buurbak.api.config.randomizers.Hallo123PasswordRandomizer;
-import com.buurbak.api.config.randomizers.TrailerDimensionRandomizer;
-import com.buurbak.api.config.randomizers.TrailerOwnerRandomizer;
-import com.buurbak.api.config.randomizers.TrailerTypeRandomizer;
+import com.buurbak.api.data.randomizers.Hallo123PasswordRandomizer;
+import com.buurbak.api.data.randomizers.TrailerDimensionRandomizer;
+import com.buurbak.api.data.randomizers.TrailerOwnerRandomizer;
+import com.buurbak.api.data.randomizers.TrailerTypeRandomizer;
 import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
@@ -37,7 +37,7 @@ import java.util.stream.StreamSupport;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GenerateRandomData implements CommandLineRunner {
+public class RandomDataGenerator implements CommandLineRunner {
     private static final int CUSTOMERS_TO_GENERATE = 50;
     private static final int TRAILER_OFFERS_TO_GENERATE = 200;
 

@@ -1,4 +1,4 @@
-package com.buurbak.api;
+package com.buurbak.api.config;
 
 import net.kaczmarzyk.spring.data.jpa.web.SpecificationArgumentResolver;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,7 @@ import java.util.List;
 
 @Configuration
 @EnableJpaRepositories
-public class Config implements WebMvcConfigurer {
-
+public class SpecificationArgResolverConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new SpecificationArgumentResolver());

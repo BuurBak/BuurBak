@@ -35,3 +35,7 @@ spring:
     multipart:
       max-file-size: 1MB
       max-request-size: 1MB
+
+  mail:
+    addresses:
+      no-reply-address: noreply.buurbak@gmail.com

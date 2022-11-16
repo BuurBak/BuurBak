@@ -1,4 +1,4 @@
-package com.buurbak.api;
+package com.buurbak.api.config;
 
 import com.buurbak.api.security.model.Role;
 import com.buurbak.api.security.service.RoleService;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class GenerateRoles implements CommandLineRunner {
+public class RolesConfig implements CommandLineRunner {
     @Autowired
     private RoleService roleService;
 

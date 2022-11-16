@@ -9,8 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class AppUserRepositoryTest {
@@ -23,7 +22,32 @@ class AppUserRepositoryTest {
     }
 
     @Test
-    void findByEmail() {
+    void shouldExistByEmail() {
+        // Given
+        EasyRandom easyRandom = new EasyRandom();
+        AppUser appUser = appUserRepository.save(easyRandom.nextObject(AppUser.class));
+
+        // When
+        boolean result = appUserRepository.existsByEmail(appUser.getEmail());
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldNotExistByEmail() {
+        // Given
+        EasyRandom easyRandom = new EasyRandom();
+
+        // When
+        boolean result = appUserRepository.existsByEmail(easyRandom.nextObject(String.class));
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    void shouldFindByEmail() {
         // Given
         EasyRandom easyRandom = new EasyRandom();
         AppUser appUser = appUserRepository.save(easyRandom.nextObject(AppUser.class));
@@ -33,6 +57,18 @@ class AppUserRepositoryTest {
 
         // Then
         assertTrue(foundAppUser.isPresent());
-        assertEquals(foundAppUser.get().getEmail(), appUser.getEmail());
+        assertEquals(foundAppUser.get(), appUser);
+    }
+
+    @Test
+    void shouldNotFindByEmail() {
+        // Given
+        EasyRandom easyRandom = new EasyRandom();
+
+        // When
+        Optional<AppUser> foundAppUser = appUserRepository.findByEmail(easyRandom.nextObject(String.class));
+
+        // Then
+        assertTrue(foundAppUser.isEmpty());
     }
 }
