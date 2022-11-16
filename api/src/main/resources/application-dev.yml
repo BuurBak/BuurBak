@@ -21,6 +21,8 @@ spring:
 
   cloud:
     gcp:
+      secretmanager:
+        enabled: false
       sql:
         enabled: false
 
