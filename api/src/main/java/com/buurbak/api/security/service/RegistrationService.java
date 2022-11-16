@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -41,24 +42,25 @@ public class RegistrationService {
 
     public Customer registerNewCustomer(RegisterNewCustomerDTO registerNewCustomerDTO, HttpServletRequest request) throws EmailTakenException {
         if (appUserService.isEmailTaken(registerNewCustomerDTO.getEmail())) {
-            throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.getEmail()));
+                throw new EmailTakenException(String.format(EMAIL_TAKEN_MESSAGE, registerNewCustomerDTO.getEmail()));
         }
 
         Customer customerToRegister = customerService.saveCustomer(
                 new Customer(
-                    registerNewCustomerDTO.getEmail(),
-                    bCryptPasswordEncoder.encode(registerNewCustomerDTO.getPassword()),
-                    registerNewCustomerDTO.getName(),
-                    null,
-                    null,
-                    registerNewCustomerDTO.getNumber(),
-                    new Address(
-                            registerNewCustomerDTO.getAddress().getCity(),
-                            registerNewCustomerDTO.getAddress().getStreetName(),
-                            registerNewCustomerDTO.getAddress().getNumber(),
-                            registerNewCustomerDTO.getAddress().getPostalCode()
-                    )
-            )
+                        registerNewCustomerDTO.getEmail(),
+                        bCryptPasswordEncoder.encode(registerNewCustomerDTO.getPassword()),
+                        Collections.singletonList(roleService.findByName("USER")),
+                        registerNewCustomerDTO.getName(),
+                        null,
+                        null,
+                        registerNewCustomerDTO.getNumber(),
+                        new Address(
+                                registerNewCustomerDTO.getAddress().getCity(),
+                                registerNewCustomerDTO.getAddress().getStreetName(),
+                                registerNewCustomerDTO.getAddress().getNumber(),
+                                registerNewCustomerDTO.getAddress().getPostalCode()
+                        )
+                )
         );
 
         EmailConfirmationToken emailConfirmationToken = emailConfirmationTokenService.saveEmailConfirmationToken(
