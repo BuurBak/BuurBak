@@ -49,10 +49,10 @@ spring:
     password: ${sm://MAIL_PASSWORD}
     port: 587
 
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
+    smtp:
+      auth: true
+      starttls:
+        enable: true
+
+    transport:
+      protocol: smtp
