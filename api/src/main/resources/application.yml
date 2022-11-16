@@ -23,6 +23,10 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
 
+  cloud:
+    gcp:
+      project-id: ${GCP_PROJECT_ID}
+
   data:
     web:
       pageable:
