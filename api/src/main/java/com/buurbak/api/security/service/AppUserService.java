@@ -23,7 +23,7 @@ public class AppUserService implements UserDetailsService {
     private AppUserRepository appUserRepository;
 
     public boolean isEmailTaken(String email) {
-        return appUserRepository.findByEmail(email).isPresent();
+        return appUserRepository.existsByEmail(email);
     }
 
     public AppUser findByEmail(String email) throws AppUserNotFoundException {

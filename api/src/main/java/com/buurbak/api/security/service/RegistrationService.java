@@ -10,7 +10,7 @@ import com.buurbak.api.security.model.EmailConfirmationToken;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +19,22 @@ import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 @Transactional
 public class RegistrationService {
-    private final AppUserService appUserService;
-    private final EmailConfirmationTokenService emailConfirmationTokenService;
-    private final EmailSender emailSender;
-    private final ConfirmEmailService confirmEmailService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final CustomerService customerService;
-
+    @Autowired
+    private AppUserService appUserService;
+    @Autowired
+    private EmailConfirmationTokenService emailConfirmationTokenService;
+    @Autowired
+    private EmailSender emailSender;
+    @Autowired
+    private ConfirmEmailService confirmEmailService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private RoleService roleService;
 
     private final static String EMAIL_TAKEN_MESSAGE = "Email: %s already taken";
 
