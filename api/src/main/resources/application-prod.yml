@@ -10,6 +10,8 @@ jwt-secret: ${sm://JWT_SECRET}
 
 spring:
   datasource:
+    username: {DATABASE_USERNAME}
+    password: {sm://BUURBAK_DATABASE_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       initializationFailTimeout: 30000
@@ -21,9 +23,11 @@ spring:
 
   cloud:
     gcp:
+      project-id: ${GCP_PROJECT_ID}
       sql:
         instance-connection-name: ${INSTANCE_CONNECTION_NAME}
         database-name: ${DATABASE_NAME}
+        enabled: true
 
   sql:
     init:
