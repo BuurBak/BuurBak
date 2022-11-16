@@ -29,23 +29,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserService).passwordEncoder(encoder());
+            auth.userDetailsService(appUserService).passwordEncoder(encoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/auth/login", "/auth/register", "/auth/confirm/*").permitAll()
-                .antMatchers("/swagger-ui/**", "/swagger-ui.html","/v3/api-docs/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/traileroffer", "/traileroffer/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            http.cors().and().csrf().disable();
+            http.authorizeRequests().antMatchers("/auth/login", "/auth/register", "/auth/confirm/*").permitAll();
+            http.authorizeRequests().antMatchers("/swagger-ui/**", "/swagger-ui.html","/v3/api-docs/**").permitAll();
+//            http.authorizeRequests().antMatchers(HttpMethod.GET, "/traileroffer", "/traileroffer/*").permitAll()
+            http.authorizeRequests().anyRequest().authenticated();
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+            http.formLogin().disable()
+                    .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+            http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -56,11 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+            return super.authenticationManagerBean();
     }
 
     @Bean
     public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationFilter();
+            return new JwtAuthenticationFilter();
     }
 }
