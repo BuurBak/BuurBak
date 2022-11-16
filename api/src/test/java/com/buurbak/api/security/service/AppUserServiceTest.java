@@ -57,7 +57,7 @@ class AppUserServiceTest {
 
         when(appUserRepository.findByEmail(appUser.getEmail())).thenReturn(Optional.of(appUser));
 
-        AppUser result = appUserService.findByUsername(appUser.getEmail());
+        AppUser result = appUserService.findByEmail(appUser.getEmail());
 
         assertEquals(appUser, result);
         verify(appUserRepository, times(1)).findByEmail(appUser.getEmail());
@@ -69,7 +69,7 @@ class AppUserServiceTest {
         String email = "asdf";
         when(appUserRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        assertThrows(AppUserNotFoundException.class, () -> appUserService.findByUsername(email));
+        assertThrows(AppUserNotFoundException.class, () -> appUserService.findByEmail(email));
         verify(appUserRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(appUserRepository);
     }

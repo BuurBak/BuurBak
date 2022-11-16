@@ -35,7 +35,7 @@ public class AuthService {
                 DecodedJWT decodedjwt = verifier.verify(refreshToken);
                 String username = decodedjwt.getSubject();
 
-                AppUser appUser = appUserService.findByUsername(username);
+                AppUser appUser = appUserService.findByEmail(username);
                 String accessToken = tokenService.generateAccessToken(request, username, appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
 
                 return new TokenDTO(accessToken, refreshToken);
