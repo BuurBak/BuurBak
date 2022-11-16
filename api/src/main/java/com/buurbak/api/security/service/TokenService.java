@@ -2,7 +2,7 @@ package com.buurbak.api.security.service;
 
 import com.auth0.jwt.JWT;
 import com.buurbak.api.security.util.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TokenService {
-    @Autowired
     private SecurityUtils securityUtils;
 
     public static final int ACCESS_TOKEN_DURATION = 8 * 60 * 60 * 1000;
