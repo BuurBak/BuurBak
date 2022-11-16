@@ -10,9 +10,14 @@ jwt-secret: ${sm://JWT_SECRET}
 
 spring:
   datasource:
-    url: jdbc:postgresql:///${DATABASE_NAME}?cloudSqlInstance=${INSTANCE_CONNECTION_NAME}&socketFactory=com.google.cloud.sql.postgres.SocketFactory
-    username: ${DATABASE_USERNAME}
-    password: ${sm://BUURBAK_DATABASE_PASSWORD}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      initializationFailTimeout: 30000
+      idle-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 15
+      connection-timeout: 20000
+      max-lifetime: 1000
 
   cloud:
     gcp:
