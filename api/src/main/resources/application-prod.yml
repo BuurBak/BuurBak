@@ -20,6 +20,10 @@ spring:
         instance-connection-name: ${INSTANCE_CONNECTION_NAME}
         database-name: ${DATABASE_NAME}
 
+  sql:
+    init:
+      mode: always
+
   jpa:
     hibernate:
       ddl-auto: update
