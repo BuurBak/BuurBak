@@ -3,6 +3,7 @@ package com.buurbak.api.security.service;
 import com.auth0.jwt.JWT;
 import com.buurbak.api.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class TokenService {
     @Autowired
     private SecurityUtils securityUtils;
