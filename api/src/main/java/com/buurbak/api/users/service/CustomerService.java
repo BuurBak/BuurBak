@@ -4,6 +4,7 @@ import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,7 +16,8 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 @Transactional
 public class CustomerService {
-    private final CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);

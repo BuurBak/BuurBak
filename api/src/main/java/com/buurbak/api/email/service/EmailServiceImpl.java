@@ -1,5 +1,6 @@
 package com.buurbak.api.email.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -13,6 +14,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service("EmailService")
+@AllArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
     @Value("${spring.mail.addresses.no-reply-address}")
@@ -20,12 +22,6 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender emailSender;
-
-    @Autowired
-    private SimpleMailMessage template;
-
-    @Autowired
-    private FreeMarkerConfigurer freemarkerConfigurer;
 
 //    @Value("classpath:/mail-logo.png")
 //    private Resource resourceFile;

@@ -4,6 +4,7 @@ import com.buurbak.api.security.exception.EmailConfirmationTokenNotFoundExceptio
 import com.buurbak.api.security.model.EmailConfirmationToken;
 import com.buurbak.api.security.repository.EmailConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,7 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Transactional
 public class EmailConfirmationTokenService {
-    private final EmailConfirmationTokenRepository emailConfirmationTokenRepository;
+    @Autowired
+    private EmailConfirmationTokenRepository emailConfirmationTokenRepository;
 
     public EmailConfirmationToken saveEmailConfirmationToken (EmailConfirmationToken emailConfirmationToken) {
         return emailConfirmationTokenRepository.save(emailConfirmationToken);
