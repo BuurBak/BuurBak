@@ -31,7 +31,7 @@ public class EmailConfirmationToken {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public EmailConfirmationToken(com.buurbak.api.users.model.Customer customer) {
+    public EmailConfirmationToken(Customer customer) {
         Customer = customer;
     }
 }
