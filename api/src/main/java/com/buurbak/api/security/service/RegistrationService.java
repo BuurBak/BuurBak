@@ -9,7 +9,6 @@ import com.buurbak.api.security.model.EmailConfirmationToken;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 @Transactional
 public class RegistrationService {
     @Autowired

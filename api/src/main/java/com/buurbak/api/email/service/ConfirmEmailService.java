@@ -1,13 +1,11 @@
 package com.buurbak.api.email.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
 @Service
-@AllArgsConstructor
 public class ConfirmEmailService {
     @Autowired
     private EmailServiceImpl emailService;

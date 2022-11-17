@@ -3,7 +3,6 @@ package com.buurbak.api.security.service;
 import com.buurbak.api.security.exception.AppUserNotFoundException;
 import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.repository.AppUserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-@AllArgsConstructor
 @Transactional
 public class AppUserService implements UserDetailsService {
     @Autowired
