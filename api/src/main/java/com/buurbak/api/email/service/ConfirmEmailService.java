@@ -8,7 +8,7 @@ import javax.mail.MessagingException;
 @Service
 public class ConfirmEmailService {
     @Autowired
-    private EmailServiceImpl emailService;
+    private EmailService emailService;
 
     public void sendConfirmEmailEmail(String email, String name, String link) throws MessagingException {
         emailService.sendHtmlMessage(email, "BuurBak - Confirm Email", buildEmail(name, link));
