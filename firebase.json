@@ -8,9 +8,16 @@
     ],
     "rewrites": [
       {
+        "source": "/api/v1/**",
+        "run": {
+          "serviceId": "buurbak-api",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
-      }
+      }      
     ]
   }
 }
