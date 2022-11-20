@@ -12,9 +12,11 @@ spring:
 
   cloud:
     gcp:
-      sql:
-        enabled: false
       secretmanager:
+        enabled: false
+        bootstrap:
+          enabled: false
+      sql:
         enabled: false
 
   properties:
