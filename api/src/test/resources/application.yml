@@ -18,6 +18,8 @@ spring:
         enabled: false
       sql:
         enabled: false
+      trace:
+        enabled: false
 
   properties:
     hibernate:
