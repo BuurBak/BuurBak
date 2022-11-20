@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase
 class AppUserRepositoryTest {
     @Autowired
     private AppUserRepository appUserRepository;
