@@ -1,4 +1,4 @@
-name: test
+name: Test and test building of API
 
 on:
   pull_request:

@@ -24,12 +24,12 @@ spring:
 
   cloud:
     gcp:
-      core:
+      sql:
         enabled: false
       secretmanager:
         enabled: false
-      sql:
-        enabled: false
+        bootstrap:
+          enabled: false
 
   mail:
     host: localhost

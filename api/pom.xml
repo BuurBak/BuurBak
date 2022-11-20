@@ -32,7 +32,7 @@
 
 		<dependency>
 			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-secretmanager</artifactId>
+			<artifactId>spring-cloud-gcp-starter-secretmanager</artifactId>
 		</dependency>
 
 		<dependency>
@@ -146,12 +146,12 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.google.cloud</groupId>
-				<artifactId>libraries-bom</artifactId>
-				<version>26.0.0</version>
+				<artifactId>spring-cloud-gcp-dependencies</artifactId>
+				<version>3.4.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-        </dependencies>
+		</dependencies>
 	</dependencyManagement>
 
 	<build>

@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    gcp:
+      secretmanager:
+        enabled: false
+        bootstrap:
+          enabled: false
