@@ -4,7 +4,7 @@ import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecifica
 import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
-import com.buurbak.api.users.dto.UpdateUserDTO;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
@@ -80,9 +80,9 @@ public class CustomerController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
         try {
-            customerService.updateUser(id, updateUserDTO);
+            customerService.updateUser(id, updateCustomerDTO);
         }
         catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
