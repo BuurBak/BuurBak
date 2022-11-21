@@ -16,11 +16,11 @@ export default function Header({ setShowLogin }) {
                     <IoIosMenu size="28px" color="#EE7B46" />
                 </IconButton>
                 <nav className="headerContent">
-                    <Link to='/aanbod' style={{ textDecoration: 'none', color: '#3B8B87' }}>Aanbod</Link>
-                    <Link to='/blog' style={{ textDecoration: 'none', color: '#3B8B87' }}>Blog</Link>
-                    <Link to='/verhuren' style={{ textDecoration: 'none', color: '#3B8B87' }}><button className="headerAction">Ik wil verhuren</button></Link>
-                    <div style={{ textDecoration: 'none', color: '#3B8B87', cursor: 'pointer' }} onClick={() => setShowLogin(true)}>Inloggen</div>
-                    <Link to='/contact' style={{ textDecoration: 'none', color: '#3B8B87' }}>Contact</Link>
+                    <Link to='/aanbod' style={{ textDecoration: 'none', color: 'var(--secondary)' }}>Aanbod</Link>
+                    <Link to='/blog' style={{ textDecoration: 'none', color: 'var(--secondary)' }}>Blog</Link>
+                    <Link to='/verhuren' style={{ textDecoration: 'none', color: 'var(--secondary)' }}><button className="headerAction">Ik wil verhuren</button></Link>
+                    <div style={{ textDecoration: 'none', color: 'var(--secondary)', cursor: 'pointer' }} onClick={() => setShowLogin(true)}>Inloggen</div>
+                    <Link to='/contact' style={{ textDecoration: 'none', color: 'var(--secondary)' }}>Contact</Link>
                 </nav>
             </div>
             {showMenu

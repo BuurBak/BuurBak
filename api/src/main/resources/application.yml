@@ -8,7 +8,7 @@ server:
 
 web:
   cors:
-    allowed-origins: "https://www.buurbak.nl"
+    allowed-origins: "http://localhost:3001"
     allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
     max-age: 3600
     allowed-headers: "*"
@@ -16,7 +16,7 @@ web:
 
 
 gcp:
-  auth-file: gcp-account-file.json
+  auth-file: gcp-account-file.jsonå
   project-id: celestial-sonar-365614
   bucket-id: buurbak_public
   dir-name: prod

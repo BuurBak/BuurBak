@@ -1,0 +1,59 @@
+.formStepContainer>span,
+.spanItem>span {
+    margin: 40px 0 0 0;
+    font-size: 15px;
+    font-weight: var(--bold);
+    color: var(--text);  
+}
+
+.spanItem {
+    display: flex;
+    flex-direction: column;
+    width: 23%;
+}
+
+.spanItem>span {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--primary);
+}
+
+.spanItem>input {
+    margin: 10px 0 0 0;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 14px 14px;
+}
+
+.formStepContainer>p:nth-child(4),
+.formStepContainer>p:nth-child(7)    {
+    margin: 6px 0 0 0;
+    font-size: 14px;
+
+}
+
+.uploadImageContainer {
+    width: 22%;
+    height: 190px;
+    border: 1px dotted var(--border);
+    border-radius: 10px;
+    margin: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.uploadImageContainer>p:nth-child(2) {
+    color: var(--text);
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: var(--bold);
+}
+
+.uploadImageContainer>p:nth-child(3) {
+    font-size: 14px;
+    font-weight: var(--medium);
+}

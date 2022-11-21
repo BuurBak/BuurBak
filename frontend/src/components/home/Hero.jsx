@@ -6,6 +6,7 @@ export default function Hero() {
     return (
         <div>
             <div className="heroContainer">
+                <div className="heroOverlay" />
                 <h1>Huur en verhuur je aanhanger via BuurBak</h1>
                 <div className="heroIncluded">
                     <div className="heroIncludedItem">
@@ -15,7 +16,7 @@ export default function Hero() {
                     <div className="heroIncludedItem">
                         <FiCheckCircle size="26px" color="#66CC99" />
                         <p>Altijd duurzaam</p>
-                    </div>
+                    </div> 
                     <div className="heroIncludedItem">
                         <FiCheckCircle size="26px" color="#66CC99" />
                         <p>Altijd verzekerd</p>

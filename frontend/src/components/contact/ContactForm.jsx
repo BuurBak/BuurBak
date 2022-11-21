@@ -15,7 +15,7 @@ export default function ContactForm() {
             <p>Geen antwoord gekregen op je vraag? Neem contact op en we komen zo snel mogelijk bij je terug.</p>
             <form className="formQuestions">
                 <span>Bent u huurder of verhuurder?</span>
-                <div className="formSelect">
+                <div className="formSelect" style={{ width: '48.5%' }}>
                     <select value={typeOfUser} onChange={(e) => setTypeOfUser(e.target.value)}>
                         <option>Huurder</option>
                         <option>Verhuurder</option>

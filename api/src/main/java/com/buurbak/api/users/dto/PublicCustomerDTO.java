@@ -21,8 +21,6 @@ public class PublicCustomerDTO {
     private UUID id;
     @NotBlank
     private String name;
-    @NotBlank
-    private String email;
     @Past
     private LocalDate createdAt;
 

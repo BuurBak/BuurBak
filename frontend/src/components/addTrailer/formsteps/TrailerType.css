@@ -1,0 +1,103 @@
+.trailerTypeGrid {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    justify-content: space-between;
+    column-gap: 4px;
+    margin-top: 40px;
+    row-gap: 20px;
+}
+
+.trailerTypeIcon,
+.trailerTypeIconLast {
+    width: 90%;
+    height: 150px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    transition: 0.2s ease;
+    position: relative;
+}
+
+.trailerTypeIcon:hover {
+    cursor: pointer;
+    border: 1px solid var(--text);
+    transition: 0.2s ease;
+}
+
+.trailerTypeIcon>p {
+    text-align: center;
+    font-size: 14px;
+    font-weight: var(--semibold);
+    max-width: 80%;
+    margin-top: 10px;
+    color: var(--text);
+}
+
+.trailerTypeIconLast {
+    background-color: var(--primary);
+    border: none;
+}
+
+.trailerTypeIconLast>p {
+    text-align: center;
+    font-size: 14px;
+    font-weight: var(--semibold);
+    max-width: 80%;
+    margin-top: 10px;
+    color: var(--text);
+    color: white;
+}
+
+.iconImage {
+    width: 50px;
+    height: 50px;
+    background-image: url(../../../data/svg/icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.infoIcon {
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
+    padding: 5px !important;
+    font-size: 18px !important;
+    color: var(--primary) !important;
+}
+
+.trailerInfoContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 98;
+    background-color: none;
+}
+
+.trailerTypeInfoContainer {
+    width: 20%;
+    height: fit-content;
+    min-height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.backgroundBlur {
+    opacity: 0.06 !important;
+}
+
+.trailerTypeInfoImage {
+    
+}

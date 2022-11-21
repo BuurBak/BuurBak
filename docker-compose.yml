@@ -41,6 +41,7 @@ services:
       DATABASE_HOST: db
       MAIL_HOST: maildev
       JWT_SECRET: secret
+      RANDOM_DATA: true
     labels: 
       traefik.enable: true
       traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
@@ -64,16 +65,16 @@ services:
       traefik.http.routers.adminer.rule: Host(`adminer.localhost`)
       traefik.http.services.adminer.loadbalancer.server.port: 8080
     
-  frontend:
-    image: buurbak-frontend
-    container_name: frontend
-    build:
-      context: frontend
-    labels: 
-      traefik.enable: true
-      traefik.http.routers.frontend.rule: Host(`localhost`)
-      traefik.http.routers.frontend.entrypoints: web
-      traefik.http.services.frontend.loadbalancer.server.port: 80
+  # frontend:
+  #   image: buurbak-frontend
+  #   container_name: frontend
+  #   build:
+  #     context: frontend
+  #   labels: 
+  #     traefik.enable: true
+  #     traefik.http.routers.frontend.rule: Host(`localhost`)
+  #     traefik.http.routers.frontend.entrypoints: web
+  #     traefik.http.services.frontend.loadbalancer.server.port: 80
       
 
 

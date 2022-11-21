@@ -17,6 +17,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrivateCustomerDTO extends PublicCustomerDTO {
+    @NotBlank
+    private String email;
+
     @Past
     private LocalDate dateOfBirth;
 
@@ -28,9 +31,10 @@ public class PrivateCustomerDTO extends PublicCustomerDTO {
 
     @Past
     private LocalDate updatedAt;
-
+    
     public PrivateCustomerDTO(@NotNull UUID id, @NotBlank String name, @NotBlank String email, @Past LocalDate createdAt, Collection<PublicRoleDTO> roles, LocalDate dateOfBirth, String iban, String address, LocalDate updatedAt) {
-        super(id, name, email, createdAt, roles);
+        super(id, name, createdAt, roles);
+        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.iban = iban;
         this.address = address;

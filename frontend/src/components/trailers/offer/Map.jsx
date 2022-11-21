@@ -7,7 +7,9 @@ import GoogleMapReact from 'google-map-react';
 
 export default function Map({ trailerDetails }) {
     const mapContainerStyle = { width: '100%', height: '100%', borderRadius: 10 }
-    const center = ({ lat: trailerDetails?.[0]?.lat, lng: trailerDetails?.[0]?.lng })
+    const center = trailerDetails 
+        ? ({ lat: trailerDetails?.[0]?.lat, lng: trailerDetails?.[0]?.lng }) 
+        : ({ lat: 52.090736, lng: 5.121420})
     const options = ({ styles: mapStyles, disableDefaultUI: true, clickableIcons: false })
 
     return (
