@@ -1,39 +1,39 @@
 .homeOfferContainer {
-    width: 100%;
-    max-width: 100%;
-    height: fit-content;
-    box-sizing: border-box;
-    padding: 50px 60px;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 50px 60px;
+  display: flex;
+  flex-direction: column;
 }
 
-.homeOfferContainer>h2 {
-    margin: 0 auto;
-    font-weight: var(--bold);
-    color: var(--primary);
-    text-align: center;
+.homeOfferContainer > h2 {
+  margin: 0 auto;
+  font-weight: var(--bold);
+  color: var(--primary);
+  text-align: center;
 }
 
-.homeOfferContainer>p {
-    margin: 6px auto;
-    color: var(--primary);
-    font-weight: var(--medium);
-    text-align: center;
+.homeOfferContainer > p {
+  margin: 6px auto;
+  color: var(--primary);
+  font-weight: var(--medium);
+  text-align: center;
 }
 
 .homeOfferGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-    justify-content: space-between;
-    width: fit-content;
-    max-width: 100%;
-    min-width: fit-content;
-    width: 93%;
-    height: fit-content;
-    column-gap: 20px;
-    margin: 40px auto 0 auto;
-    grid-gap: 7px;
-    row-gap: 30px;
-    flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  justify-content: space-between;
+  width: fit-content;
+  max-width: 100%;
+  min-width: fit-content;
+  width: 93%;
+  height: fit-content;
+  column-gap: 20px;
+  margin: 40px auto 0 auto;
+  grid-gap: 7px;
+  row-gap: 30px;
+  flex-wrap: wrap;
 }

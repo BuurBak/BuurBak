@@ -1,47 +1,47 @@
 .footerContainer {
-    width: 100vw;
-    height: fit-content;
-    background-color: var(--background);
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 60px 180px;
-    border-top: 1px solid var(--border);
+  width: 100vw;
+  height: fit-content;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 60px 180px;
+  border-top: 1px solid var(--border);
 }
 
 .footerLogo {
-    width: 120px;
-    height: 34px;
-    background-image: url(../../../data/images/logov2.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  width: 120px;
+  height: 34px;
+  background-image: url(../../../data/images/logov2.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .footerLinks {
-    flex: 1;
-    height: fit-content;
-    background-color: var(--background);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  flex: 1;
+  height: fit-content;
+  background-color: var(--background);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 .footerGrid {
-    width: 80%;
-    height: fit-content;
-    margin: 20% 0 0 35%;
+  width: 80%;
+  height: fit-content;
+  margin: 20% 0 0 35%;
 }
 
-.footerGrid>p:nth-child(1) {
-    color: var(--primary);
-    font-weight: var(--semibold);
+.footerGrid > p:nth-child(1) {
+  color: var(--primary);
+  font-weight: var(--semibold);
 }
 
 .footerLinkContent {
-    font-weight: var(--medium);
-    margin-top: 15px;
+  font-weight: var(--medium);
+  margin-top: 15px;
 }
 
 .footerLinkContent:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

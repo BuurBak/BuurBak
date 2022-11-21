@@ -9,14 +9,14 @@ body {
 
 :root {
   /* Color variables */
-  --primary: #EE7B46;
-  --secondary: #43938F;
-  --white: #FFFFFF;
-  --error: #ED6C6C;
-  --border: #DDDDDD;
+  --primary: #ee7b46;
+  --secondary: #43938f;
+  --white: #ffffff;
+  --error: #ed6c6c;
+  --border: #dddddd;
   --text: #373530;
   --subheader: #747474;
-  --background: #FFFFFF;
+  --background: #ffffff;
   --darkBackground: #000000;
 
   /* Font weight variables */
@@ -70,7 +70,7 @@ h3 {
   width: 100%;
 }
 
-.iconInputContainer>span {
+.iconInputContainer > span {
   font-size: 14px;
   font-weight: 600;
   margin: 20px 0 15px 0;
@@ -95,7 +95,7 @@ h3 {
   border-radius: 5px 0 0 5px;
 }
 
-.iconInput>input {
+.iconInput > input {
   border-radius: 0 5px 5px 0;
   border: 1px solid var(--border);
   border-left: none;
