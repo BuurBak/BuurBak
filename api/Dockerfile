@@ -1,16 +1,20 @@
-FROM eclipse-temurin:17-jdk-jammy as builder
-WORKDIR /opt/app
-RUN apt update && apt install dos2unix
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN dos2unix mvnw
-RUN ./mvnw dependency:go-offline
-COPY ./src ./src
-RUN ./mvnw clean install
+# Use the official maven/Java 17 Temurin image to create a build artifact.
+# https://hub.docker.com/_/maven
+FROM maven:3.8.6-eclipse-temurin-17 as builder
 
+# Copy local code to the container image.
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
 
+# Build a release artifact.
+RUN mvn package -DskipTests
+
+# Use Temurin JDK for base image.
+# https://hub.docker.com/_/eclipse-temurin/
+# https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 FROM eclipse-temurin:17-jre-jammy
-WORKDIR /opt/app
-EXPOSE 8080
-COPY --from=builder /opt/app/target/*.jar /opt/app/*.jar
-ENTRYPOINT ["java", "-jar", "/opt/app/*.jar" ]
+WORKDIR /app
+EXPOSE 80
+COPY --from=builder /app/target/*.jar /app/*.jar
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/*.jar"]

@@ -1,22 +1,24 @@
 package com.buurbak.api.users.repository;
 
 import com.buurbak.api.users.model.Customer;
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @DataJpaTest
+@RunWith(SpringRunner.class)
 class CustomerRepositoryTest {
-
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @AfterEach
     void tearDown() {
@@ -26,15 +28,8 @@ class CustomerRepositoryTest {
     @Test
     void findByEmail() {
         // Given
-        Customer customer = new Customer(
-                "luca.bergman@buurbak.nl",
-                "ghjkjhg",
-                "Luca Bergman",
-                LocalDate.now(),
-                "NLinadkljfhlak123123",
-                "Heidelberglaan 7"
-        );
-        customerRepository.save(customer);
+        EasyRandom easyRandom = new EasyRandom();
+        Customer customer = customerRepository.save(easyRandom.nextObject(Customer.class));
 
         // When
         Optional<Customer> foundCustomer = customerRepository.findByEmail(customer.getEmail());

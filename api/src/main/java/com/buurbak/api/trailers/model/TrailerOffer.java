@@ -8,8 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -45,10 +45,10 @@ public class TrailerOffer {
     private double price;
     private boolean available;
 
-	@CreationTimestamp
-	private Date createdAt;
-	@UpdateTimestamp
-	private Date updatedAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,

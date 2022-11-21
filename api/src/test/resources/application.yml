@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     username: sa
@@ -6,35 +5,21 @@ spring:
     url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
 
-
-#  servlet:
-#    multipart:
-#      max-file-size: 1MB
-#      max-request-size: 1MB
-
   jpa:
     show-sql: false
     hibernate:
       ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        format_sql: true
 
-#  mail:
-#    host: ${MAIL_HOST}
-#    port: 1025
-#    username: hello
-#    password: hello
-#
-#    properties:
-#      mail:
-#        smtp:
-#          ssl:
-#            trust: "*"
-#          auth: true
-#          starttls:
-#            enable: true
-#          connectiontimeout: 5000
-#          timeout: 3000
-#          writetimeout: 5000
+  cloud:
+    gcp:
+      core:
+        enabled: false
+      secretmanager:
+        enabled: false
+      sql:
+        enabled: false
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
