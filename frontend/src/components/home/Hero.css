@@ -1,11 +1,12 @@
 .heroContainer {
     width: 100%;
-    height: fit-content;
-    min-height: 920px;
+    height: 840px;
+    min-height: 840px;
     background-color: var(--secondary);
     box-sizing: border-box;
     padding: 100px 8%;
-    background-image: url(../../data/images/hero.svg);
+    top: 80px;
+    background-image: url(../../data/images/BuurBak_Duurzaam-Delen_Aanhanger02972022.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -20,12 +21,12 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    opacity: 0.3;
+    opacity: 0.45;
     z-index: 1;
 }
 
 .heroContainer>h1 {
-    margin: 110px auto 0 auto;
+    margin: 100px auto 0 auto;
     font-weight: var(--bold);
     color: var(--white);
     font-size: 50px;

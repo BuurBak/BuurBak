@@ -37,7 +37,8 @@
     margin-top: 40px;
 }
 
-.licenseGridItem {
+.licenseGridItem,
+.licenseGridItemActive {
     width: 94%;
     height: 320px;
     border: 1px solid var(--border);
@@ -48,7 +49,10 @@
     padding: 22px;
     position: relative;
     transition: 0.2s ease;
+}
 
+.licenseGridItemActive {
+    border: 1px solid var(--text);
 }
 
 .licenseGridItem:hover {
@@ -57,19 +61,22 @@
     transition: 0.2s ease;
 }
 
-.licenseGridItem>b {
+.licenseGridItem>b,
+.licenseGridItemActive>b {
     margin-top: 25px;
     font-size: 15px;
 }
 
-.licenseGridItem>p:nth-child(3) {
+.licenseGridItem>p:nth-child(3),
+.licenseGridItemActive>p:nth-child(3) {
     color: var(--subheader);
     font-weight: var(--medium);
     font-size: 14px;
     margin-top: 6px;
 }
 
-.licenseGridItem>p:nth-child(4) {
+.licenseGridItem>p:nth-child(4),
+.licenseGridItemActive>p:nth-child(4) {
     position: absolute;
     bottom: 22px;
     left: 22px;
@@ -80,7 +87,8 @@
     cursor: pointer;
 }
 
-.licenseGridItem>p:nth-child(4):hover {
+.licenseGridItem>p:nth-child(4):hover,
+.licenseGridItemActive>p:nth-child(4):hover {
     font-weight: var(--semibold);
 }
 

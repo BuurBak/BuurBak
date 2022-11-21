@@ -12,7 +12,7 @@ import PersonalInfo from './PersonalInfo';
 export default function TrailerForm() {
     const [formstep, setFormstep] = useState(0)
     const [trailerType, setTrailerType] = useState()
-    const [license, setLicense] = useState()
+    const [license, setLicense] = useState("")
 
     const currentUser = {
         name: "John Appleseed",
@@ -26,7 +26,7 @@ export default function TrailerForm() {
         <div className="TrailerFormContainer">
             <ProgressBar formstep={formstep} setFormstep={setFormstep} />
             {formstep === 0 ? <TrailerType trailerType={trailerType} setTrailerType={setTrailerType} /> : null}
-            {formstep === 1 ? <DriverLicense /> : null}
+            {formstep === 1 ? <DriverLicense license={license} setLicense={setLicense} /> : null}
             {formstep === 2 ? <General /> : null}
             {formstep === 3 ? <Location /> : null}
             {formstep === 4 ? <Accessoires /> : null}
