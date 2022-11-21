@@ -20,8 +20,7 @@ public class PublicCustomerDTO {
 
         @NotBlank
         private String name;
-        @NotBlank
-        private String email;
+
         @NotNull
         private Collection<PublicRoleDTO> roles;
 }
