@@ -1,12 +1,12 @@
 package com.buurbak.api.images.service;
 
-import com.buurbak.api.images.config.CgpConfig;
 import com.buurbak.api.images.exception.*;
 import com.buurbak.api.images.model.Image;
 import com.buurbak.api.images.repository.ImageRepository;
 import com.buurbak.api.images.util.DataBucketUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +24,11 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final DataBucketUtil dataBucketUtil;
 
-    private final CgpConfig config;
+    @Value("${gcp.bucket-id}")
+    private String BUCKET_ID;
+
+    @Value("${gcp.dir-name}")
+    private String DIR_NAME;
 
     public Image findById(UUID id) throws ImageNotFoundException {
         return imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
@@ -44,7 +48,7 @@ public class ImageService {
                 throw new BadOriginalFileNameException();
             }
 
-            images.add(new Image(originalFileName, this.config.getDirName(), this.config.getBucketId()));
+            images.add(new Image(originalFileName, DIR_NAME, BUCKET_ID));
         });
         imageRepository.saveAll(images);
 

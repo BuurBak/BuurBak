@@ -14,7 +14,7 @@ body {
   --white: #FFFFFF;
   --error: #ED6C6C;
   --border: #DDDDDD;
-  --text: #000000;
+  --text: #373530;
   --subheader: #747474;
   --background: #FFFFFF;
   --darkBackground: #000000;
@@ -104,4 +104,11 @@ h3 {
   padding: 0 0 0 15px;
   width: 100%;
   outline: none;
+}
+
+.TrailerFormContainer {
+  width: 50%;
+  position: relative;
+  box-sizing: border-box;
+  margin: 120px auto;
 }

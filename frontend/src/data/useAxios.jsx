@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://api.publicapis.org/entries'
+axios.defaults.baseURL = 'http://localhost/api/v1'
 
 const useAxios = ({ method, url, body = null, headers = null }) => {
     const [response, setResponse] = useState(null);

@@ -14,7 +14,7 @@
 
 .formContainer>b>span {
     color: var(--primary);
-    font-weight: var(--bold);
+    font-weight: var(--bold); 
 }
 
 .formContainer>p {
