@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    username: sa
+    password: sa
+    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+
+  cloud:
+    gcp:
+      core:
+        enabled: false
+      secretmanager:
+        enabled: false
+      sql:
+        enabled: false
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true

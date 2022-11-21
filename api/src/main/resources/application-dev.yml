@@ -1,0 +1,49 @@
+data:
+  generate-random-data: ${RANDOM_DATA}
+
+gcp:
+  auth-file: ${GCP_AUTH_FILE}
+
+jwt:
+  secret-key: ${JWT_SECRET}
+
+spring:
+  datasource:
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/${DATABASE_NAME}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
+
+  cloud:
+    gcp:
+      sql:
+        enabled: false
+      secretmanager:
+        enabled: false
+        bootstrap:
+          enabled: false
+
+  mail:
+    host: localhost
+    port: 1025
+
+    # Username & Password not used but must be set
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true

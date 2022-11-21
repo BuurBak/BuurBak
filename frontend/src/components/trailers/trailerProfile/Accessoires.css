@@ -1,0 +1,19 @@
+.accessoiresGrid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: var(--background);
+    height: fit-content;
+    margin: 15px 0 0 0;
+}
+
+.accessoireItem {
+    display: flex;
+    align-items: center;
+    color: var(--subheader);
+}
+
+.accessoireItem>p {
+    margin-left: 20px;
+    font-size: 15px;
+    color: var(--text);
+}

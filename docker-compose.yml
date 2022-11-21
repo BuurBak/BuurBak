@@ -1,32 +1,54 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  db:
-    image: postgres:latest
+  traefik:
+    image: traefik:v2.4
+    container_name: traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false 
+      - --entrypoints.web.address=:80
     ports:
-      - "5432"
+      - "80:80"
+      - "8082:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  db:
+    container_name: database
+    image: postgres:latest
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=buurbak
-      - POSTGRES_PASSWORD=buurbak
+      POSTGRES_PASSWORD: buurbak
+      POSTGRES_USER: buurbak
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  backend:
-    image: buurbak-backend
-    container_name: buurbak-backend
-    build:
-      context: Backend
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
     ports:
-      - "3080:3080"
-    depends_on:
-      db:
-        condition: service_healthy
-    # environment:
-    #   - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/buurbak
-    #   - SPRING_DATASOURCE_USERNAME=buurbak
-    #   - SPRING_DATASOURCE_PASSWORD=buurbak
-    #   - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - "1025:1025"
+      - "1080:1080"
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.maildev.rule: Host(`mail.localhost`)
+      traefik.http.services.maildev.loadbalancer.server.port: 1080
+
+  adminer:
+    image: adminer
+    restart: always
+    labels: 
+      traefik.enable: true
+      traefik.http.routers.adminer.rule: Host(`adminer.localhost`)
+      traefik.http.services.adminer.loadbalancer.server.port: 8080
+
+volumes:
+  db:

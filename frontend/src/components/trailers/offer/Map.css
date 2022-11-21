@@ -1,0 +1,37 @@
+.zoomBtn {
+    position: absolute;
+    width: 30px;
+    height: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    background-color: var(--primary);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.map {
+    width: 57%;
+    height: 100vh;
+    background-color: var(--border);
+    position: fixed;
+    right: 0;
+}
+
+.filterButton {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    z-index: 99 !important;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}

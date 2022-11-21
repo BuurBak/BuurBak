@@ -1,0 +1,66 @@
+.personalInfoContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.Avatar {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.personalInfoContainer>div>p {
+    margin-left: 20px;
+    color: var(--text);
+}
+
+.personalInfoContainer>div>p:nth-child(1) {
+    font-weight: var(--semibold);
+    margin-bottom: 4px;
+}
+
+.editBtn {
+    position: absolute !important;
+    right: 0px !important;
+}
+
+.profileItem {
+    display: flex;
+    align-items: center;
+}
+
+.profileItem>div {
+    margin-left: 30px;
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+}
+
+.profileItem>div>p {
+    margin-top: 4px;
+}
+
+.editInfoInput {
+    box-sizing: border-box;
+    width: 340px;
+    padding: 12px 20px 12px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #DDDDDD;
+    outline: none;
+}
+
+.editContentAction {
+    box-sizing: border-box;
+    padding: 12px 14px;
+    margin-top: 10px;
+    position: absolute;
+    right: 0px;
+    font-size: 12px;
+    font-weight: var(--bold);
+    border-radius: 5px;
+    background-color: var(--secondary);
+    color: var(--white);
+}
