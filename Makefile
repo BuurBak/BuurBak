@@ -1,8 +1,8 @@
 start:
-	docker compose -f up -d
+	docker compose up -d
 
 down:
-	docker compose -f down
+	docker compose down
 
 logs:
-	docker compose -f logs
+	docker compose logs
