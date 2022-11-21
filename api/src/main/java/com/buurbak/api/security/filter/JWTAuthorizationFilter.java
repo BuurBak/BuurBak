@@ -21,8 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.REFRESH_TOKEN_URL;
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.SIGN_IN_URL;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -31,7 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals(SIGN_IN_URL) || request.getServletPath().equals(REFRESH_TOKEN_URL)) {
+        if (request.getServletPath().equals("/auth/login") || request.getServletPath().equals("/auth/refresh")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);

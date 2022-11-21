@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -19,36 +19,35 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "user_table") // "user" is a protected table name in PostgreSQL
-public class User implements UserDetails {
+public class AppUser implements UserDetails {
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", nullable = false)
     private String email;
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
     // defaults for all accounts
     private boolean enabled = true;
     private boolean locked = false;
     private boolean deleted = false;
 
-    public User(String email, String password) {
+    public AppUser(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public User(String email, String password, Collection<Role> roles) {
+    public AppUser(String email, String password, Collection<Role> roles) {
         this.email = email;
         this.password = password;
         this.roles = roles;

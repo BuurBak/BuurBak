@@ -5,40 +5,38 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.buurbak.api.security.dto.TokenDTO;
+import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.security.model.Role;
-import com.buurbak.api.security.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.SECRET;
-import static com.buurbak.api.security.config.AuthenticationConfigConstants.TOKEN_PREFIX;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final UserService userService;
+    private final AppUserService appUserService;
     private final TokenService tokenService;
 
-    public TokenDTO refreshToken(HttpServletRequest request) {
+    public TokenDTO refreshAccessAndRefreshTokens(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-                String refresh_token = authorizationHeader.substring(TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                String refreshToken = authorizationHeader.substring("Bearer ".length());
+                Algorithm algorithm = Algorithm.HMAC256(System.getenv("JWT_SECRET").getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedjwt = verifier.verify(refresh_token);
+                DecodedJWT decodedjwt = verifier.verify(refreshToken);
                 String username = decodedjwt.getSubject();
 
-                User user = userService.findByUsername(username);
-                String access_token = tokenService.generateAccessToken(request, username, user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+                AppUser appUser = appUserService.findByUsername(username);
+                String accessToken = tokenService.generateAccessToken(request, username, appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
 
-                return new TokenDTO(access_token, refresh_token);
+                return new TokenDTO(accessToken, refreshToken);
         } else {
-            throw new RuntimeException("refresh token is missing");
+            throw new RuntimeException("Refresh token is missing from Authorization header");
         }
     }
 }

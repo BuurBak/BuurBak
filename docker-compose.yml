@@ -3,7 +3,7 @@ version: "3.9"
 services:
   traefik:
     image: traefik:v2.4
-    container_name: traefik
+    container_name: buurbak-traefik
     command:
       - --api.insecure=true
       - --providers.docker
@@ -16,11 +16,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   db:
-    container_name: database
     image: postgres:latest
+    container_name: buurbak-database
     environment:
-      POSTGRES_PASSWORD: admin
       POSTGRES_USER: buurbak
+      POSTGRES_PASSWORD: buurbak
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
       interval: 10s
@@ -29,7 +29,7 @@ services:
 
   api:
     image: buurbak-api
-    container_name: api
+    container_name: buurbak-api
     build:
       context: api
     depends_on:
@@ -37,7 +37,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_USERNAME: buurbak
-      DATABASE_PASSWORD: admin
+      DATABASE_PASSWORD: buurbak
       DATABASE_HOST: db
       MAIL_HOST: maildev
       JWT_SECRET: secret
@@ -50,7 +50,7 @@ services:
 
   maildev:
     image: maildev/maildev
-    container_name: maildev
+    container_name: buurbak-maildev
     labels: 
       traefik.enable: true
       traefik.http.routers.maildev.rule: Host(`mail.localhost`)
@@ -58,6 +58,7 @@ services:
 
   adminer:
     image: adminer
+    container_name: buurbak-adminer
     restart: always
     labels: 
       traefik.enable: true
@@ -66,7 +67,7 @@ services:
     
   frontend:
     image: buurbak-frontend
-    container_name: frontend
+    container_name: buurbak-frontend
     build:
       context: frontend
     labels: 

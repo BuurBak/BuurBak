@@ -17,12 +17,12 @@ import javax.transaction.Transactional;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public Customer findByUsername(String name) throws CustomerNotFoundException {
-        return customerRepository.findByEmail(name).orElseThrow(CustomerNotFoundException::new);
+    public Customer saveCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 
-    public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+    public Customer findByUsername(String name) throws CustomerNotFoundException {
+        return customerRepository.findByEmail(name).orElseThrow(() -> new CustomerNotFoundException(name));
     }
 
     public Page<Customer> findAll(Specification<Customer> specification, Pageable pageable) {

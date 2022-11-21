@@ -1,27 +1,25 @@
 package com.buurbak.api.images.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import java.util.Date;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class ImageDTO {
+public class PublicImageDTO {
     @NotNull
     private UUID id;
 
-    @Past
-    private Date createdAt;
-    @Past
-    private Date updatedAt;
-
-    @NotBlank
+    @NotBlank @JsonProperty("original_file_name")
     private String originalFileName;
-    @NotBlank
+    @NotBlank @JsonProperty("public_url")
     private String publicUrl;
 }

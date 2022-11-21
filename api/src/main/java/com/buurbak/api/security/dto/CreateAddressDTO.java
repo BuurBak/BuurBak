@@ -12,9 +12,13 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenDTO {
-    @NotBlank @JsonProperty("access_token")
-    private String accessToken;
-    @NotBlank @JsonProperty("refresh_token")
-    private String refreshToken;
+public class CreateAddressDTO {
+        @NotBlank
+        private String city;
+        @NotBlank @JsonProperty("street_name")
+        private String streetName;
+        @NotBlank
+        private String number;
+        @NotBlank @JsonProperty("postal_code")
+        private String postalCode;
 }
