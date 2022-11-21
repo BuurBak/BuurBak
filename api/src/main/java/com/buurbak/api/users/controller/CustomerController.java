@@ -7,6 +7,7 @@ import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
+import com.buurbak.api.users.repository.CustomerRepository;
 import com.buurbak.api.users.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,6 +34,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "customers")
+
 public class CustomerController {
     private final CustomerService customerService;
     private final CustomerConverter customerConverter;
@@ -87,5 +89,18 @@ public class CustomerController {
         catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
         }
+    }
+
+    @Operation(summary = "Delete customer")
+    @ApiResponses({
+            @
+    })
+
+    @DeleteMapping void deleteCustomer(UUID id) {
+        if(!customerService.getCustomer(id)) {
+            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
+        }
+
+        CustomerRepository
     }
 }
