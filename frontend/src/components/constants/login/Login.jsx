@@ -2,23 +2,35 @@ import { IoIosClose } from 'react-icons/io'
 import './Login.css'
 import { IconButton, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
-import Users from '../../../data/dummy/users.json'
 import { AiFillApple, AiOutlineGooglePlus } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
 import AuthService from '../../../data/services/auth.service'
+import useAxios from '../../../data/useAxios'
 
 export default function Login({ setShowLogin }) {
     const [email, setEmail] = useState("")
-    const [users] = useState(Users)
     const [userExists, setUserExists] = useState()
     const [password, setPassword] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [number, setNumber] = useState("")
     const [address, setAddress] = useState()
+    const { response, loading, error } = useAxios({
+        method: 'get',
+        url: '/customers',
+        headers: JSON.stringify({ accept: '*/*' })
+    });
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const checkIfUserExists = users.filter((user) => user.email === email)
+        if (response !== null) {
+            setUsers(response);
+        }
+    }, [response]);
+
+    useEffect(() => {
+        if (!users) return
+        const checkIfUserExists = users?.content?.filter((user) => user.name.toLowerCase() === email)
         if (checkIfUserExists) {
             setUserExists(checkIfUserExists)
         } else {
@@ -58,7 +70,11 @@ export default function Login({ setShowLogin }) {
         } catch (err) {
             console.log(err)
         }
+        setShowLogin(false)
     }
+    
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>{error.message}</p>
 
     return (
         <div className="pageContainer">
@@ -67,7 +83,7 @@ export default function Login({ setShowLogin }) {
                 <p><span>Log in</span> of <span>Meld je aan</span> met je email adres</p>
                 <TextField className='primaryInput' size="large" label="Email" value={email} variant="outlined" onChange={(e) => setEmail(e.target.value)} />
                 {!email ?
-                    <p style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}><span>Smart login</span> - type je email adres in, als je al een account hebt wordt je automatisch doorverwezen naar de login pagina. Als het email adres niet bij ons bekend is zetten we account op!</p>
+                    <p style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}><span>Smart login</span> - typ je email adres in, als je al een account hebt wordt je automatisch doorverwezen naar de login pagina. Als het email adres niet bij ons bekend is zetten we account op!</p>
                     : null}
                 {userExists?.length > 0 ? <p>Welkom terug <span>{userExists?.[0]?.firstName}</span>. Laten we inloggen!</p> : null}
                 {!userExists?.length && email ? <p>Hmm je email wordt niet herkend, laten we een account aanmaken!</p> : null}
@@ -88,17 +104,11 @@ export default function Login({ setShowLogin }) {
                     : <>
                         {email ?
                             <form className="registerContent" onSubmit={handleSignup}>
-                                <div className="flexBox">
-                                    <div style={{ marginRight: '5%' }}>
-                                        <p>Voornaam</p>
+                                <div>
+                                    <div className="registerItem">
+                                        <p>Voor- / achternaam</p>
                                         <div className="inputItem">
                                             <TextField className='secondaryInput' value={firstName} size="large" label="Voornaam" variant="outlined" onChange={(e) => setFirstName(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div style={{ marginLeft: '5%' }}>
-                                        <p>Achternaam</p>
-                                        <div className="inputItem">
-                                            <TextField className='secondaryInput' value={lastName} size="large" label="Achternaam" variant="outlined" onChange={(e) => setLastName(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -106,17 +116,17 @@ export default function Login({ setShowLogin }) {
                                     <p>Adres</p>
                                     <div className="addressInput">
                                         <TextField className='secondaryInput' size="large" label="Postcode" variant="outlined" />
-                                        <TextField className='secondaryInput' size="large" label="Huis nr." variant="outlined" />
+                                        <TextField className='secondaryInput' type="number" size="large" label="Huis nr." variant="outlined" />
                                         <TextField className='secondaryInput' size="large" label="Woonplaats" variant="outlined" />
                                     </div>
                                 </div>
                                 <div className="registerItem">
                                     <p>Telefoonnummer</p>
-                                    <TextField className='secondaryInput' value={number} type="tel" size="large" label="Nummer" variant="outlined" onChange={(e) => setNumber(e.target.value)} />
+                                    <TextField className='secondaryInput' type="number" value={number} size="large" label="Nummer" variant="outlined" onChange={(e) => setNumber(e.target.value)} />
                                 </div>
                                 <div className="registerItem">
                                     <p>Wachtwoord</p>
-                                    <TextField className='secondaryInput' value={password} size="large" type="password" label="Wachtwoord" variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+                                    <TextField className='secondaryInput' type="password" value={password} size="large" label="Wachtwoord" variant="outlined" onChange={(e) => setPassword(e.target.value)} />
                                 </div>
                                 <button type="submit" className="loginCta">Registreren</button>
                             </form>

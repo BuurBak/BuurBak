@@ -24,7 +24,7 @@
     justify-content: space-between;
     align-items: center;
     visibility: hidden;
-    font-weight: var(--subheader);
+    font-weight: var(--semibold);
     opacity: 0;
     display: none;
 }

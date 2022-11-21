@@ -2,7 +2,6 @@ import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import mapStyles from '../../data/mapStyles.js';
 import Marker from '../../data/images/marker.svg'
 import { useEffect, useState } from "react";
-import Data from '../../data/dummy/trailers.json'
 import '../../components/trailers/offer/Map.css'
 import { IoIosArrowBack, IoIosArrowForward, IoIosMenu } from "react-icons/io";
 import OfferHeader from '../../components/trailers/offer/OfferHeader'
@@ -12,7 +11,6 @@ import Filters from "../../components/trailers/filters/Filters.jsx";
 import useAxios from "../../data/useAxios.jsx";
 
 export default function Offer() {
-    const [trailers, setTrailers] = useState()
     const [activeTrailer, setActiveTrailer] = useState()
     const [scaleMap, setScaleMap] = useState(false)
     const [showFilters, setShowFilters] = useState(false)
@@ -21,22 +19,17 @@ export default function Offer() {
     const mapContainerStyle = { width: '100%', height: '100%', borderRadius: 10 }
     const center = ({ lat: 52.090736, lng: 5.121420 })
     const options = ({ styles: mapStyles, disableDefaultUI: true, clickableIcons: false })
-    // const [data, setData] = useState([]);
-    // const { response, loading, error } = useAxios({
-    //     method: 'get',
-    //     url: '/get',
-    //     headers: JSON.stringify({ accept: '*/*' }),
-    // });
-
-    // useEffect(() => {
-    //     if (response !== null) {
-    //         setTrailers(response);
-    //     }
-    // }, [response]);
+    const { response, loading, error } = useAxios({
+        method: 'get',
+        url: '/traileroffer'
+    });
+    const [trailers, setTrailers] = useState([]);
 
     useEffect(() => {
-        setTrailers(Data)
-    }, [])
+        if (response !== null) {
+            setTrailers(response);
+        }
+    }, [response]);
 
     useEffect(() => {
         setFilteredTrailers(trailers)
@@ -88,7 +81,7 @@ export default function Offer() {
                         }
                     </button>
                     {scaleMap
-                        ? <button className="filterButton"><IoIosMenu size="26px" color="white" /></button>
+                        ? <button className="filterButton" onClick={() => setShowFilters(true)}><IoIosMenu size="26px" color="white" /></button>
                         : null
                     }
                     {filteredTrailers.map((trailer) => (
