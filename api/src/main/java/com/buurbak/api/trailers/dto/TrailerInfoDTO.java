@@ -5,7 +5,10 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TrailerInfoDTO {
     @NotBlank(message = "Id may not be blank")
     UUID id;
