@@ -1,9 +1,9 @@
-version: "3.9"
+version: '3.9'
 
 services:
   traefik:
     image: traefik:v2.4
-    container_name: buurbak-traefik
+    container_name: traefik
     command:
       - --api.insecure=true
       - --providers.docker
@@ -16,41 +16,27 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   db:
+    container_name: database
     image: postgres:latest
-    container_name: buurbak-database
     environment:
-      POSTGRES_USER: buurbak
       POSTGRES_PASSWORD: buurbak
+      POSTGRES_USER: buurbak
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U buurbak" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  api:
-    image: buurbak-api
-    container_name: buurbak-api
-    build:
-      context: api
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_USERNAME: buurbak
-      DATABASE_PASSWORD: buurbak
-      DATABASE_HOST: db
-      MAIL_HOST: maildev
-      JWT_SECRET: secret
-    labels: 
-      traefik.enable: true
-      traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
-      traefik.http.services.backend.loadbalancer.server.port: 3080
-      # traefik.http.middlewares.backendpathstrip.stripprefix.prefixes: /api/v1
-      # traefik.http.routers.backend.middlewares: backendpathstrip@docker
-
   maildev:
     image: maildev/maildev
-    container_name: buurbak-maildev
+    container_name: maildev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
     labels: 
       traefik.enable: true
       traefik.http.routers.maildev.rule: Host(`mail.localhost`)
@@ -58,23 +44,11 @@ services:
 
   adminer:
     image: adminer
-    container_name: buurbak-adminer
     restart: always
     labels: 
       traefik.enable: true
       traefik.http.routers.adminer.rule: Host(`adminer.localhost`)
       traefik.http.services.adminer.loadbalancer.server.port: 8080
-    
-  frontend:
-    image: buurbak-frontend
-    container_name: buurbak-frontend
-    build:
-      context: frontend
-    labels: 
-      traefik.enable: true
-      traefik.http.routers.frontend.rule: Host(`localhost`)
-      traefik.http.routers.frontend.entrypoints: web
-      traefik.http.services.frontend.loadbalancer.server.port: 80
-      
 
-
+volumes:
+  db:

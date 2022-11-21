@@ -1,9 +1,9 @@
-package com.buurbak.api;
+package com.buurbak.api.data;
 
-import com.buurbak.api.config.randomizers.Hallo123PasswordRandomizer;
-import com.buurbak.api.config.randomizers.TrailerDimensionRandomizer;
-import com.buurbak.api.config.randomizers.TrailerOwnerRandomizer;
-import com.buurbak.api.config.randomizers.TrailerTypeRandomizer;
+import com.buurbak.api.data.randomizers.Hallo123PasswordRandomizer;
+import com.buurbak.api.data.randomizers.TrailerDimensionRandomizer;
+import com.buurbak.api.data.randomizers.TrailerOwnerRandomizer;
+import com.buurbak.api.data.randomizers.TrailerTypeRandomizer;
 import com.buurbak.api.security.model.AppUser;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
@@ -12,7 +12,7 @@ import com.buurbak.api.trailers.repository.TrailerTypeRepository;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -21,6 +21,7 @@ import org.jeasy.random.randomizers.CreditCardNumberRandomizer;
 import org.jeasy.random.randomizers.EmailRandomizer;
 import org.jeasy.random.randomizers.FullNameRandomizer;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -34,9 +35,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
-public class GenerateRandomData implements CommandLineRunner {
+public class RandomDataGenerator implements CommandLineRunner {
     private static final int CUSTOMERS_TO_GENERATE = 50;
     private static final int TRAILER_OFFERS_TO_GENERATE = 200;
 
@@ -45,9 +46,11 @@ public class GenerateRandomData implements CommandLineRunner {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TrailerTypeRepository trailerTypeRepository;
 
+    @Value("${data.generate-random-data:false}")
+    private boolean GENERATE_RANDOM_DATA;
 
     public void run(String... args) {
-        if (!System.getenv("RANDOM_DATA").equals("true")) {
+        if (!GENERATE_RANDOM_DATA) {
             return;
         }
 

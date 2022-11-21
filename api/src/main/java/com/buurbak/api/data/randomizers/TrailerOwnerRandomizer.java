@@ -1,4 +1,4 @@
-package com.buurbak.api.config.randomizers;
+package com.buurbak.api.data.randomizers;
 
 import com.buurbak.api.users.model.Customer;
 import org.jeasy.random.api.Randomizer;

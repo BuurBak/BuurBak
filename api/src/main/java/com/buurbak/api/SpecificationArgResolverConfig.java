@@ -10,8 +10,7 @@ import java.util.List;
 
 @Configuration
 @EnableJpaRepositories
-public class Config implements WebMvcConfigurer {
-
+public class SpecificationArgResolverConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new SpecificationArgumentResolver());
