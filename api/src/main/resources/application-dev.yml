@@ -11,7 +11,7 @@ spring:
   datasource:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-    url: jdbc:postgresql://localhost:5432/${DATABASE_NAME}
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
 
   jpa:
     hibernate:
@@ -32,7 +32,7 @@ spring:
           enabled: false
 
   mail:
-    host: localhost
+    host: ${MAIL_HOST}
     port: 1025
 
     # Username & Password not used but must be set
