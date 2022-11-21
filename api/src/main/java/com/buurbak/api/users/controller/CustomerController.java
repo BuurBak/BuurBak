@@ -78,7 +78,7 @@ public class CustomerController {
         return customerConverter.convertCustomerPageToPublicCustomerDTOPage(customerPage);
     }
 
-    @PutMapping(path = "{/id}")
+    @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
         try {

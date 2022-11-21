@@ -32,7 +32,7 @@ public class CustomerService {
         return customerRepository.findAll(specification, pageable);
     }
 
-    public void updateUser(UUID id, UpdateUserDTO updateUserDTO) throws CustomerNotFoundException {
-
+    public Customer updateUser(UUID id, UpdateUserDTO updateUserDTO) throws CustomerNotFoundException {
+        Customer customer =
     }
 }
