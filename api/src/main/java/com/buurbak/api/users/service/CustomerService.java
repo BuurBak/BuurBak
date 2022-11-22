@@ -34,8 +34,8 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer getCustomer(UUID id) throws EntityNotFoundException {
-        return customerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Customer getCustomer(UUID id) throws CustomerNotFoundException {
+        return customerRepository.findById(id).orElseThrow(CustomerNotFoundException::new);
     }
 
     public Customer findByUsername(String name) throws CustomerNotFoundException {
@@ -78,10 +78,9 @@ public class CustomerService {
 
     public void deleteUser(UUID id) throws CustomerNotFoundException {
 
-        if(!customerRepository.existsById(id)) {
-            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
-        }
         Customer customer = getCustomer(id);
         customer.setDeleted(true);
+
+        customerRepository.save(customer);
     }
 }

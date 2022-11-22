@@ -96,6 +96,12 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Sets customer deleted boolean to true")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Customer deleted boolean set to true"),
+            @ApiResponse(responseCode = "404", description = "Customer not found"),
+            @ApiResponse(responseCode = "500", description = "Could not set customer deleted boolean to true")
+    })
     public void deleteCustomer(@PathVariable UUID id) {
         try {
             customerService.deleteUser(id);
@@ -105,17 +111,4 @@ public class CustomerController {
 
         }
     }
-
-//    @Operation(summary = "Delete customer")
-//    @ApiResponses({
-//            @
-//    })
-
-//    @DeleteMapping void deleteCustomer(UUID id) {
-//        if(!customerService.getCustomer(id)) {
-//            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
-//        }
-//
-//        CustomerRepository
-//    }
 }
