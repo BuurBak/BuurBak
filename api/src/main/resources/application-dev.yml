@@ -1,49 +1,41 @@
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-  servlet:
-    context-path: /api/v1
-  port: 3080
-
-web:
-  cors:
-    allowed-origins: "http://localhost:3000"
-    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
-    max-age: 3600
-    allowed-headers: "*"
-    exposed-headers: "*"
+data:
+  generate-random-data: ${RANDOM_DATA}
 
 gcp:
-  auth-file: gcp-account-file.json
-  project-id: celestial-sonar-365614
-  bucket-id: buurbak_public
-  dir-name: dev
+  auth-file: ${GCP_AUTH_FILE}
+
+jwt:
+  secret-key: ${JWT_SECRET}
 
 spring:
-  data:
-    web:
-      pageable:
-        default-page-size: 20
-        max-page-size: 100
-
   datasource:
-    username: buurbak
-    password: buurbak
-    url: jdbc:postgresql://localhost:5432/buurbak
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
 
   jpa:
     hibernate:
       ddl-auto: create-drop
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
+
+  cloud:
+    gcp:
+      sql:
+        enabled: false
+      secretmanager:
+        enabled: false
+        bootstrap:
+          enabled: false
 
   mail:
-    host: localhost
+    host: ${MAIL_HOST}
     port: 1025
+
+    # Username & Password not used but must be set
     username: hello
     password: hello
 
@@ -55,6 +47,3 @@ spring:
           auth: true
           starttls:
             enable: true
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000

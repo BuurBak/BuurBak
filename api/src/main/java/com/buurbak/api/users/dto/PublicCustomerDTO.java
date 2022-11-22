@@ -7,24 +7,20 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PublicCustomerDTO {
-    @NotNull
-    private UUID id;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String email;
-    @Past
-    private LocalDate createdAt;
+        @NotNull
+        private UUID id;
 
-    private Collection<PublicRoleDTO> roles;
+        @NotBlank
+        private String name;
+
+        @NotNull
+        private Collection<PublicRoleDTO> roles;
 }

@@ -1,81 +1,101 @@
 [
-    {
-        "id": "1",
-        "title": "Dubbel asser",
-        "location": "Harderwijk",
-        "price": 15,
-        "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhEt6JU7LS0iNDdogzBorAZw9QeVwqPtAGJ-9KRuMRVTutOxXLggKePeOE5qO9v25aTu3sfaBbR3IqfxTjI4ReFzXK1cmfzsko5zk8WUwr&usqp=CAE",
-        "lat": 52.090736,
-        "lng": 5.121420,
-        "createdAt": 1
-    },
-    {
-        "id": "2",
-        "title": "Enkele aanhanger",
-        "location": "Utrecht",
-        "price": 35,
-        "img": "https://cdn.hornbach.nl/cmsm/de/chke2-60/80e67a9b1c132f7112e7cbc6caede6/anhaenger-abdeckplane-1200x800.jpg",
-        "lat": 52.090256,
-        "lng": 5.102170,
-        "createdAt": 5
-    },
-    {
-        "id": "3",
-        "title": "Drie asser",
-        "location": "Zeist",
-        "price": 20,
-        "img": "https://titanjelsum.nl/wp-content/uploads/2019/02/aanhangwagens.jpg",
-        "lat": 52.078441,
-        "lng": 5.114538,
-        "createdAt": 6
-    },
-    {
-        "id": "4",
-        "title": "Paardentrailer",
-        "location": "Zaandam",
-        "price": 27,
-        "img": "https://gptrailers.nl/previews/2020/1/18/media_860_510021_w650_h450_crop.jpg",
-        "lat": 52.086247,
-        "lng": 5.134807,
-        "createdAt": 3
-    },
-    {
-        "id": "5",
-        "title": "Enkelasser",
-        "location": "Groningen",
-        "price": 17,
-        "lat": 52.090256,
-        "lng": 5.102170,
-        "createdAt": 4
-    },
-    {
-        "id": "6",
-        "title": "Paardentrailer",
-        "location": "Zaandam",
-        "price": 27,
-        "img": "https://gptrailers.nl/previews/2020/1/18/media_860_510021_w650_h450_crop.jpg",
-        "lat": 52.095740,
-        "lng": 5.110072,
-        "createdAt": 8
-    },
-    {
-        "id": "7",
-        "title": "Dubbel asser",
-        "location": "Harderwijk",
-        "price": 15,
-        "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhEt6JU7LS0iNDdogzBorAZw9QeVwqPtAGJ-9KRuMRVTutOxXLggKePeOE5qO9v25aTu3sfaBbR3IqfxTjI4ReFzXK1cmfzsko5zk8WUwr&usqp=CAE",
-        "lat": 52.083505,
-        "lng": 5.118317,
-        "createdAt": 2
-    },
-    {
-        "id": "8",
-        "title": "Enkele aanhanger",
-        "location": "Utrecht",
-        "price": 35,
-        "img": "https://cdn.hornbach.nl/cmsm/de/chke2-60/80e67a9b1c132f7112e7cbc6caede6/anhaenger-abdeckplane-1200x800.jpg",
-        "lat": 52.108815,
-        "lng": 5.097704,
-        "createdAt": 7
-    }
+  {
+    "id": "1",
+    "title": "Dubbel asser",
+    "location": "Harderwijk",
+    "price": 15,
+    "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhEt6JU7LS0iNDdogzBorAZw9QeVwqPtAGJ-9KRuMRVTutOxXLggKePeOE5qO9v25aTu3sfaBbR3IqfxTjI4ReFzXK1cmfzsko5zk8WUwr&usqp=CAE",
+    "lat": 52.090736,
+    "lng": 5.12142,
+    "createdAt": 1
+  },
+  {
+    "id": "2",
+    "title": "Enkele aanhanger",
+    "location": "Utrecht",
+    "price": 35,
+    "img": "https://cdn.hornbach.nl/cmsm/de/chke2-60/80e67a9b1c132f7112e7cbc6caede6/anhaenger-abdeckplane-1200x800.jpg",
+    "lat": 52.090256,
+    "lng": 5.10217,
+    "createdAt": 5
+  },
+  {
+    "id": "3",
+    "title": "Drie asser",
+    "location": "Zeist",
+    "price": 20,
+    "img": "https://titanjelsum.nl/wp-content/uploads/2019/02/aanhangwagens.jpg",
+    "lat": 52.078441,
+    "lng": 5.114538,
+    "createdAt": 6
+  },
+  {
+    "id": "4",
+    "title": "Paardentrailer",
+    "location": "Zaandam",
+    "price": 27,
+    "img": "https://gptrailers.nl/previews/2020/1/18/media_860_510021_w650_h450_crop.jpg",
+    "lat": 52.086247,
+    "lng": 5.134807,
+    "createdAt": 3
+  },
+  {
+    "id": "5",
+    "title": "Enkelasser",
+    "location": "Groningen",
+    "price": 17,
+    "lat": 52.090256,
+    "lng": 5.10217,
+    "createdAt": 4
+  },
+  {
+    "id": "6",
+    "title": "Paardentrailer",
+    "location": "Zaandam",
+    "price": 27,
+    "img": "https://gptrailers.nl/previews/2020/1/18/media_860_510021_w650_h450_crop.jpg",
+    "lat": 52.09574,
+    "lng": 5.110072,
+    "createdAt": 8
+  },
+  {
+    "id": "7",
+    "title": "Dubbel asser",
+    "location": "Harderwijk",
+    "price": 15,
+    "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhEt6JU7LS0iNDdogzBorAZw9QeVwqPtAGJ-9KRuMRVTutOxXLggKePeOE5qO9v25aTu3sfaBbR3IqfxTjI4ReFzXK1cmfzsko5zk8WUwr&usqp=CAE",
+    "lat": 52.083505,
+    "lng": 5.118317,
+    "createdAt": 2
+  },
+  {
+    "id": "8",
+    "title": "Enkele aanhanger",
+    "location": "Utrecht",
+    "price": 35,
+    "img": "https://cdn.hornbach.nl/cmsm/de/chke2-60/80e67a9b1c132f7112e7cbc6caede6/anhaenger-abdeckplane-1200x800.jpg",
+    "lat": 52.108815,
+    "lng": 5.097704,
+    "createdAt": 7
+  },
+  {
+    "id": "9",
+    "title": "Dubbel asser",
+    "location": "Groningen",
+    "price": 15,
+    "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhEt6JU7LS0iNDdogzBorAZw9QeVwqPtAGJ-9KRuMRVTutOxXLggKePeOE5qO9v25aTu3sfaBbR3IqfxTjI4ReFzXK1cmfzsko5zk8WUwr&usqp=CAE",
+    "lat": 53.201233,
+    "lng": 5.799913,
+    "createdAt": 8
+  },
+  {
+    "id": "10",
+    "title": "Enkele aanhanger",
+    "location": "Leeuwarden",
+    "price": 35,
+    "img": "https://cdn.hornbach.nl/cmsm/de/chke2-60/80e67a9b1c132f7112e7cbc6caede6/anhaenger-abdeckplane-1200x800.jpg",
+    "lat": 53.219383,
+    "lng": 6.566502,
+    "createdAt": 9
+  }
 ]

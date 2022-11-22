@@ -1,71 +1,71 @@
 .reserveTrailer {
-    width: 38%;
-    margin: 6.8% 0 0 5%;
-    min-height: 300px;
-    height: fit-content;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 20px;
+  width: 38%;
+  margin: 6.8% 0 0 5%;
+  min-height: 300px;
+  height: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .reserveTrailerHeader {
-    display: flex;
+  display: flex;
 }
 
 .reservationTrailerImg {
-    width: 42%;
-    height: 120px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 5px;
+  width: 42%;
+  height: 120px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
 }
 
-.reserveTrailerHeader>div>p {
-    margin-left: 15px;
-    font-weight: var(--bold);
-    color: var(--primary);
+.reserveTrailerHeader > div > p {
+  margin-left: 15px;
+  font-weight: var(--bold);
+  color: var(--primary);
 }
 
 .reservationTrailerLocation {
-    display: flex;
-    align-items: center;
-    margin: 5px 0 0 16px;
-    color: var(--secondary);
-    font-size: 14px;
-    font-weight: var(--semibold);
+  display: flex;
+  align-items: center;
+  margin: 5px 0 0 16px;
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: var(--semibold);
 }
 
 .reservationTrailerDate {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.reservationTrailerDate>p {
-    margin-left: 10px;
-    font-weight: var(--semibold);
-    font-size: 14px;
+.reservationTrailerDate > p {
+  margin-left: 10px;
+  font-weight: var(--semibold);
+  font-size: 14px;
 }
 
 .reservationFlex {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    font-size: 14px;
-    font-weight: var(--medium);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: var(--medium);
 }
 
-.reservationFlex>p:nth-child(2) {
-    color: var(--text);
-    font-weight: var(--semibold);
+.reservationFlex > p:nth-child(2) {
+  color: var(--text);
+  font-weight: var(--semibold);
 }
 
 .reservationTotal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--primary);
-    font-weight: var(--bold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--primary);
+  font-weight: var(--bold);
 }

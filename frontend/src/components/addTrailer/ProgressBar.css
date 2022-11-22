@@ -1,0 +1,63 @@
+.progressBarContainer {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  justify-content: space-between;
+}
+
+.progressBarStep,
+.progressBarStepActive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.progressBarStepActive {
+  color: var(--primary);
+}
+
+.progressBarStep > div,
+.progressBarStepActive > div {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.progressDot {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  background-color: var(--border);
+  border-radius: 50px;
+  z-index: 1;
+}
+
+.progressLine {
+  width: 152px;
+  height: 1.5px;
+  background-color: var(--border);
+  position: absolute;
+}
+
+.progressBarText {
+  font-size: 12px;
+  font-weight: var(--semibold);
+  color: var(--border);
+  margin-top: 10px;
+}
+
+.progressBarTextActive {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: var(--semibold);
+  margin-top: 10px;
+}

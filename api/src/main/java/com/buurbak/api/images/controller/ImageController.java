@@ -1,6 +1,6 @@
 package com.buurbak.api.images.controller;
 
-import com.buurbak.api.images.dto.ImageDTO;
+import com.buurbak.api.images.dto.PublicImageDTO;
 import com.buurbak.api.images.exception.BadRequestException;
 import com.buurbak.api.images.exception.FileWriteException;
 import com.buurbak.api.images.exception.GCPFileUploadException;
@@ -37,16 +37,15 @@ public class ImageController {
             @ApiResponse(responseCode = "400", description = "File should be an image", content = @Content),
             @ApiResponse(responseCode = "500", description = "Could not save profile picture", content = @Content)
     })
-    public ArrayList<ImageDTO> uploadImage(@RequestParam("files") MultipartFile[] files) {
+    public ArrayList<PublicImageDTO> uploadImage(@RequestParam("files") MultipartFile[] files) {
         try {
             log.info("Uploading images");
             List<Image> images = imageService.uploadImages(files);
-            ArrayList<ImageDTO> uploadedImages = new ArrayList<>();
+            ArrayList<PublicImageDTO> uploadedImages = new ArrayList<>();
 
-            images.forEach(image -> uploadedImages.add(new ImageDTO(
+            // TODO write converter
+            images.forEach(image -> uploadedImages.add(new PublicImageDTO(
                     image.getId(),
-                    image.getCreatedAt(),
-                    image.getUpdatedAt(),
                     image.getOriginalFileName(),
                     image.getPublicUrl()
             )));

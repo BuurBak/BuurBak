@@ -10,7 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,9 +23,9 @@ public class Image {
     private UUID id;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(columnDefinition = "text")
     private String originalFileName;

@@ -1,44 +1,21 @@
 package com.buurbak.api.email.service;
 
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 @Service
-@AllArgsConstructor
-@Slf4j
-public class ConfirmEmailService implements EmailSender {
-    private final JavaMailSender javaMailSender;
-    private final static String ENCODING = "utf-8";
+public class ConfirmEmailService {
+    @Autowired
+    private EmailService emailService;
 
-    @Override
-    @Async
-    public void send(String to, String email) {
-        try {
-            log.info("Sending email to: " + to);
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, ENCODING);
-
-            mimeMessageHelper.setText(email, true);
-            mimeMessageHelper.setTo(to);
-            mimeMessageHelper.setSubject("BuurBak - Confirm your email");
-            mimeMessageHelper.setFrom("noreply@buurbak.nl");
-            javaMailSender.send(mimeMessage);
-        } catch (MessagingException messagingException) {
-            log.error("failed to send email", messagingException);
-            throw new IllegalStateException("failed to send email");
-        }
+    public void sendConfirmEmailEmail(String email, String name, String link) throws MessagingException {
+        emailService.sendHtmlMessage(email, "BuurBak - Confirm Email", buildEmail(name, link));
     }
 
     // TODO: create a BuurBak themed email
-    public String buildEmail(String name, String link) {
+    private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

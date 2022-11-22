@@ -1,0 +1,60 @@
+database: postgresql
+
+data:
+  generate-random-data: false
+
+gcp:
+  auth-file: ${sm://GCP_AUTH_FILE}
+
+jwt:
+  secret-key: ${sm://JWT_SECRET}
+
+spring:
+  datasource:
+    username: ${DATABASE_USERNAME}
+    password: ${sm://BUURBAK_DATABASE_PASSWORD}
+    url: jdbc:postgresql:///${DATABASE_NAME}?cloudSqlInstance=${INSTANCE_CONNECTION_NAME}&socketFactory=com.google.cloud.sql.postgres.SocketFactory
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      initializationFailTimeout: 30000
+      idle-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 15
+      connection-timeout: 20000
+      max-lifetime: 1000
+
+  cloud:
+    gcp:
+      sql:
+        instance-connection-name: ${INSTANCE_CONNECTION_NAME}
+        database-name: ${DATABASE_NAME}
+        enabled: true
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: false
+
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${sm://MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          # tls, port 587
+          starttls:
+            enable: true
