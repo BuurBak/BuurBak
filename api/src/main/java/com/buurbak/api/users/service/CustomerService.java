@@ -1,5 +1,7 @@
 package com.buurbak.api.users.service;
 
+import com.buurbak.api.reservations.model.Reservation;
+import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
@@ -11,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +21,8 @@ import javax.transaction.Transactional;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final ReservationRepository reservationRepository;
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
@@ -29,5 +34,10 @@ public class CustomerService {
 
     public Page<Customer> findAll(Specification<Customer> specification, Pageable pageable) {
         return customerRepository.findAll(specification, pageable);
+    }
+
+    public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
+//        return reservationRepository.findAll(pageable);
+        return reservationRepository.findAllByRenterId(customerId, pageable);
     }
 }

@@ -1,5 +1,7 @@
 package com.buurbak.api.users.controller;
 
+import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecification;
 import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
@@ -20,13 +22,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -74,5 +79,17 @@ public class CustomerController {
     ) {
         Page<Customer> customerPage = customerService.findAll(specification, pageable);
         return customerConverter.convertCustomerPageToPublicCustomerDTOPage(customerPage);
+    }
+
+    @Operation(summary = "Return all reservations for a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+    })
+    @GetMapping(path = "/{id}/reservations")
+    @PreAuthorize("authentication.principal.id == #id or hasRole('ROLE_ADMIN')")
+    public Page<ReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+        Page<Reservation> reservationPage = customerService.getAllReservations(id, pageable);
+        return customerConverter.convertReservationPageToReservationDTOPage(reservationPage);
     }
 }
