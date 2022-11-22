@@ -1,95 +1,93 @@
 .formStepContainer {
-    display: flex;
-    flex-direction: column;
-    animation: slide-in 1s ease;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: slide-in 1s ease;
+  position: relative;
 }
 
 @keyframes slide-in {
-    0% {
-        top: -50px;
-        opacity: 0;
-    }
-    100% {
-        top: 0px;
-        opacity: 1;
-    }
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+  100% {
+    top: 0px;
+    opacity: 1;
+  }
 }
 
-.formStepContainer>h2 {
-    margin: 50px 0 0 0;
-    color: var(--text);
+.formStepContainer > h2 {
+  margin: 50px 0 0 0;
+  color: var(--text);
 }
 
-.formStepContainer>p {
-    color: var(--subheader);
-    margin-top: 8px;
-    max-width: 84%;
-    font-size: 15px;
-    font-weight: var(--medium);
+.formStepContainer > p {
+  color: var(--subheader);
+  margin-top: 8px;
+  max-width: 84%;
+  font-size: 15px;
+  font-weight: var(--medium);
 }
 
 .licenseGrid {
-    display: grid;
-    grid-template-columns: 33.3% 33.3% 33.3%;
-    justify-content: space-between;
-    column-gap: 8px;
-    margin-top: 40px;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  justify-content: space-between;
+  column-gap: 8px;
+  margin-top: 40px;
 }
 
 .licenseGridItem,
 .licenseGridItemActive {
-    width: 94%;
-    height: 320px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 22px;
-    position: relative;
-    transition: 0.2s ease;
+  width: 94%;
+  height: 320px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 22px;
+  position: relative;
+  transition: 0.2s ease;
 }
 
 .licenseGridItemActive {
-    border: 1px solid var(--text);
+  border: 1px solid var(--text);
 }
 
 .licenseGridItem:hover {
-    border: 1px solid var(--text);
-    cursor: pointer;
-    transition: 0.2s ease;
+  border: 1px solid var(--text);
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.licenseGridItem>b,
-.licenseGridItemActive>b {
-    margin-top: 25px;
-    font-size: 15px;
+.licenseGridItem > b,
+.licenseGridItemActive > b {
+  margin-top: 25px;
+  font-size: 15px;
 }
 
-.licenseGridItem>p:nth-child(3),
-.licenseGridItemActive>p:nth-child(3) {
-    color: var(--subheader);
-    font-weight: var(--medium);
-    font-size: 14px;
-    margin-top: 6px;
+.licenseGridItem > p:nth-child(3),
+.licenseGridItemActive > p:nth-child(3) {
+  color: var(--subheader);
+  font-weight: var(--medium);
+  font-size: 14px;
+  margin-top: 6px;
 }
 
-.licenseGridItem>p:nth-child(4),
-.licenseGridItemActive>p:nth-child(4) {
-    position: absolute;
-    bottom: 22px;
-    left: 22px;
-    font-size: 14px;
-    font-weight: var(--medium);
-    color: var(--primary);
-    text-decoration: underline;
-    cursor: pointer;
+.licenseGridItem > p:nth-child(4),
+.licenseGridItemActive > p:nth-child(4) {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  font-size: 14px;
+  font-weight: var(--medium);
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.licenseGridItem>p:nth-child(4):hover,
-.licenseGridItemActive>p:nth-child(4):hover {
-    font-weight: var(--semibold);
+.licenseGridItem > p:nth-child(4):hover,
+.licenseGridItemActive > p:nth-child(4):hover {
+  font-weight: var(--semibold);
 }
-
-

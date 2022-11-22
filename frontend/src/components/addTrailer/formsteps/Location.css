@@ -1,36 +1,35 @@
 .mapContainer {
-    width: 100%;
-    height: 380px;
-    margin-top: 40px;
-    position: relative;
+  width: 100%;
+  height: 380px;
+  margin-top: 40px;
+  position: relative;
 }
 
 .locationInputContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  z-index: 2;
 }
 
 .flexbox {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .mapOverlay {
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    border-radius: 10px;
-    position: absolute;
-    z-index: 1;
-    opacity: 0.05;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.05;
 }
 
 .locationInput {
-
 }

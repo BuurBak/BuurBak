@@ -1,52 +1,50 @@
-import axios from 'axios';
+import { instance } from './axiosInstance'
 
-const API_URL = "http://localhost/api/v1/auth"
-
-const signUp = async(email, password, firstName, lastName, number, address) => {
-    const name = firstName + " " + lastName
-    return axios
-        .post(API_URL + '/register', {
-            email,
-            password,
-            name,
-            number,
-            address
-        })
-        .then((response) => {
-            if (response.data.accesToken) {
-                localStorage.setItem('user', JSON.stringify(response.data))
-            }
-            return response.data
-        })
+const signUp = async (
+  email,
+  password,
+  firstName,
+  lastName,
+  number,
+  address
+) => {
+  const name = firstName + ' ' + lastName
+  return instance
+    .post('/auth/register', {
+      email,
+      password,
+      name,
+      number,
+      address,
+    })
+    .then((response) => {
+      login(email, password)
+      return response.data
+    })
 }
 
-const login = async(email, password) => {
-    return axios
-        .post(API_URL + '/login', {
-            email,
-            password
-        })
-        .then((response) => {
-            if (response.data.accesToken) {
-                localStorage.setItem('user', JSON.stringify(response.data))
-            }
-            return response.data
-        })
+const login = async (email, password) => {
+  return instance
+    .post('/auth/login', {
+      email,
+      password,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        localStorage.setItem('tokens', JSON.stringify(response.data))
+      }
+      return response.data
+    })
 }
 
 const logout = () => {
-    localStorage.removeItem('user')
-}
-
-const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('user'))
+  localStorage.removeItem('tokens')
 }
 
 const authService = {
-    signUp,
-    login,
-    logout,
-    getCurrentUser
+  signUp,
+  login,
+  logout,
 }
 
 export default authService
