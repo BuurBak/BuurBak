@@ -1,30 +1,30 @@
 .formFooter {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 50px;
-    animation: slide-in 1s ease;
-    position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  animation: slide-in 1s ease;
+  position: relative;
 }
 
 .secondaryBtn {
-    background-color: transparent;
-    border: none;
-    color: var(--primary);
-    font-weight: var(--medium);
+  background-color: transparent;
+  border: none;
+  color: var(--primary);
+  font-weight: var(--medium);
 }
 
 .secondaryBtn:hover {
-    text-decoration: underline;
-    font-weight: var(--semibold);
+  text-decoration: underline;
+  font-weight: var(--semibold);
 }
 
 .primaryBtn {
-    padding: 14px 20px;
-    font-weight: var(--semibold);
-    border-radius: 5px;
-    background-color: var(--primary);
-    color: var(--white);
-    margin-left: auto;
+  padding: 14px 20px;
+  font-weight: var(--semibold);
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: var(--white);
+  margin-left: auto;
 }

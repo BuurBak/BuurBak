@@ -1,130 +1,130 @@
 .faqContainer {
-    width: 100%;
-    min-height: 800px;
-    height: fit-content;
-    background-color: var(--primary);
-    box-sizing: border-box;
-    padding: 80px 0;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  min-height: 800px;
+  height: fit-content;
+  background-color: var(--primary);
+  box-sizing: border-box;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
-    width: 20%;
-    height: 50px;
-    font-size: 36px;
-    color: var(--white);
+  width: 20%;
+  height: 50px;
+  font-size: 36px;
+  color: var(--white);
 }
 
 .faqHeader {
-    width: 50%;
-    margin: 80px auto 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 50%;
+  margin: 80px auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.faqHeader>div>p:nth-child(1) {
-    font-size: 22px;
-    color: var(--white);
-    text-align: right;
-    margin: 0;
+.faqHeader > div > p:nth-child(1) {
+  font-size: 22px;
+  color: var(--white);
+  text-align: right;
+  margin: 0;
 }
 
-.faqHeader>div>p:nth-child(2) {
-    color: var(--white);
-    text-align: right;
-    margin: 2px 0 0 0;
+.faqHeader > div > p:nth-child(2) {
+  color: var(--white);
+  text-align: right;
+  margin: 2px 0 0 0;
 }
 
-.faqHeader>div>p:nth-child(2)>span {
-font-weight: var(--semibold);
-cursor: pointer;
+.faqHeader > div > p:nth-child(2) > span {
+  font-weight: var(--semibold);
+  cursor: pointer;
 }
 
-.faqHeader>div>p:nth-child(2)>span:hover {
-    text-decoration: underline;
+.faqHeader > div > p:nth-child(2) > span:hover {
+  text-decoration: underline;
 }
 
 .faqQuestions {
-    width: 50%;
-    margin: 0 auto;
-    height: fit-content;
-    min-height: 60px;
+  width: 50%;
+  margin: 0 auto;
+  height: fit-content;
+  min-height: 60px;
 }
 
 .category {
-    display: flex;
-    margin: 50px 0 0 25%;
+  display: flex;
+  margin: 50px 0 0 25%;
 }
 
-.category>p {
-    color: #FFFFFF;
-    margin: 0 20px 0 0;
-    font-weight: var(--medium);
-    text-decoration: underline;
-    cursor: pointer;
+.category > p {
+  color: #ffffff;
+  margin: 0 20px 0 0;
+  font-weight: var(--medium);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .questionContainer {
-    width: 100%;
-    min-height: 50px;
-    height: fit-content;
-    background-color: var(--background);
-    border-radius: 5px;
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 0 20px;
-    position: relative;
-    cursor: pointer;
+  width: 100%;
+  min-height: 50px;
+  height: fit-content;
+  background-color: var(--background);
+  border-radius: 5px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+  position: relative;
+  cursor: pointer;
 }
 
-.questionContainer>p {
-    margin-left: 20px;
-    font-weight: var(--medium);
-    max-width: 80%;
+.questionContainer > p {
+  margin-left: 20px;
+  font-weight: var(--medium);
+  max-width: 80%;
 }
 
 .iconButton {
-    position: absolute !important;
-    right: 15px !important;
-    padding: 10px;
+  position: absolute !important;
+  right: 15px !important;
+  padding: 10px;
 }
 
 .arrowDown {
-    font-size: 22px;
-    color: var(--primary);
-} 
+  font-size: 22px;
+  color: var(--primary);
+}
 
 .answerContainer {
-    background-color: var(--background);
-    box-sizing: border-box;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 5px;
-    font-size: 15px;
-    animation: slideOut 0.4s ease;
+  background-color: var(--background);
+  box-sizing: border-box;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  animation: slideOut 0.4s ease;
 }
 
 @keyframes slideOut {
-    0% {
-        margin-top: 0px;
-        opacity: 0;
-    }
-    100% {
-        margin-top: 15px;
-        opacity: 1;
-    }
+  0% {
+    margin-top: 0px;
+    opacity: 0;
+  }
+  100% {
+    margin-top: 15px;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1280px) {
-    .faqQuestions {
-        width: 80%;
-    }
+  .faqQuestions {
+    width: 80%;
+  }
 
-    .faqHeader {
-        width: 80%;
-    }
+  .faqHeader {
+    width: 80%;
+  }
 }
