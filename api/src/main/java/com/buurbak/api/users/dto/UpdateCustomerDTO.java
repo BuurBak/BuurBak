@@ -16,18 +16,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UpdateCustomerDTO {
 
-//    @NotBlank @Email
-//    private String email;
-//    @NotBlank
-//    private String password;
+    @NotBlank @Email
+    private String email;
+    @NotBlank
+    private String password;
     @NotBlank
     private String name;
-//    @NotBlank
-//    private String number;
-//    @Valid
-//    private CreateAddressDTO address;
-//    @Past @JsonProperty("date_of_birth")
-//    private LocalDate dateOfBirth;
-//    @NotBlank
-//    private String iban;
+    @NotBlank
+    private String number;
+    @Valid
+    private CreateAddressDTO address;
+    @Past @JsonProperty("date_of_birth")
+    private LocalDate dateOfBirth;
+    @NotBlank
+    private String iban;
 }

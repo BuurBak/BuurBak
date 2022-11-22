@@ -81,7 +81,12 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Updates customer details")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
     public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
         try {
             customerService.updateUser(id, updateCustomerDTO);
