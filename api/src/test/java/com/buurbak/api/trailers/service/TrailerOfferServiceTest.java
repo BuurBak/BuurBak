@@ -3,7 +3,6 @@ package com.buurbak.api.trailers.service;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
-import com.buurbak.api.trailers.repository.TrailerTypeRepository;
 import com.buurbak.api.users.service.CustomerService;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -31,6 +30,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TrailerOfferServiceTest {
     @Mock private TrailerOfferRepository trailerOfferRepository;
+    @Mock private TrailerTypeService trailerTypeService;
+    @Mock private CustomerService customerService;
 
     @InjectMocks
     private TrailerOfferService trailerOfferService;
