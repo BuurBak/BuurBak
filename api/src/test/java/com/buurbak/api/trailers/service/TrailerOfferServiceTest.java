@@ -5,10 +5,10 @@ import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.users.service.CustomerService;
 import org.jeasy.random.EasyRandom;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,15 +23,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TrailerOfferServiceTest {
     @Mock private TrailerOfferRepository trailerOfferRepository;
-    private TrailerOfferService trailerOfferService;
     @Mock private TrailerTypeService trailerTypeService;
     @Mock private CustomerService customerService;
-
-
-    @BeforeEach
-    void setUp() {
-        trailerOfferService = new TrailerOfferService(trailerOfferRepository, customerService, trailerTypeService);
-    }
+    @InjectMocks private TrailerOfferService trailerOfferService;
 
     @Test
     void addTrailerOffer() {
