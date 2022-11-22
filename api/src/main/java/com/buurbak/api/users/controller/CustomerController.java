@@ -91,16 +91,16 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "Delete customer")
-    @ApiResponses({
-            @
-    })
+//    @Operation(summary = "Delete customer")
+//    @ApiResponses({
+//            @
+//    })
 
-    @DeleteMapping void deleteCustomer(UUID id) {
-        if(!customerService.getCustomer(id)) {
-            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
-        }
-
-        CustomerRepository
-    }
+//    @DeleteMapping void deleteCustomer(UUID id) {
+//        if(!customerService.getCustomer(id)) {
+//            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
+//        }
+//
+//        CustomerRepository
+//    }
 }
