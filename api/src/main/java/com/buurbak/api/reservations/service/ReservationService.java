@@ -24,7 +24,6 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerService customerService;
     private final TrailerOfferService trailerOfferService;
-    private final ReservationConverter reservationConverter;
 
     public Reservation getReservation(UUID id) throws ReservationNotFoundException {
         return reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
@@ -34,7 +33,7 @@ public class ReservationService {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
 
-        Reservation reservation = reservationConverter.convertReservationDTOtoReservation(reservationDTO);
+        Reservation reservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
         reservation.setTrailer(trailerOffer);
 
@@ -43,21 +42,19 @@ public class ReservationService {
     }
 
     public void updateReservation(UUID reservationId, ReservationDTO reservationDTO) throws ReservationNotFoundException, TrailerOfferNotFoundException {
-        Reservation reservation = getReservation(reservationId);
+        Customer renter = getReservation(reservationId).getRenter();
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
 
-        Reservation newReservation = reservationConverter.convertReservationDTOtoReservation(reservationDTO);
+        Reservation newReservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
         newReservation.setId(reservationId);
+        newReservation.setRenter(renter);
         newReservation.setTrailer(trailerOffer);
         reservationRepository.save(newReservation);
     }
 
     public void deleteReservation(UUID reservationId) {
-        if(!reservationRepository.existsById(reservationId)) {
-            throw new ReservationNotFoundException("Reservation with id " + reservationId + " does not exist");
-        }
+        if(!reservationRepository.existsById(reservationId)) throw new ReservationNotFoundException();
 
         reservationRepository.deleteById(reservationId);
-        log.info("Reservation with id " + reservationId + " has been deleted");
     }
 }

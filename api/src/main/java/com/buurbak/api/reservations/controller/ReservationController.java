@@ -72,6 +72,8 @@ public class ReservationController {
     @Operation(summary = "Delete reservation")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "404", description = "Entity not found")
     })
     @DeleteMapping("/{id}")
