@@ -1,4 +1,4 @@
-import { instance } from './axiosInstance'
+import { instance } from '../axiosInstance'
 
 const signUp = async (email, password, name, number, address) => {
   const response = await instance.post('/auth/register', {
