@@ -18,7 +18,6 @@ export default function Login({ setShowLogin }) {
   const { response, loading, error } = useAxios({
     method: 'get',
     url: '/customers',
-    headers: JSON.stringify({ accept: '*/*' }),
   })
   const [users, setUsers] = useState([])
 
