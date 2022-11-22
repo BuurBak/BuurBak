@@ -2,11 +2,11 @@ package com.buurbak.api.security.service;
 
 import com.buurbak.api.security.exception.AppUserNotFoundException;
 import com.buurbak.api.security.model.AppUser;
+import com.buurbak.api.security.model.CustomUser;
 import com.buurbak.api.security.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,7 +35,7 @@ public class AppUserService implements UserDetailsService {
         AppUser appUser = appUserRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Invalid username or password"));
         if (!appUser.isEnabled()) throw new UsernameNotFoundException("Invalid username or password");
 
-        return new User(appUser.getUsername(), appUser.getPassword(), getAuthorities(appUser));
+        return new CustomUser(appUser.getId(), appUser.getUsername(), appUser.getPassword(), getAuthorities(appUser));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(AppUser appUser) {
