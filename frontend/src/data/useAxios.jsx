@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { instance } from './axiosInstance'
+import { instance } from './services/axiosInstance'
 
 const useAxios = ({ method, url, body = null, headers = null }) => {
   const [response, setResponse] = useState(null)
