@@ -8,33 +8,28 @@ const signUp = async (
   number,
   address
 ) => {
-  const name = firstName + ' ' + lastName
-  return instance
-    .post('/auth/register', {
-      email,
-      password,
-      name,
-      number,
-      address,
-    })
-    .then((response) => {
-      login(email, password)
-      return response.data
-    })
+  const response = await instance.post('/auth/register', {
+    email,
+    password,
+    name: firstName + ' ' + lastName,
+    number,
+    address,
+  })
+  await login(email, password)
+  await getCurrentUser()
+  return response.data
 }
 
 const login = async (email, password) => {
-  return instance
-    .post('/auth/login', {
-      email,
-      password,
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        localStorage.setItem('tokens', JSON.stringify(response.data))
-      }
-      return response.data
-    })
+  const response = await instance.post('/auth/login', { email, password })
+  localStorage.setItem('tokens', JSON.stringify(response.data))
+  await getCurrentUser()
+  return response.data
+}
+
+const getCurrentUser = async () => {
+  const response = await instance.get('/customers/self')
+  return response.data
 }
 
 const logout = () => {
@@ -45,6 +40,7 @@ const authService = {
   signUp,
   login,
   logout,
+  getCurrentUser,
 }
 
 export default authService
