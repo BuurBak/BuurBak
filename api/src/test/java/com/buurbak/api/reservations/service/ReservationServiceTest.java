@@ -30,7 +30,7 @@ class ReservationServiceTest {
     @InjectMocks ReservationService reservationService;
 
     @Test
-    void getReservation() {
+    void shouldGetReservation() {
     }
 
     @Test
@@ -66,7 +66,6 @@ class ReservationServiceTest {
         Reservation reservation = easyRandom.nextObject(Reservation.class);
         ReservationDTO reservationDTO = easyRandom.nextObject(ReservationDTO.class);
         TrailerOffer trailer = easyRandom.nextObject(TrailerOffer.class);
-        String username = "lucabergman@yahoo.com";
 
         when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailer())).thenReturn(trailer);
@@ -88,7 +87,7 @@ class ReservationServiceTest {
     }
 
     @Test
-    void deleteReservation() {
+    void shouldDeleteReservation() {
         EasyRandom easyRandom = new EasyRandom();
         Reservation reservation = easyRandom.nextObject(Reservation.class);
 
@@ -99,5 +98,10 @@ class ReservationServiceTest {
         verify(reservationRepository).deleteById(idArgumentCaptor.capture());
 
         assertThat(idArgumentCaptor.getValue()).isEqualTo(reservation.getId());
+    }
+
+    @Test
+    void shouldThrowReservationNotFoundExceptionWhenIdNotFoundWhenDeleteReservation() {
+
     }
 }
