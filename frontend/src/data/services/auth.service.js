@@ -14,7 +14,11 @@ const signUp = async (email, password, name, number, address) => {
 }
 
 const login = async (email, password) => {
-  const response = await instance.post('/auth/login', { email, password })
+  const response = await instance.request({
+    method: 'post',
+    url: '/auth/login',
+    data: { username: email, password },
+  })
   localStorage.setItem('tokens', JSON.stringify(response.data))
   await getCurrentUser()
   return response.data
