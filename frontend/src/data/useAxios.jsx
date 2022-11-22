@@ -1,30 +1,29 @@
 import { useState, useEffect } from 'react'
-import { instance } from './services/axiosInstance'
+import { instance } from './axiosInstance'
 
-const useAxios = ({ method, url, body = null, headers = null }) => {
-  const [response, setResponse] = useState(null)
+export default function useAxios(axiosParams) {
+  const [response, setResponse] = useState(undefined)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
 
-  const fetchData = () => {
-    instance[method](url, JSON.parse(headers), JSON.parse(body))
-      .then((res) => {
-        setResponse(res.data)
-      })
-      .catch((err) => {
-        setError(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+  const fetchData = async (params) => {
+    try {
+      const result = await instance.request(params)
+      setResponse(result.data)
+    } catch (error) {
+      setError(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [method, url, body, headers])
+    fetchData(axiosParams)
+  }, []) // execute once only
 
-  return { response, error, loading }
+  const refetch = () => {
+    fetchData(axiosParams)
+  }
+
+  return { response, error, loading, refetch }
 }
-
-export default useAxios

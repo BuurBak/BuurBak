@@ -2,6 +2,7 @@
   "extends": ["plugin:prettier/recommended", "react-app"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
