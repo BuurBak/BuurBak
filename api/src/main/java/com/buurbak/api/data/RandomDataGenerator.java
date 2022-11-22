@@ -1,10 +1,10 @@
 package com.buurbak.api.data;
 
-import com.buurbak.api.data.randomizers.Hallo123PasswordRandomizer;
-import com.buurbak.api.data.randomizers.TrailerDimensionRandomizer;
-import com.buurbak.api.data.randomizers.TrailerOwnerRandomizer;
-import com.buurbak.api.data.randomizers.TrailerTypeRandomizer;
+import com.buurbak.api.data.randomizers.*;
 import com.buurbak.api.security.model.AppUser;
+import com.buurbak.api.security.model.Role;
+import com.buurbak.api.security.repository.RoleRepository;
+import com.buurbak.api.security.service.RoleService;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -45,6 +46,8 @@ public class RandomDataGenerator implements CommandLineRunner {
     private final TrailerOfferRepository trailerOfferRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TrailerTypeRepository trailerTypeRepository;
+    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     @Value("${data.generate-random-data:false}")
     private boolean GENERATE_RANDOM_DATA;
@@ -60,7 +63,7 @@ public class RandomDataGenerator implements CommandLineRunner {
 
         LocalDate today = LocalDate.now();
 
-
+        Role userRole = roleService.findByName("USER");
 
         // Generate Customer Paramater
         EasyRandomParameters customerParameters = new EasyRandomParameters()
@@ -94,7 +97,10 @@ public class RandomDataGenerator implements CommandLineRunner {
                         FieldPredicates.named("locked")
                                 .and(FieldPredicates.inClass(AppUser.class)),
                         new SkipRandomizer())
-
+                .randomize(
+                        FieldPredicates.named("roles")
+                                .and(FieldPredicates.inClass(AppUser.class)),
+                        new UserRoleRandomizer(userRole))
                 .seed(123L)
                 .objectPoolSize(100)
                 .randomizationDepth(5)
@@ -117,6 +123,7 @@ public class RandomDataGenerator implements CommandLineRunner {
         Customer lucaBergman = new Customer(
                 "lucabergman@yahoo.com",
                 bCryptPasswordEncoder.encode("hallo123"),
+                Collections.singletonList(userRole),
                 "Luca Bergman",
                 LocalDate.of(2001, 3, 10),
                 "This is an IBAN",
@@ -200,8 +207,6 @@ public class RandomDataGenerator implements CommandLineRunner {
         }
         trailerOfferRepository.saveAll(trailerOffers);
         log.info("Generated: " + TRAILER_OFFERS_TO_GENERATE + " trailer offers");
-
-
 
         // TODO generate user profile pictures and trailer pictures
     }

@@ -6,79 +6,54 @@ import { AiFillApple, AiOutlineGooglePlus } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
 import AuthService from '../../../data/services/auth.service'
 import useAxios from '../../../data/useAxios'
+import _ from 'lodash'
 
 export default function Login({ setShowLogin }) {
   const [email, setEmail] = useState('')
-  const [userExists, setUserExists] = useState()
+  const [userExists, setUserExists] = useState(false)
   const [password, setPassword] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const [address, setAddress] = useState()
-  const { response, loading, error } = useAxios({
-    method: 'get',
+  const { response, loading, error, refetch } = useAxios({
+    method: 'GET',
     url: '/customers',
-    headers: JSON.stringify({ accept: '*/*' }),
+    params: {
+      email,
+    },
   })
-  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    if (response !== null) {
-      setUsers(response)
-    }
-  }, [response])
+    refetch()
+  }, [email])
 
   useEffect(() => {
-    if (!users) return
-    const checkIfUserExists = users?.content?.filter(
-      (user) => user.name.toLowerCase() === email
-    )
-    if (checkIfUserExists) {
-      setUserExists(checkIfUserExists)
-    } else {
-      setUserExists(null)
-    }
-  }, [email, users])
+    if (loading || error || !response) return
+
+    setUserExists(response.content.length > 0 && email)
+  }, [response, loading, error])
 
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      await AuthService.login(email, password).then(
-        () => {
-          setShowLogin(false)
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
-    } catch (err) {
-      console.log(err)
+      await AuthService.login(email, password)
+      setShowLogin(false)
+    } catch (error) {
+      console.error('Error logging in')
+      console.error(error)
+    } finally {
     }
   }
 
   const handleSignup = async (e) => {
     e.preventDefault()
     try {
-      await AuthService.signUp(
-        email,
-        password,
-        firstName,
-        lastName,
-        number,
-        address
-      ).then(
-        (response) => {
-          setShowLogin(false)
-          console.log('Sign up succesfull', response)
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
-    } catch (err) {
-      console.log(err)
+      await AuthService.signUp(email, password, name, number, address)
+      setShowLogin(false)
+    } catch (error) {
+      console.error(error)
+    } finally {
     }
-    setShowLogin(false)
   }
 
   if (loading) return <p>Loading...</p>
@@ -112,13 +87,13 @@ export default function Login({ setShowLogin }) {
             Als het email adres niet bij ons bekend is zetten we account op!
           </p>
         ) : null}
-        {userExists?.length > 0 ? (
+        {userExists ? (
           <p>
             Welkom terug <span>{userExists?.[0]?.firstName}</span>. Laten we
             inloggen!
           </p>
         ) : null}
-        {!userExists?.length && email ? (
+        {!userExists && email ? (
           <p>Hmm je email wordt niet herkend, laten we een account aanmaken!</p>
         ) : null}
         {!email ? (
@@ -158,7 +133,7 @@ export default function Login({ setShowLogin }) {
             </div>
           </>
         ) : null}
-        {userExists?.length > 0 ? (
+        {userExists ? (
           <form className="loginContent" onSubmit={handleLogin}>
             <TextField
               className="primaryInput"
@@ -182,15 +157,15 @@ export default function Login({ setShowLogin }) {
               <form className="registerContent" onSubmit={handleSignup}>
                 <div>
                   <div className="registerItem">
-                    <p>Voor- / achternaam</p>
+                    <p>Volledige naam</p>
                     <div className="inputItem">
                       <TextField
                         className="secondaryInput"
-                        value={firstName}
+                        value={name}
                         size="large"
-                        label="Voornaam"
+                        label="Volledige naam"
                         variant="outlined"
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </div>
                   </div>

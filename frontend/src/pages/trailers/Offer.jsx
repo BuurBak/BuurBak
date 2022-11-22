@@ -27,17 +27,11 @@ export default function Offer() {
     method: 'get',
     url: '/traileroffers',
   })
-  const [trailers, setTrailers] = useState([])
 
   useEffect(() => {
-    if (response !== null) {
-      setTrailers(response)
-    }
+    if (!response) return
+    setFilteredTrailers(response.content)
   }, [response])
-
-  useEffect(() => {
-    setFilteredTrailers(trailers)
-  }, [trailers])
 
   useEffect(() => {
     let filterTrailers = filteredTrailers
@@ -67,13 +61,16 @@ export default function Offer() {
     setFilteredTrailers(filterTrailers)
   }, [sortType])
 
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{error}</p>
+
   return (
     <div style={{ display: 'flex' }}>
       {showFilters ? <Filters setShowFilters={setShowFilters} /> : null}
       <div style={{ width: '43%' }}>
         <OfferHeader
           setShowFilters={setShowFilters}
-          trailers={trailers}
+          trailers={response.content}
           filteredTrailers={filteredTrailers}
           setFilteredTrailers={setFilteredTrailers}
           setSortType={setSortType}

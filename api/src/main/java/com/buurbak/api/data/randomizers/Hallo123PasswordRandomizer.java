@@ -8,5 +8,4 @@ public class Hallo123PasswordRandomizer implements Randomizer<String> {
         // hallo123
         return "$2a$10$t2F/dROSQeLH3znBEQNPHO.X8aysGv8HTcglvxcMx0KvPJxCbKfQe";
     }
-
 }
