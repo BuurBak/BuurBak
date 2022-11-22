@@ -11,6 +11,7 @@ export default function TrailerType({ trailerType, setTrailerType }) {
 
     useEffect(() => {
         setTypes(TypeOfTrailers)
+        setTrailerType(TypeOfTrailers[0])
     }, [TypeOfTrailers])
 
     return (

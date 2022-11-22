@@ -2,7 +2,7 @@ import { BsImages } from 'react-icons/bs'
 import './General.css'
 import { TextareaAutosize } from '@mui/material'
 
-export default function General() {
+export default function General({ description, setDescription }) {
     return (
         <div className="formStepContainer">
             <h2>Algemeen</h2>
@@ -52,7 +52,7 @@ export default function General() {
                 </div>
             </div>
             <span>Beschrijving</span>
-            <TextareaAutosize style={{marginTop: 20}} className="textArea" placeholder="Beschrijving..." />
+            <TextareaAutosize value={description} onChange={(e) => setDescription(e.target.value)} style={{marginTop: 20}} className="textArea" placeholder="Beschrijving..." />
         </div>
     )
 }

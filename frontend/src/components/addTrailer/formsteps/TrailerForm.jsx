@@ -8,11 +8,13 @@ import Location from './Location'
 import General from './General';
 import Accessoires from './Accessoires';
 import PersonalInfo from './PersonalInfo';
+import TrailerOverview from './TrailerOverview';
 
 export default function TrailerForm() {
     const [formstep, setFormstep] = useState(0)
     const [trailerType, setTrailerType] = useState()
     const [license, setLicense] = useState("")
+    const [description, setDescription] = useState("")
 
     const currentUser = {
         name: "John Appleseed",
@@ -24,14 +26,15 @@ export default function TrailerForm() {
 
     return(
         <div className="TrailerFormContainer">
-            <ProgressBar formstep={formstep} setFormstep={setFormstep} />
+            <ProgressBar formstep={formstep} setFormstep={setFormstep} trailerType={trailerType} license={license} />
             {formstep === 0 ? <TrailerType trailerType={trailerType} setTrailerType={setTrailerType} /> : null}
             {formstep === 1 ? <DriverLicense license={license} setLicense={setLicense} /> : null}
-            {formstep === 2 ? <General /> : null}
+            {formstep === 2 ? <General description={description} setDescription={setDescription} /> : null}
             {formstep === 3 ? <Location /> : null}
             {formstep === 4 ? <Accessoires /> : null}
             {formstep === 5 ? <PersonalInfo currentUser={currentUser} /> : null}
-            <FormFooter formstep={formstep} setFormstep={setFormstep} />
+            {formstep === 6 ? <TrailerOverview trailerType={trailerType} description={description} /> : null}
+            <FormFooter formstep={formstep} setFormstep={setFormstep} trailerType={trailerType} />
         </div>
     )
 }
