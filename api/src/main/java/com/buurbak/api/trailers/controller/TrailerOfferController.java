@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("traileroffer")
+@RequestMapping("traileroffers")
 public class TrailerOfferController {
     private final TrailerOfferService trailerOfferService;
     private final TrailerOfferRepository trailerOfferRepository;
@@ -73,6 +73,8 @@ public class TrailerOfferController {
             trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
 

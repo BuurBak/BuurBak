@@ -13,10 +13,8 @@ import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +26,8 @@ public class TrailerOfferService {
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
 
-    public TrailerOffer getTrailerOffer(UUID id) throws EntityNotFoundException {
-        return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public TrailerOffer getTrailerOffer(UUID id) throws TrailerOfferNotFoundException {
+        return trailerOfferRepository.findById(id).orElseThrow(TrailerOfferNotFoundException::new);
     }
 
     public List<TrailerInfoDTO> getAllTrailerOffersInfo(){
@@ -48,12 +46,11 @@ public class TrailerOfferService {
         return trailerOffer;
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
-        ModelMapper modelMapper = new ModelMapper();
-        TrailerOffer newTrailerOffer = modelMapper.map(createTrailerOfferDTO, TrailerOffer.class);
+        TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         newTrailerOffer.setId(trailerId);
         newTrailerOffer.setTrailerType(trailerType);
         trailerOfferRepository.save(newTrailerOffer);
