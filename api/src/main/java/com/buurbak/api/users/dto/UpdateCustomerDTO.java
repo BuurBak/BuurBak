@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCustomerDTO {
-
     @NotBlank @Email
     private String email;
     @NotBlank
