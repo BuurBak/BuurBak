@@ -8,7 +8,7 @@ import OfferHeader from '../../components/trailers/offer/OfferHeader'
 import OfferRestults from '../../components/trailers/offer/OfferResults.jsx'
 import TrailerCard from '../../components/trailers/trailerCard/TrailerCard.jsx'
 import Filters from '../../components/trailers/filters/Filters.jsx'
-import useAxios from '../../data/useAxios.jsx'
+import useAxios from '../../hooks/use-axios'
 
 export default function Offer() {
   const [activeTrailer, setActiveTrailer] = useState()

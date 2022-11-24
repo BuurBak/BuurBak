@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react'
 import { instance } from '../util/axios-instance'
+import { AxiosRequestConfig, AxiosError } from 'axios'
 
-export default function useAxios(axiosParams) {
-  const [response, setResponse] = useState(undefined)
-  const [error, setError] = useState('')
+export default function useAxios<T>(axiosParams: AxiosRequestConfig) {
+  const [response, setResponse] = useState<T>()
+  const [error, setError] = useState<AxiosError>()
   const [loading, setLoading] = useState(true)
 
-  const fetchData = async (params) => {
+  const fetchData = async (params: AxiosRequestConfig) => {
     try {
-      const result = await instance.request(params)
+      const result = await instance.request<T>(params)
       setResponse(result.data)
     } catch (error) {
-      setError(error)
+      if (error instanceof AxiosError) setError(error)
+      console.error(error)
     } finally {
       setLoading(false)
     }

@@ -4,17 +4,35 @@ import { IconButton, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { AiFillApple, AiOutlineGooglePlus } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
-import AuthService from '../../../data/services/auth.service'
-import useAxios from '../../../data/useAxios'
+import useAxios from '../../../hooks/use-axios'
+import { useAuth } from '../../../hooks/use-auth'
+import { PaginatedResponse } from '../../../types/PaginatedResponse'
+import { User } from '../../../types/User'
+import { CreateAddress } from '../../../types/CreateAddress'
+import React from 'react'
 
 export default function Login({ setShowLogin }) {
+  const { login, register } = useAuth()
+
+  // Formdata
   const [email, setEmail] = useState('')
-  const [userExists, setUserExists] = useState(false)
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-  const [address, setAddress] = useState()
-  const { response, loading, error, refetch } = useAxios({
+  const [address, setAddress] = useState<CreateAddress>({
+    city: 'Utrecht',
+    number: '69',
+    postal_code: '1107HF',
+    street_name: 'de wallen',
+  })
+
+  // logic data
+  const [userExists, setUserExists] = useState(false)
+
+  // request
+  const { response, loading, error, refetch } = useAxios<
+    PaginatedResponse<User>
+  >({
     method: 'GET',
     url: '/customers',
     params: {
@@ -26,16 +44,17 @@ export default function Login({ setShowLogin }) {
     refetch()
   }, [email])
 
+  // check if user exists
   useEffect(() => {
-    if (loading || error || !response) return
+    if (!response) return
 
-    setUserExists(response.content.length > 0 && email)
-  }, [response, loading, error])
+    setUserExists(response.content.length > 0 && email.length > 0)
+  }, [response])
 
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      await AuthService.login(email, password)
+      await login({ username: email, password })
       setShowLogin(false)
     } catch (error) {
       console.error('Error logging in')
@@ -47,7 +66,7 @@ export default function Login({ setShowLogin }) {
   const handleSignup = async (e) => {
     e.preventDefault()
     try {
-      await AuthService.signUp(email, password, name, number, address)
+      register({ email, password, name, number, address })
       setShowLogin(false)
     } catch (error) {
       console.error(error)
@@ -67,7 +86,7 @@ export default function Login({ setShowLogin }) {
         </p>
         <TextField
           className="primaryInput"
-          size="large"
+          size="medium"
           label="Email"
           value={email}
           variant="outlined"
@@ -138,7 +157,7 @@ export default function Login({ setShowLogin }) {
               className="primaryInput"
               type="password"
               value={password}
-              size="large"
+              size="medium"
               label="Wachtwoord"
               variant="outlined"
               onChange={(e) => setPassword(e.target.value)}
@@ -161,7 +180,7 @@ export default function Login({ setShowLogin }) {
                       <TextField
                         className="secondaryInput"
                         value={name}
-                        size="large"
+                        size="medium"
                         label="Volledige naam"
                         variant="outlined"
                         onChange={(e) => setName(e.target.value)}
@@ -174,20 +193,20 @@ export default function Login({ setShowLogin }) {
                   <div className="addressInput">
                     <TextField
                       className="secondaryInput"
-                      size="large"
+                      size="medium"
                       label="Postcode"
                       variant="outlined"
                     />
                     <TextField
                       className="secondaryInput"
                       type="number"
-                      size="large"
+                      size="medium"
                       label="Huis nr."
                       variant="outlined"
                     />
                     <TextField
                       className="secondaryInput"
-                      size="large"
+                      size="medium"
                       label="Woonplaats"
                       variant="outlined"
                     />
@@ -199,7 +218,7 @@ export default function Login({ setShowLogin }) {
                     className="secondaryInput"
                     type="number"
                     value={number}
-                    size="large"
+                    size="medium"
                     label="Nummer"
                     variant="outlined"
                     onChange={(e) => setNumber(e.target.value)}
@@ -211,7 +230,7 @@ export default function Login({ setShowLogin }) {
                     className="secondaryInput"
                     type="password"
                     value={password}
-                    size="large"
+                    size="medium"
                     label="Wachtwoord"
                     variant="outlined"
                     onChange={(e) => setPassword(e.target.value)}

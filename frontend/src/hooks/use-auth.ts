@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { instance } from '../util/axios-instance'
 import { User } from '../types/User'
 import { Tokens } from '../types/Tokens'
+import { SignUp } from '../types/SignUp'
 import { LocalStorage } from '../types/LocalStorage'
 import { useUser } from './use-user'
 import { useLocalStorage } from './use-localstorage'
@@ -27,7 +28,14 @@ export function useAuth() {
     await getCurrentUser()
   }
 
-  const register = async () => {}
+  const register = async (data: SignUp) => {
+    await instance.request<String>({
+      method: 'post',
+      url: '/auth/register',
+      data,
+    })
+    await login({ username: data.email, password: data.password })
+  }
 
   const logout = () => {
     setItem(LocalStorage.Tokens, '')
