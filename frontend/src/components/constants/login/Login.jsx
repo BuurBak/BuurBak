@@ -6,7 +6,6 @@ import { AiFillApple, AiOutlineGooglePlus } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
 import AuthService from '../../../data/services/auth.service'
 import useAxios from '../../../data/useAxios'
-import _ from 'lodash'
 
 export default function Login({ setShowLogin }) {
   const [email, setEmail] = useState('')

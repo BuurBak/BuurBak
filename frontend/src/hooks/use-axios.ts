@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { instance } from './axiosInstance'
+import { instance } from '../util/axios-instance'
 
 export default function useAxios(axiosParams) {
   const [response, setResponse] = useState(undefined)
