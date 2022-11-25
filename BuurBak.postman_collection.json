@@ -238,6 +238,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "UpdateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"acrbvansomeren@gmail.com\",\r\n    \"password\": \"Hallo123\",\r\n    \"name\": \"Anton van Someren\",\r\n    \"number\": \"06-12345436\",\r\n    \"address\": {\r\n        \"postal_code\": \"fake postal_code\",\r\n        \"street_name\": \"fake street_name\",\r\n        \"number\": \"100\",\r\n        \"city\": \"New York\"\r\n    },\r\n    \"date_of_birth\": \"2000-01-11\",\r\n    \"iban\": \"dit-is-een-iban\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/customers/ffad4c51-2a62-4256-95e7-60ffeef11341",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"ffad4c51-2a62-4256-95e7-60ffeef11341"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

@@ -4,6 +4,8 @@ import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecifica
 import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
+import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,16 +23,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "customers")
+
 public class CustomerController {
     private final CustomerService customerService;
     private final CustomerConverter customerConverter;
@@ -74,5 +77,38 @@ public class CustomerController {
     ) {
         Page<Customer> customerPage = customerService.findAll(specification, pageable);
         return customerConverter.convertCustomerPageToPublicCustomerDTOPage(customerPage);
+    }
+
+    @PutMapping(path = "/{id}")
+    @Operation(summary = "Updates customer details")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
+        try {
+            customerService.updateUser(id, updateCustomerDTO);
+        }
+        catch (CustomerNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Sets customer deleted boolean to true")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Customer deleted boolean set to true"),
+            @ApiResponse(responseCode = "404", description = "Customer not found"),
+            @ApiResponse(responseCode = "500", description = "Could not set customer deleted boolean to true")
+    })
+    public void deleteCustomer(@PathVariable UUID id) {
+        try {
+            customerService.deleteUser(id);
+        }
+        catch (CustomerNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+
+        }
     }
 }
