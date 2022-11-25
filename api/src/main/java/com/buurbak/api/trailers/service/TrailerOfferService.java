@@ -53,6 +53,8 @@ public class TrailerOfferService {
         TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         newTrailerOffer.setId(trailerId);
         newTrailerOffer.setTrailerType(trailerType);
+        newTrailerOffer.setOwner(trailerOffer.getOwner());
+
         trailerOfferRepository.save(newTrailerOffer);
     }
 

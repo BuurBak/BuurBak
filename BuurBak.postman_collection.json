@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2b0dffcf-82c6-44bf-982a-76f9196614e1",
+		"_postman_id": "95ad1bb6-b900-4f80-9e72-ccb5eef1a6ed",
 		"name": "BuurBak",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17650310"
 	},
 	"item": [
 		{
@@ -64,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"lucabergman@buurbak.com\",\n    \"password\": \"hello123\"\n}",
+							"raw": "{\n    \"username\": \"lucabergman@yahoo.com\",\n    \"password\": \"hallo123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,12 +121,7 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [],
-							"options": {
-								"raw": {
-									"language": "text"
-								}
-							}
+							"urlencoded": []
 						},
 						"url": {
 							"raw": "{{HOST}}/api/v1/auth/refresh",
@@ -266,6 +262,92 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "trailerOffer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 300,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 650,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"17:00:00\",\r\n    \"pickUpTimeEnd\": \"19:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Small\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffer",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trailerOffer Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 250,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 750,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"17:00:00\",\r\n    \"pickUpTimeEnd\": \"19:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Big\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffer/5de3e3ea-4ead-4270-b869-09c271084ff6",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffer",
+								"5de3e3ea-4ead-4270-b869-09c271084ff6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trailerOffer Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 250\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffer/f4fa73ea-09ed-42cf-9d52-342ba9f5258a",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffer",
+								"f4fa73ea-09ed-42cf-9d52-342ba9f5258a"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -319,6 +401,19 @@
 								"images"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": "Delete reservation",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

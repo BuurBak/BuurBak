@@ -77,7 +77,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "404", description = "Entity not found")
     })
     @DeleteMapping("/{id}")
-    public void deleteTrailerOffer(@PathVariable UUID id, Authentication authentication) {
+    public void deleteTrailerOffer(@PathVariable UUID id) {
         try {
             reservationService.deleteReservation(id);
         }

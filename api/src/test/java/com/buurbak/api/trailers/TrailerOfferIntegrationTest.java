@@ -1,34 +1,44 @@
 package com.buurbak.api.trailers;
 
-import com.buurbak.api.trailers.controller.TrailerOfferController;
+import com.buurbak.api.randomData.RandomDataGenerator;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import org.jeasy.random.EasyRandom;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(TrailerOfferController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@WithMockUser(username = "lucabergman@yahoo.com")
 public class TrailerOfferIntegrationTest {
     @Autowired
     private MockMvc mvc;
+    @Autowired
+    private RandomDataGenerator rdg;
 
     @Test
     void addTrailerOffer() throws Exception {
-        EasyRandom easyRandom = new EasyRandom();
-        CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
 
         mvc.perform(MockMvcRequestBuilders
-                .post("/traileroffer")
-                .content(String.valueOf(trailerOfferDTO)))
-                .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+                        .post("/traileroffers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 }
