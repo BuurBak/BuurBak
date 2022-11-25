@@ -6,21 +6,18 @@ import TrailerProfile from './pages/trailers/TrailerProfile'
 import Contact from './pages/Contact'
 import ReservationForm from './components/trailers/reservation/ReservationForm'
 import Header from './components/constants/header/Header'
-import Login from './components/constants/login/Login'
 import TrailerForm from './components/addTrailer/formsteps/TrailerForm'
 import { useAuth } from './hooks/use-auth'
 import { AuthContext } from './context/auth-context'
-import React, { useState } from 'react'
+
 function App() {
-  const [showLogin, setShowLogin] = useState(false)
   const { user } = useAuth()
 
   return (
     <AuthContext.Provider value={{ user, setUser: () => {} }}>
       <div className="App">
-        {showLogin ? <Login setShowLogin={setShowLogin} /> : null}
         <Router>
-          <Header setShowLogin={setShowLogin} />
+          <Header />
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/aanbod" element={<Offer />}></Route>
