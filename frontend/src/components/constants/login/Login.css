@@ -1,34 +1,3 @@
-.pageContainer {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  z-index: 99;
-}
-
-.backgroundBlur {
-  width: 100%;
-  height: 100%;
-  background-color: var(--darkBackground);
-  opacity: 0.5;
-  animation: appear 0.3s ease;
-}
-
-.popUpContainer {
-  width: 600px;
-  height: 780px;
-  border-radius: 10px;
-  background-color: var(--background);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  animation: slide 0.3s ease;
-}
-
 .popUpContainer > p:nth-child(1) {
   font-size: 28px;
   margin: 45px auto 0 auto;
@@ -191,11 +160,4 @@
   100% {
     opacity: 0.5;
   }
-}
-
-.closeIcon {
-  position: absolute !important;
-  top: 10px;
-  right: 10px;
-  padding: 5px;
 }

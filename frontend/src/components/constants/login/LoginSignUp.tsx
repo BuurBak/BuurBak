@@ -11,7 +11,7 @@ import { User } from '../../../types/User'
 import { CreateAddress } from '../../../types/CreateAddress'
 import React from 'react'
 
-export default function Login({ setShowLogin }) {
+export default function LoginSignUp() {
   const { login, register } = useAuth()
 
   // Formdata
@@ -55,7 +55,6 @@ export default function Login({ setShowLogin }) {
     e.preventDefault()
     try {
       await login({ username: email, password })
-      setShowLogin(false)
     } catch (error) {
       console.error('Error logging in')
       console.error(error)
@@ -67,7 +66,6 @@ export default function Login({ setShowLogin }) {
     e.preventDefault()
     try {
       register({ email, password, name, number, address })
-      setShowLogin(false)
     } catch (error) {
       console.error(error)
     } finally {
@@ -79,7 +77,6 @@ export default function Login({ setShowLogin }) {
 
   return (
     <div className="pageContainer">
-      <div className="backgroundBlur" onClick={() => setShowLogin(false)}></div>
       <div className="popUpContainer">
         <p>
           <span>Log in</span> of <span>Meld je aan</span> met je email adres
@@ -243,9 +240,6 @@ export default function Login({ setShowLogin }) {
             ) : null}
           </>
         )}
-        <IconButton className="closeIcon" onClick={() => setShowLogin(false)}>
-          <IoIosClose size="30px" color="black" />
-        </IconButton>
       </div>
     </div>
   )

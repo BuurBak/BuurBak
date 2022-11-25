@@ -1,4 +1,3 @@
-import styles from './Header.module.scss'
 import {
   AppBar,
   Box,
@@ -36,6 +35,7 @@ export default function Header() {
   return (
     <Box>
       <AppBar
+        color="default"
         component="nav"
         sx={{
           boxShadow: 'none',
@@ -47,7 +47,6 @@ export default function Header() {
             justifyContent: 'space-between',
             height: '80px',
           }}
-          className={styles.tooblbar}
         >
           <Logo />
 
@@ -62,14 +61,13 @@ export default function Header() {
             onClick={toggleDrawer(true)}
             sx={{ mr: 2, display: { md: 'none' } }}
           >
-            <MenuIcon className={styles.menuIcon} />
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
       <Box component="nav">
         <SwipeableDrawer
           anchor="right"
-          className={styles.drawer}
           container={container}
           variant="temporary"
           open={mobileOpen}

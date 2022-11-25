@@ -9,10 +9,10 @@ import {
 import { useAuth } from '../../../hooks/use-auth'
 import Logo from './Logo'
 
-export default function DrawerNavigation(props) {
+export default function DrawerNavigation() {
   const { user } = useAuth()
   return (
-    <Box sx={{ textAlign: 'center' }} {...props}>
+    <Box sx={{ textAlign: 'center' }}>
       <Logo />
       <Divider />
       <List>

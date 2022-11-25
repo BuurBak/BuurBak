@@ -4,14 +4,33 @@ import { useAuth } from '../../../hooks/use-auth'
 
 export default function HeaderNavigation() {
   const { user } = useAuth()
+  const margin = 1
   return (
     <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-      <Button href="/aanbod">Aanbod</Button>
-      <Button href="/blog">Blog</Button>
-      <Button href="/verhuren">Ik wil Verhuren</Button>
+      <Button sx={{ m: margin }} href="/aanbod" color="secondary">
+        Aanbod
+      </Button>
+      <Button sx={{ m: margin }} href="/blog" color="secondary">
+        Blog
+      </Button>
+      <Button
+        sx={{ m: margin }}
+        href="/verhuren"
+        color="primary"
+        variant="contained"
+        disableElevation
+      >
+        Ik wil Verhuren
+      </Button>
       {/* Todo open login popup on aanmelden click */}
-      {user ? null : <Button>Aanmelden</Button>}
-      <Button href="/contact">Contact</Button>
+      {user ? null : (
+        <Button sx={{ m: margin }} color="secondary">
+          Aanmelden
+        </Button>
+      )}
+      <Button sx={{ m: margin }} href="/contact" color="secondary">
+        Contact
+      </Button>
     </Box>
   )
 }
