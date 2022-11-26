@@ -1,7 +1,6 @@
 package com.buurbak.api.trailers;
 
 import com.buurbak.api.randomData.RandomDataGenerator;
-import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ public class TrailerOfferIntegrationTest {
         mvc.perform(MockMvcRequestBuilders
                         .post("/traileroffers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
+                        .content(mapper.writeValueAsString(System.getenv("JOJO")))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
