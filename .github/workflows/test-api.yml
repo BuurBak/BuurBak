@@ -6,12 +6,13 @@ on:
       - main
       - dev
 
+env:
+  JOJO: booop
+
 jobs:
   build-and-test:
     name: Build and Test API
     runs-on: ubuntu-latest
-    env:
-      jojo: booop
     steps:
       - name: Checkout
         uses: actions/checkout@v1
