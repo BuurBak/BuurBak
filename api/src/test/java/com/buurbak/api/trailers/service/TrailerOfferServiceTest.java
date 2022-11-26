@@ -108,9 +108,6 @@ class TrailerOfferServiceTest {
 
 	@Test
 	void addTrailerOffer() {
-        log.info("poopoo");
-        log.info(System.getenv("JOJO"));
-
 		EasyRandom easyRandom = new EasyRandom();
 		CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 
