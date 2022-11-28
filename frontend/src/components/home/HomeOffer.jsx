@@ -1,6 +1,6 @@
 import './HomeOffer.css'
 import TrailerCard from '../trailers/trailerCard/TrailerCard.jsx'
-import useAxios from '../../data/useAxios'
+import useAxios from '../../hooks/use-axios'
 
 export default function HomeOffer() {
   const { response, loading, error } = useAxios({
