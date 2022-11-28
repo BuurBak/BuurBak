@@ -17,7 +17,7 @@ env:
   JWT_SECRET: secret
   MAIL_HOST: localhost
   PORT: 8000
-  SPRING_PROFILES_ACTIVE: dev
+  SPRING_PROFILES_ACTIVE: iTest
 
 jobs:
   build-and-test:
