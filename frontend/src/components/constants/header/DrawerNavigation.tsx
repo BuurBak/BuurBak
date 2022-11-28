@@ -9,7 +9,11 @@ import {
 import { useAuth } from '../../../hooks/use-auth'
 import Logo from './Logo'
 
-export default function DrawerNavigation() {
+interface DrawerNavigationProps {
+  onLogin: () => void
+}
+
+export default function DrawerNavigation({ onLogin }: DrawerNavigationProps) {
   const { user } = useAuth()
   return (
     <Box sx={{ textAlign: 'center' }}>
@@ -34,7 +38,7 @@ export default function DrawerNavigation() {
         {/* Todo open login popup on aanmelden click */}
         {user ? null : (
           <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'right' }}>
+            <ListItemButton sx={{ textAlign: 'right' }} onClick={onLogin}>
               <ListItemText primary="Aanmelden" />
             </ListItemButton>
           </ListItem>

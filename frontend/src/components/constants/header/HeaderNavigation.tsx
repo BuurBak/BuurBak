@@ -2,7 +2,11 @@ import { Button } from '@mui/material'
 import { Box } from '@mui/system'
 import { useAuth } from '../../../hooks/use-auth'
 
-export default function HeaderNavigation() {
+interface HeaderNavigationProps {
+  onLogin: () => void
+}
+
+export default function HeaderNavigation({ onLogin }: HeaderNavigationProps) {
   const { user } = useAuth()
   const margin = 1
   return (
@@ -24,7 +28,7 @@ export default function HeaderNavigation() {
       </Button>
       {/* Todo open login popup on aanmelden click */}
       {user ? null : (
-        <Button sx={{ m: margin }} color="secondary">
+        <Button sx={{ m: margin }} color="secondary" onClick={onLogin}>
           Aanmelden
         </Button>
       )}
