@@ -50,18 +50,14 @@ export default function LoginRegisterModal({
           }}
         >
           <Toolbar>
-            <IconButton edge="start">
+            <IconButton edge="start" onClick={onClose}>
               <CloseIcon />
             </IconButton>
           </Toolbar>
 
           <Stack spacing={3} sx={{ p: 4, paddingTop: 0 }}>
             {/* Login / Register part */}
-            {login ? (
-              <Login onClose={onClose} />
-            ) : (
-              <Register onClose={onClose} />
-            )}
+            {login ? <Login /> : <Register />}
 
             {/* Switch to register / login part */}
             <Typography

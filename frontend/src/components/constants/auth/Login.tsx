@@ -18,11 +18,7 @@ const loginSchema = object({
 
 type LoginInput = TypeOf<typeof loginSchema>
 
-interface LoginProps {
-  onClose: () => void
-}
-
-export default function Login({ onClose }: LoginProps) {
+export default function Login() {
   const { login } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -49,7 +45,6 @@ export default function Login({ onClose }: LoginProps) {
         username: values.email,
         password: values.password,
       })
-      onClose()
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response.status === 401) {

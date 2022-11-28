@@ -40,11 +40,7 @@ const registerSchema = object({
 
 type RegisterInput = TypeOf<typeof registerSchema>
 
-interface RegisterProps {
-  onClose: () => void
-}
-
-export default function Register({ onClose }: RegisterProps) {
+export default function Register() {
   const { register: registerAuth } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
