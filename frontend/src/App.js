@@ -8,7 +8,8 @@ import ReservationForm from './components/trailers/reservation/ReservationForm'
 import Header from './components/constants/header/Header'
 import { useState } from 'react'
 import Login from './components/constants/login/Login'
-import TrailerForm from './components/addTrailer/formsteps/TrailerForm'
+// import TrailerForm from './components/addTrailer/formsteps/TrailerForm'
+import TrailerForm from './components/addTrailerForm/TrailerForm'
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -19,11 +20,12 @@ function App() {
       <Router>
         <Header setShowLogin={setShowLogin} />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/aanbod" element={<Offer />}></Route>
-          <Route path="/verhuren" element={<TrailerForm />}></Route>
-          <Route path="/aanbod/:id" element={<TrailerProfile />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/aanbod" element={<Offer />} />
+          {/* <Route path="/verhuren" element={<TrailerForm />}></Route> */}
+          <Route path="/iets" element={<TrailerForm />} />
+          <Route path="/aanbod/:id" element={<TrailerProfile />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/reserveren/:id" element={<ReservationForm />} />
         </Routes>
       </Router>

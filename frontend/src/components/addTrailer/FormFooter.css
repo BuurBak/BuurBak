@@ -4,8 +4,13 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 50px;
-  animation: slide-in 1s ease;
-  position: relative;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  background-color: var(--background);
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+  padding: 15px 50px;
 }
 
 .secondaryBtn {

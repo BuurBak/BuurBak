@@ -1,35 +1,89 @@
 .mapContainer {
   width: 100%;
-  height: 380px;
-  margin-top: 40px;
+  height: 350px;
+  margin-top: 20px;
   position: relative;
 }
 
-.locationInputContainer {
+.locationInput {
+  width: 90%;
   position: absolute;
-  top: 50%;
+  top: 30px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  z-index: 2;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  padding-left: 20px;
+  border-radius: 30px;
+  height: 48px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  font-weight: var(--semibold);
 }
 
-.flexbox {
+.locationInput::placeholder {
+  color: var(--text);
+  font-weight: var(--semibold);
+}
+
+.locationOptionsContainer {
+  width: 100%;
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: space-between;
 }
 
-.mapOverlay {
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  border-radius: 10px;
-  position: absolute;
-  z-index: 1;
-  opacity: 0.05;
+.locationOptionsItem,
+.locationOptionsItemActive {
+  width: 48%;
+  height: 110px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 40px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: 0.2s ease;
+  position: relative;
+  box-sizing: border-box;
+  padding: 15px;
+  position: relative;
+  cursor: pointer;
 }
 
-.locationInput {
+.locationOptionsItemActive {
+  border: 1.8px solid var(--text);
+  cursor: default;
+}
+
+.locationOptionsItem>p,
+.locationOptionsItemActive>p {
+  text-align: left;
+  font-size: 14px;
+  font-weight: var(--medium);
+  max-width: 80%;
+  margin-top: 10px;
+}
+
+.locationOptionSelect {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--text);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.locationOptionSelectActive {
+  width: 71%;
+  height: 71%;
+  background-color: var(--text);
+  border-radius: 20px;
 }

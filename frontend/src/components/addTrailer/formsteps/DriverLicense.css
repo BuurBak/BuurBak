@@ -3,6 +3,10 @@
   flex-direction: column;
   animation: slide-in 1s ease;
   position: relative;
+  margin: 0 auto;
+  width: 40%;
+  box-sizing: border-box;
+  padding-bottom: 120px;
 }
 
 @keyframes slide-in {
@@ -10,84 +14,79 @@
     top: -50px;
     opacity: 0;
   }
+
   100% {
     top: 0px;
     opacity: 1;
   }
 }
 
-.formStepContainer > h2 {
+.formStepContainer>h2 {
   margin: 50px 0 0 0;
   color: var(--text);
+  font-size: 32px;
 }
 
-.formStepContainer > p {
+.formStepContainer>p {
   color: var(--subheader);
-  margin-top: 8px;
+  margin-top: 10px;
   max-width: 84%;
-  font-size: 15px;
-  font-weight: var(--medium);
+  font-size: 16px;
 }
 
 .licenseGrid {
-  display: grid;
-  grid-template-columns: 33.3% 33.3% 33.3%;
-  justify-content: space-between;
-  column-gap: 8px;
-  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
 }
 
 .licenseGridItem,
 .licenseGridItemActive {
   width: 94%;
-  height: 320px;
+  height: fit-content;
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: 8px;
   display: flex;
-  flex-direction: column;
   box-sizing: border-box;
-  padding: 22px;
+  padding: 24px;
   position: relative;
   transition: 0.2s ease;
-}
-
-.licenseGridItemActive {
-  border: 1px solid var(--text);
-}
-
-.licenseGridItem:hover {
-  border: 1px solid var(--text);
   cursor: pointer;
-  transition: 0.2s ease;
+  margin-top: 15px;
+  align-items: center;
 }
 
-.licenseGridItem > b,
-.licenseGridItemActive > b {
-  margin-top: 25px;
+.licenseGridItem>div,
+.licenseGridItemActive>div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  max-width: 88%;
+}
+
+.licenseGridItemText>b {
+  font-weight: var(--semibold);
   font-size: 15px;
 }
 
-.licenseGridItem > p:nth-child(3),
-.licenseGridItemActive > p:nth-child(3) {
+.licenseGridItemText>p {
+  font-size: 14px;
   color: var(--subheader);
+  margin-top: 4px;
   font-weight: var(--medium);
-  font-size: 14px;
-  margin-top: 6px;
 }
 
-.licenseGridItem > p:nth-child(4),
-.licenseGridItemActive > p:nth-child(4) {
-  position: absolute;
-  bottom: 22px;
-  left: 22px;
-  font-size: 14px;
-  font-weight: var(--medium);
-  color: var(--primary);
-  text-decoration: underline;
+
+.licenseGridItemActive {
+  border: 1.8px solid var(--text);
+}
+
+.licenseGridItem:hover {
+  border: 1.8px solid var(--text);
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.licenseGridItem > p:nth-child(4):hover,
-.licenseGridItemActive > p:nth-child(4):hover {
-  font-weight: var(--semibold);
+.licenseIcon {
+  font-size: 24px !important;
 }

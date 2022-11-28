@@ -97,6 +97,7 @@ export default function Header({ setShowLogin }) {
                   color: 'white',
                   marginTop: 30,
                 }}
+                onClick={() => setShowLogin(true)}
               >
                 Inloggen
               </div>
