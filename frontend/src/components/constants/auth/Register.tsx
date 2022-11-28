@@ -40,7 +40,11 @@ const registerSchema = object({
 
 type RegisterInput = TypeOf<typeof registerSchema>
 
-export default function Register() {
+interface RegisterProps {
+  onClose: () => void
+}
+
+export default function Register({ onClose }: RegisterProps) {
   const { register: registerAuth } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -79,6 +83,7 @@ export default function Register() {
           street_name: values.streetName,
         },
       })
+      onClose()
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response.status === 409) {

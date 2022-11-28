@@ -4,13 +4,11 @@ import { Tokens } from '../types/Tokens'
 import { SignUp } from '../types/SignUp'
 import { LocalStorage } from '../types/LocalStorage'
 import { useLocalStorage } from './use-localstorage'
+import { useContext } from 'react'
+import { AuthContext } from '../context/auth-context'
 
 export function useAuth() {
-  const {
-    value: user,
-    setItem: setUser,
-    removeItem: removeUser,
-  } = useLocalStorage<User>(LocalStorage.User)
+  const { user, setUser, removeUser } = useContext(AuthContext)
   const { setItem: setTokens, removeItem: removeTokens } =
     useLocalStorage<Tokens>(LocalStorage.Tokens)
 
@@ -22,8 +20,6 @@ export function useAuth() {
     })
     setTokens(response.data)
     await getCurrentUser()
-    // TODO find better fix for state not updating components
-    window.location.reload()
   }
 
   const register = async (data: SignUp) => {

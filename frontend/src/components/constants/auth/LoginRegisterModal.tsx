@@ -57,7 +57,11 @@ export default function LoginRegisterModal({
 
           <Stack spacing={3} sx={{ p: 4, paddingTop: 0 }}>
             {/* Login / Register part */}
-            {login ? <Login /> : <Register />}
+            {login ? (
+              <Login onClose={onClose} />
+            ) : (
+              <Register onClose={onClose} />
+            )}
 
             {/* Switch to register / login part */}
             <Typography

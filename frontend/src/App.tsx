@@ -7,18 +7,14 @@ import Contact from './pages/Contact'
 import ReservationForm from './components/trailers/reservation/ReservationForm'
 import Header from './components/constants/header/Header'
 import TrailerForm from './components/addTrailer/formsteps/TrailerForm'
-import { useAuth } from './hooks/use-auth'
-import { AuthContext } from './context/auth-context'
-
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './themes/light-theme'
+import AuthProvider from './providers/auth-provider'
 
 function App() {
-  const { user } = useAuth()
-
   return (
     <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={{ user, setUser: () => {} }}>
+      <AuthProvider>
         <div className="App">
           <Router>
             <Header />
@@ -32,7 +28,7 @@ function App() {
             </Routes>
           </Router>
         </div>
-      </AuthContext.Provider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }
