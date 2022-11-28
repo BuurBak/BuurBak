@@ -10,4 +10,5 @@ export interface User {
   number?: string
   address?: Address
   date_of_birth?: Date
+  profile_picture_url?: string
 }

@@ -1,13 +1,21 @@
 import {
+  Avatar,
   Box,
+  Collapse,
   Divider,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
 } from '@mui/material'
+import PersonIcon from '@mui/icons-material/Person'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import { useAuth } from '../../../hooks/use-auth'
 import Logo from './Logo'
+import { useState } from 'react'
 
 interface DrawerNavigationProps {
   onLoginRegister: () => void
@@ -16,51 +24,79 @@ interface DrawerNavigationProps {
 export default function DrawerNavigation({
   onLoginRegister,
 }: DrawerNavigationProps) {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+  const [accountOpen, setAccountOpen] = useState(true)
 
   return (
     <Box sx={{ textAlign: 'center' }}>
       <Logo />
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton href="/aanbod" sx={{ textAlign: 'right' }}>
-            <ListItemText primary="Aanbod" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href="/blog" sx={{ textAlign: 'right' }}>
-            <ListItemText primary="Blog" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href="/verhuren" sx={{ textAlign: 'right' }}>
-            <ListItemText primary="Ik wil verhuren" />
-          </ListItemButton>
-        </ListItem>
+        <ListItemButton
+          href="/aanbod"
+          sx={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <ListItemText primary="Aanbod" />
+        </ListItemButton>
+
+        <ListItemButton
+          href="/blog"
+          sx={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <ListItemText primary="Blog" />
+        </ListItemButton>
+
+        <ListItemButton
+          href="/verhuren"
+          sx={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <ListItemText primary="Ik wil verhuren" />
+        </ListItemButton>
+
+        <ListItemButton
+          href="/contact"
+          sx={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <ListItemText primary="Contact" />
+        </ListItemButton>
 
         {user ? (
-          <ListItem disablePadding>
-            <ListItemButton href="/profiel" sx={{ textAlign: 'right' }}>
-              <ListItemText primary="Profiel" />
-            </ListItemButton>
-          </ListItem>
-        ) : (
-          <ListItem disablePadding>
+          <div>
             <ListItemButton
-              sx={{ textAlign: 'right' }}
-              onClick={onLoginRegister}
+              onClick={() => setAccountOpen(!accountOpen)}
+              sx={{ display: 'flex', justifyContent: 'end' }}
             >
-              <ListItemText primary="Aanmelden/ Inloggen" />
+              <ListItemAvatar>
+                {user.profile_picture_url ? (
+                  <Avatar alt={user.name} src={user.profile_picture_url} />
+                ) : (
+                  <Avatar>
+                    <PersonIcon />
+                  </Avatar>
+                )}
+              </ListItemAvatar>
+              <ListItemText primary={user.name ? user.name : 'Account'} />
+              {accountOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-          </ListItem>
-        )}
-
-        <ListItem disablePadding>
-          <ListItemButton href="/contact" sx={{ textAlign: 'right' }}>
-            <ListItemText primary="Contact" />
+            <Collapse in={accountOpen} timeout="auto" unmountOnExit>
+              <List component="div">
+                <ListItemButton href="/account" sx={{ pl: 4 }}>
+                  Mijn account
+                </ListItemButton>
+                <ListItemButton onClick={logout} sx={{ pl: 4 }}>
+                  Uitloggen
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </div>
+        ) : (
+          <ListItemButton
+            sx={{ display: 'flex', justifyContent: 'flex-end' }}
+            onClick={onLoginRegister}
+          >
+            <ListItemText primary="Aanmelden/ Inloggen" />
           </ListItemButton>
-        </ListItem>
+        )}
       </List>
     </Box>
   )

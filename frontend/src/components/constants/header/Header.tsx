@@ -11,8 +11,6 @@ import MenuIcon from '@mui/icons-material/Menu'
 import DrawerNavigation from './DrawerNavigation'
 import HeaderNavigation from './HeaderNavigation'
 import LoginRegisterModal from '../auth/LoginRegisterModal'
-import Register from '../auth/Register'
-import Login from '../auth/Login'
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
