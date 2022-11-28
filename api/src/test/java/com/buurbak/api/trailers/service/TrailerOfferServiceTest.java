@@ -108,6 +108,8 @@ class TrailerOfferServiceTest {
 
 	@Test
 	void addTrailerOffer() {
+        log.info("Poop" + System.getenv("DATABASE_USERNAME"));
+
 		EasyRandom easyRandom = new EasyRandom();
 		CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 
