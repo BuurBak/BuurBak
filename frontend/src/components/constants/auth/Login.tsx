@@ -55,6 +55,8 @@ export default function Login({ onClose }: LoginProps) {
         if (error.response.status === 401) {
           setError('E-mail of wachtwoord incorrect')
         }
+      } else {
+        setError('Er is iets foutgegaan, probeer het later opnieuw')
       }
       throw error
     } finally {
@@ -95,9 +97,7 @@ export default function Login({ onClose }: LoginProps) {
         {...register('password')}
       />
 
-      {!!error ? (
-        <Alert severity="error">{error} - Probeer het opnieuw</Alert>
-      ) : null}
+      {!!error ? <Alert severity="error">{error}</Alert> : null}
 
       <LoadingButton
         variant="contained"

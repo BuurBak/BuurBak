@@ -49,7 +49,7 @@ export default function Register({ onClose }: RegisterProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const ACCOUNT_CREATION_ERROR_MESSAGE =
-    'Iets ging verkeerd bij het maken van uw account'
+    'Iets ging verkeerd bij het maken van uw account, probeer het alstublieft opnieuw'
   const ACCOUNT_CREATION_EMAIL_TAKEN_MESSAGE = 'E-mail is al in gebruik'
 
   const {
@@ -237,9 +237,7 @@ export default function Register({ onClose }: RegisterProps) {
               </FormHelperText>
             </FormGroup> */}
 
-      {!!error ? (
-        <Alert severity="error">{error} - Probeer het opnieuw</Alert>
-      ) : null}
+      {!!error ? <Alert severity="error">{error}</Alert> : null}
 
       <LoadingButton
         variant="contained"
