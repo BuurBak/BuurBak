@@ -41,6 +41,7 @@ export default function Login() {
   const onSubmitHandler: SubmitHandler<LoginInput> = async (values) => {
     try {
       setLoading(true)
+      setError('')
       await login({
         username: values.email,
         password: values.password,

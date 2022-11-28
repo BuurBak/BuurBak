@@ -1,4 +1,4 @@
-import { Alert, Box, Grid, TextField, Typography } from '@mui/material'
+import { Alert, Box, Grid, Stack, TextField, Typography } from '@mui/material'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -66,6 +66,7 @@ export default function Register() {
   const onSubmitHandler: SubmitHandler<RegisterInput> = async (values) => {
     try {
       setLoading(true)
+      setError('')
       await registerAuth({
         email: values.email,
         password: values.password,
@@ -103,68 +104,77 @@ export default function Register() {
       <Typography align="center" variant="h4" gutterBottom>
         Meld je aan bij BuurBak
       </Typography>
+      <Grid container spacing={{ xs: 2 }}>
+        <Grid item xs={12}>
+          <Typography variant="h6">Account</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          {/* Account */}
+          <TextField
+            label="E-mail"
+            fullWidth
+            required
+            type="email"
+            error={!!errors['email']}
+            helperText={errors['email'] ? errors['email'].message : ''}
+            {...register('email')}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Wachtwoord"
+            fullWidth
+            required
+            type="password"
+            error={!!errors['password']}
+            helperText={errors['password'] ? errors['password'].message : ''}
+            {...register('password')}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Herhaal wachtwoord"
+            fullWidth
+            required
+            type="password"
+            error={!!errors['passwordConfirm']}
+            helperText={
+              errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''
+            }
+            {...register('passwordConfirm')}
+          />
+        </Grid>
 
-      <Typography variant="h6">Account</Typography>
-      {/* Account */}
-      <TextField
-        sx={{ mb: 2 }}
-        label="E-mail"
-        fullWidth
-        required
-        type="email"
-        error={!!errors['email']}
-        helperText={errors['email'] ? errors['email'].message : ''}
-        {...register('email')}
-      />
-      <TextField
-        sx={{ mb: 2 }}
-        label="Wachtwoord"
-        fullWidth
-        required
-        type="password"
-        error={!!errors['password']}
-        helperText={errors['password'] ? errors['password'].message : ''}
-        {...register('password')}
-      />
-      <TextField
-        sx={{ mb: 2 }}
-        label="Herhaal wachtwoord"
-        fullWidth
-        required
-        type="password"
-        error={!!errors['passwordConfirm']}
-        helperText={
-          errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''
-        }
-        {...register('passwordConfirm')}
-      />
+        {/* Contactinformatie */}
+        <Grid item xs={12}>
+          <Typography variant="h6">Contact</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Volledige naam"
+            fullWidth
+            required
+            error={!!errors['name']}
+            helperText={errors['name'] ? errors['name'].message : ''}
+            {...register('name')}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Telefoonnummer"
+            fullWidth
+            required
+            error={!!errors['phoneNumber']}
+            helperText={
+              errors['phoneNumber'] ? errors['phoneNumber'].message : ''
+            }
+            {...register('phoneNumber')}
+          />
+        </Grid>
+        {/* Address */}
 
-      {/* Contactinformatie */}
-      <Typography variant="h6">Contact</Typography>
-      <TextField
-        sx={{ mb: 2 }}
-        label="Volledige naam"
-        fullWidth
-        required
-        error={!!errors['name']}
-        helperText={errors['name'] ? errors['name'].message : ''}
-        {...register('name')}
-      />
-      <TextField
-        sx={{ mb: 2 }}
-        label="Telefoonnummer"
-        fullWidth
-        required
-        error={!!errors['phoneNumber']}
-        helperText={errors['phoneNumber'] ? errors['phoneNumber'].message : ''}
-        {...register('phoneNumber')}
-      />
-
-      {/* Address */}
-      <Grid container columnSpacing={{ xs: 2 }}>
         <Grid item xs={6}>
           <TextField
-            sx={{ mb: 2 }}
             label="Postcode"
             fullWidth
             required
@@ -178,7 +188,6 @@ export default function Register() {
 
         <Grid item xs={6}>
           <TextField
-            sx={{ mb: 2 }}
             label="Huisnummer & toevoegingen"
             fullWidth
             required
@@ -192,7 +201,6 @@ export default function Register() {
 
         <Grid item xs={12}>
           <TextField
-            sx={{ mb: 2 }}
             label="Woonplaats"
             fullWidth
             required
@@ -204,7 +212,6 @@ export default function Register() {
 
         <Grid item xs={12}>
           <TextField
-            sx={{ mb: 2 }}
             label="Straatnaam"
             fullWidth
             required
@@ -215,10 +222,9 @@ export default function Register() {
             {...register('streetName')}
           />
         </Grid>
-      </Grid>
 
-      {/* Algemene voorwaarden */}
-      {/* <FormGroup>
+        {/* Algemene voorwaarden */}
+        {/* <FormGroup>
               <FormControlLabel
                 control={<Checkbox required />}
                 {...register('terms')}
@@ -233,17 +239,24 @@ export default function Register() {
               </FormHelperText>
             </FormGroup> */}
 
-      {!!error ? <Alert severity="error">{error}</Alert> : null}
+        {!!error ? (
+          <Grid item xs={12}>
+            <Alert severity="error">{error}</Alert>
+          </Grid>
+        ) : null}
 
-      <LoadingButton
-        variant="contained"
-        fullWidth
-        type="submit"
-        loading={loading}
-        sx={{ py: '0.8rem', mt: '1rem' }}
-      >
-        Aanmelden
-      </LoadingButton>
+        <Grid item xs={12}>
+          <LoadingButton
+            variant="contained"
+            fullWidth
+            type="submit"
+            loading={loading}
+            size="large"
+          >
+            Aanmelden
+          </LoadingButton>
+        </Grid>
+      </Grid>
     </Box>
   )
 }
