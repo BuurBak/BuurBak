@@ -1,33 +1,25 @@
 import './HomeOffer.css'
-import Data from '../../data/dummy/trailers.json'
-import { useEffect, useState } from 'react'
 import TrailerCard from '../trailers/trailerCard/TrailerCard.jsx'
-import useAxios from '../../data/useAxios';
+import useAxios from '../../hooks/use-axios'
 
 export default function HomeOffer() {
-    const { response, loading, error } = useAxios({
-        method: 'get',
-        url: '/traileroffer',
-    });
-    const [trailers, setTrailers] = useState([]);
+  const { response, loading, error } = useAxios({
+    method: 'get',
+    url: '/traileroffers',
+  })
 
-    useEffect(() => {
-        if (response !== null) {
-            setTrailers(response);
-        }
-    }, [response]);
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{error}</p>
 
-    return (
-        <div className="homeOfferContainer">
-            <h2>Bekijk het aanbod</h2>
-            <p>En wordt duurzaam door te delen</p>
-            <div className="homeOfferGrid">
-                {trailers
-                    .slice(0,16)
-                    .map((trailer) => (
-                    <TrailerCard trailer={trailer} key={trailer.id} />
-                ))}
-            </div>
-        </div>
-    )
+  return (
+    <div className="homeOfferContainer">
+      <h2>Bekijk het aanbod</h2>
+      <p>En wordt duurzaam door te delen</p>
+      <div className="homeOfferGrid">
+        {response.content.map((trailer) => (
+          <TrailerCard trailer={trailer} key={trailer.id} />
+        ))}
+      </div>
+    </div>
+  )
 }

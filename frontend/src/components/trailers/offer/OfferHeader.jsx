@@ -3,33 +3,45 @@ import { BsFilterRight } from 'react-icons/bs'
 import { IoIosSearch } from 'react-icons/io'
 import './OfferHeader.css'
 
-export default function OfferHeader({ setShowFilters, trailers, setFilteredTrailers, filteredTrailers, setSortType }) {
-  const [searchText, setSearchText] = useState("");
+export default function OfferHeader({
+  setShowFilters,
+  trailers,
+  setFilteredTrailers,
+  filteredTrailers,
+  setSortType,
+}) {
+  const [searchText, setSearchText] = useState('')
 
-  const handleChange = value => {
-    setSearchText(value);
-    filterData(value);
-  };
+  const handleChange = (value) => {
+    setSearchText(value)
+    filterData(value)
+  }
 
-  const excludeColumns = ["id", "lat", "lng", "img"];
+  const excludeColumns = ['id', 'lat', 'lng', 'img']
 
   const filterData = (value) => {
-    const lowercasedValue = value.toLowerCase().trim();
-    if (lowercasedValue === "") setFilteredTrailers(trailers);
+    const lowercasedValue = value.toLowerCase().trim()
+    if (lowercasedValue === '') setFilteredTrailers(trailers)
     else {
-      const filteredData = trailers.filter(item => {
-        return Object.keys(item).some(key =>
-          excludeColumns.includes(key) ? false : item[key].toString().toLowerCase().includes(lowercasedValue)
-        );
-      });
-      setFilteredTrailers(filteredData);
+      const filteredData = trailers.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLowerCase().includes(lowercasedValue)
+        )
+      })
+      setFilteredTrailers(filteredData)
     }
   }
 
   return (
     <div className="offerHeaderContainer">
       <div className="offerHeaderInput">
-        <input placeholder="Zoeken op type, locatie, prijs..." value={searchText} onChange={e => handleChange(e.target.value)} />
+        <input
+          placeholder="Zoeken op type, locatie, prijs..."
+          value={searchText}
+          onChange={(e) => handleChange(e.target.value)}
+        />
         <IoIosSearch className="searchIcon" />
         <div className="offerHeaderIcon" onClick={() => setShowFilters(true)}>
           <BsFilterRight />
@@ -52,4 +64,4 @@ export default function OfferHeader({ setShowFilters, trailers, setFilteredTrail
       </div>
     </div>
   )
-} 
+}
