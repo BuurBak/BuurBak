@@ -1,22 +1,18 @@
-import { useEffect } from 'react'
 import { instance } from '../util/axios-instance'
 import { User } from '../types/User'
 import { Tokens } from '../types/Tokens'
 import { SignUp } from '../types/SignUp'
 import { LocalStorage } from '../types/LocalStorage'
-import { useUser } from './use-user'
 import { useLocalStorage } from './use-localstorage'
 
 export function useAuth() {
-  const { user, addUser, removeUser } = useUser()
-  const { getItem, setItem } = useLocalStorage()
-
-  useEffect(() => {
-    const stringifiedUser = getItem(LocalStorage.User)
-    if (stringifiedUser) {
-      addUser(JSON.parse(stringifiedUser))
-    }
-  }, [])
+  const {
+    value: user,
+    setItem: setUser,
+    removeItem: removeUser,
+  } = useLocalStorage<User>(LocalStorage.User)
+  const { setItem: setTokens, removeItem: removeTokens } =
+    useLocalStorage<Tokens>(LocalStorage.Tokens)
 
   const login = async (data: { username: string; password: string }) => {
     const response = await instance.request<Tokens>({
@@ -24,8 +20,10 @@ export function useAuth() {
       url: '/auth/login',
       data,
     })
-    setItem(LocalStorage.Tokens, JSON.stringify(response.data))
+    setTokens(response.data)
     await getCurrentUser()
+    // TODO find better fix for state not updating components
+    window.location.reload()
   }
 
   const register = async (data: SignUp) => {
@@ -38,7 +36,7 @@ export function useAuth() {
   }
 
   const logout = () => {
-    setItem(LocalStorage.Tokens, '')
+    removeTokens()
     removeUser()
   }
 
@@ -47,7 +45,7 @@ export function useAuth() {
       method: 'get',
       url: '/customers/self',
     })
-    addUser(response.data)
+    setUser(response.data)
   }
 
   // Return the user object and auth methods

@@ -10,11 +10,13 @@ import Logo from './Logo'
 import MenuIcon from '@mui/icons-material/Menu'
 import DrawerNavigation from './DrawerNavigation'
 import HeaderNavigation from './HeaderNavigation'
-import LoginSignUpModal from './LoginSignUpModal'
+import LoginRegisterModal from '../auth/LoginRegisterModal'
+import Register from '../auth/Register'
+import Login from '../auth/Login'
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [LoginSignUpModalOpen, setLoginSignUpModelOpen] = useState(false)
+  const [loginRegisterModalOpen, setLoginRegisterModalOpen] = useState(false)
   const drawerWidth = 240
 
   const toggleDrawer =
@@ -53,7 +55,9 @@ export default function Header() {
           <Logo />
 
           {/* Desktop navigation */}
-          <HeaderNavigation onLogin={() => setLoginSignUpModelOpen(true)} />
+          <HeaderNavigation
+            onLoginRegister={() => setLoginRegisterModalOpen(true)}
+          />
 
           {/* Mobile drawer button */}
           <IconButton
@@ -86,12 +90,15 @@ export default function Header() {
             },
           }}
         >
-          <DrawerNavigation onLogin={() => setLoginSignUpModelOpen(true)} />
+          <DrawerNavigation
+            onLoginRegister={() => setLoginRegisterModalOpen(true)}
+          />
         </SwipeableDrawer>
       </Box>
-      <LoginSignUpModal
-        open={LoginSignUpModalOpen}
-        onClose={() => setLoginSignUpModelOpen(false)}
+
+      <LoginRegisterModal
+        open={loginRegisterModalOpen}
+        onClose={() => setLoginRegisterModalOpen(false)}
       />
     </Box>
   )

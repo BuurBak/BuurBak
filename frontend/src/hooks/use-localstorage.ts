@@ -1,20 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { LocalStorage } from '../types/LocalStorage'
 
-export const useLocalStorage = () => {
-  const [value, setValue] = useState<string | null>(null)
+export function useLocalStorage<Type>(key: LocalStorage) {
+  const [value, setValue] = useState<Type | null>(null)
 
-  const setItem = (key: string, value: string) => {
-    localStorage.setItem(key, value)
+  useEffect(() => {
+    getItem()
+  }, [])
+
+  function setItem(value: Type) {
+    localStorage.setItem(key, JSON.stringify(value))
     setValue(value)
   }
 
-  const getItem = (key: string) => {
+  function getItem(): Type {
     const value = localStorage.getItem(key)
-    setValue(value)
-    return value
+    const parsedValue = JSON.parse(value)
+    setValue(parsedValue)
+    return parsedValue
   }
 
-  const removeItem = (key: string) => {
+  function removeItem() {
     localStorage.removeItem(key)
     setValue(null)
   }
