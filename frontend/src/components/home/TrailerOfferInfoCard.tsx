@@ -3,6 +3,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  Stack,
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
@@ -19,7 +20,7 @@ export default function TrailerOfferInfoCard({
     <Card
       sx={{
         borderRadius: 4,
-        maxWidth: 350,
+        width: 350,
         boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.2)',
       }}
     >
@@ -27,14 +28,14 @@ export default function TrailerOfferInfoCard({
         {trailer.images ? (
           <CardMedia
             component="img"
-            height="140"
+            height={200}
             image={trailer.images ? trailer.images[0] : ''}
             alt="trailer"
           />
         ) : (
           <Box
             bgcolor="secondary.main"
-            height={140}
+            height={200}
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -49,10 +50,14 @@ export default function TrailerOfferInfoCard({
           <Typography gutterBottom variant="h5" color="primary" component="div">
             {trailer.trailerType.name}
           </Typography>
-          <Typography variant="body2" color="secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="body2" color="secondary">
+              {trailer.price ? trailer.price : '$30'}
+            </Typography>
+            <Typography variant="body2" color="secondary">
+              {trailer.location ? trailer.location : 'Onbekend'}
+            </Typography>
+          </Stack>
         </CardContent>
       </CardActionArea>
     </Card>
