@@ -8,5 +8,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.UUID;
 
 public interface ReservationRepository extends PagingAndSortingRepository<Reservation, UUID> {
-    Page<Reservation> findAllByRenterId(UUID customerId, Pageable pageable);
+    Page<Reservation> findAllByRenterId(UUID renterId, Pageable pageable);
+
+
+
+
 }

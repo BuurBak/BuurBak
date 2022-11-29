@@ -1,6 +1,6 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecification;
 import com.buurbak.api.users.converter.CustomerConverter;
@@ -31,13 +31,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
 
 @RestController
@@ -121,7 +114,8 @@ public class CustomerController {
 
         }
     }
-    
+
+
     @Operation(summary = "Return all reservations for a user")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
@@ -129,7 +123,7 @@ public class CustomerController {
     })
     @GetMapping(path = "/{id}/reservations")
     @PreAuthorize("authentication.principal.id == #id or hasRole('ROLE_ADMIN')")
-    public Page<ReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+    public Page<ReturnReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
         Page<Reservation> reservationPage = customerService.getAllReservations(id, pageable);
         return customerConverter.convertReservationPageToReservationDTOPage(reservationPage);
     }

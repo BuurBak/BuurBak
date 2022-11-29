@@ -1,8 +1,8 @@
 package com.buurbak.api.users.service;
 
-import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.repository.ReservationRepository;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
@@ -13,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -31,6 +29,7 @@ public class CustomerService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final ReservationRepository reservationRepository;
 
     public Customer saveCustomer(Customer customer) {
@@ -47,6 +46,11 @@ public class CustomerService {
 
     public Page<Customer> findAll(Specification<Customer> specification, Pageable pageable) {
         return customerRepository.findAll(specification, pageable);
+    }
+
+    public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
+//        return reservationRepository.findAll(pageable);
+        return reservationRepository.findAllByRenterId(customerId, pageable);
     }
 
     public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
@@ -85,10 +89,5 @@ public class CustomerService {
         customer.setDeleted(true);
 
         customerRepository.save(customer);
-    }
-    
-    public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
-//        return reservationRepository.findAll(pageable);
-        return reservationRepository.findAllByRenterId(customerId, pageable);
     }
 }
