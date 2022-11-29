@@ -88,6 +88,8 @@ public class TrailerOfferController {
             trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
 

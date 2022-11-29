@@ -1,4 +1,4 @@
-package com.buurbak.api.trailers.exception;
+package com.buurbak.api.reservations.exception;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,8 @@ import javax.persistence.EntityNotFoundException;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrailerOfferNotFoundException extends EntityNotFoundException {
-    public TrailerOfferNotFoundException(String message) {
+public class ReservationNotFoundException extends EntityNotFoundException {
+    public ReservationNotFoundException(String message) {
         super(message);
     }
 }

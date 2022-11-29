@@ -1,6 +1,8 @@
 package com.buurbak.api.users.service;
 
 import com.buurbak.api.users.dto.UpdateCustomerDTO;
+import com.buurbak.api.reservations.model.Reservation;
+import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
@@ -29,6 +31,7 @@ public class CustomerService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ReservationRepository reservationRepository;
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
@@ -82,5 +85,10 @@ public class CustomerService {
         customer.setDeleted(true);
 
         customerRepository.save(customer);
+    }
+    
+    public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
+//        return reservationRepository.findAll(pageable);
+        return reservationRepository.findAllByRenterId(customerId, pageable);
     }
 }

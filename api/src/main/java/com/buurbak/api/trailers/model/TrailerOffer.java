@@ -29,21 +29,19 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
-    private int length;
-    private int height;
-    private int width;
-    private int weight;
-    private int capacity;
-    @Column(columnDefinition = "text")
-    private String licensePlateNumber;
-    private LocalTime pickUpTimeStart;
-    private LocalTime pickUpTimeEnd;
-    private LocalTime dropOffTimeStart;
-    private LocalTime dropOffTimeEnd;
-    @Column(columnDefinition = "text")
-    private String location;
-    private double price;
-    private boolean available;
+    @Column(nullable = false) private int length;
+    @Column(nullable = false) private int height;
+    @Column(nullable = false) private int width;
+    @Column(nullable = false) private int weight;
+    @Column(nullable = false) private int capacity;
+    @Column(columnDefinition = "text", nullable = false)  private String licensePlateNumber;
+    @Column(nullable = false) private LocalTime pickUpTimeStart;
+    @Column(nullable = false) private LocalTime pickUpTimeEnd;
+    @Column(nullable = false) private LocalTime dropOffTimeStart;
+    @Column(nullable = false) private LocalTime dropOffTimeEnd;
+    @Column(columnDefinition = "text", nullable = false) private String location;
+    @Column(nullable = false) private double price;
+    @Column(nullable = false) private boolean available;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
