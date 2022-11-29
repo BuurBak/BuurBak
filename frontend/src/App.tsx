@@ -10,14 +10,15 @@ import TrailerForm from './components/addTrailer/formsteps/TrailerForm'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './themes/light-theme'
 import AuthProvider from './providers/auth-provider'
+import { Box } from '@mui/material'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <div className="App">
-          <Router>
-            <Header />
+        <Router>
+          <Header />
+          <Box component="main" sx={{ paddingTop: '80px' }}>
             <Routes>
               <Route path="/" element={<Home />}></Route>
               <Route path="/aanbod" element={<Offer />}></Route>
@@ -26,8 +27,8 @@ function App() {
               <Route path="/contact" element={<Contact />}></Route>
               <Route path="/reserveren/:id" element={<ReservationForm />} />
             </Routes>
-          </Router>
-        </div>
+          </Box>
+        </Router>
       </AuthProvider>
     </ThemeProvider>
   )
