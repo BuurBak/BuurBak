@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.controller;
 
+import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
@@ -21,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -104,6 +106,15 @@ public class TrailerOfferController {
         }
         catch (TrailerOfferNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
+    }
+
+    @PostMapping("/{id}")
+    public void testMailService(@PathVariable UUID id) {
+        try {
+            trailerOfferService.testMailService(id);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

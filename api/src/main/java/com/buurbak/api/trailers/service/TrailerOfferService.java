@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.service;
 
+import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
 
@@ -25,6 +27,7 @@ public class TrailerOfferService {
     private final TrailerOfferRepository trailerOfferRepository;
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
+    private final ContactExchangeEmailService contactExchangeEmailService;
 
 
     public TrailerOffer getTrailerOffer(UUID id) throws EntityNotFoundException {
@@ -88,5 +91,9 @@ public class TrailerOfferService {
 
         trailerOfferRepository.deleteById(trailerId);
         log.info("TrailerOffer with id " + trailerId + " has been deleted");
+    }
+
+    public void testMailService(UUID id) throws MessagingException {
+        contactExchangeEmailService.sendContactExchangeMail(id);
     }
 }
