@@ -41,8 +41,12 @@ public class TrailerOfferController {
     })
     @GetMapping(path = "/{id}")
     public ReturnTrailerOfferDTO getTrailerOffer(@PathVariable UUID id){
-         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(id);
-         return trailerOfferConverter.convertTrailerOfferToReturnTrailerOfferDTO(trailerOffer);
+        try {
+            TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(id);
+            return trailerOfferConverter.convertTrailerOfferToReturnTrailerOfferDTO(trailerOffer);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
 
     @Operation(summary = "Return all trailerOffers")
