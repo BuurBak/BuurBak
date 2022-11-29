@@ -1,15 +1,14 @@
 package com.buurbak.api.trailers.dto;
 
+import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -22,6 +21,8 @@ public class ReturnTrailerOfferDTO {
     private UUID id;
 
     private TrailerTypeDTO trailerType;
+
+    private PublicCustomerDTO owner;
 
     @Positive(message = "Length may only be a positive number above 0")
     private int length;
@@ -65,4 +66,10 @@ public class ReturnTrailerOfferDTO {
     private double price;
 
     private boolean available;
+
+    @Past
+    private LocalDateTime createdAt;
+
+    @Past
+    private LocalDateTime updatedAt;
 }

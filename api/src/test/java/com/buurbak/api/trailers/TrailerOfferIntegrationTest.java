@@ -3,6 +3,7 @@ package com.buurbak.api.trailers;
 import com.buurbak.api.trailers.controller.TrailerOfferController;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import org.jeasy.random.EasyRandom;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class TrailerOfferIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
+    @Disabled
     @Test
     void addTrailerOffer() throws Exception {
         EasyRandom easyRandom = new EasyRandom();
