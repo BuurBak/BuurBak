@@ -92,8 +92,4 @@ public class TrailerOfferService {
         trailerOfferRepository.deleteById(trailerId);
         log.info("TrailerOffer with id " + trailerId + " has been deleted");
     }
-
-    public void testMailService(UUID id) throws MessagingException {
-        contactExchangeEmailService.sendContactExchangeMail(id);
-    }
 }

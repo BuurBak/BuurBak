@@ -108,15 +108,6 @@ public class TrailerOfferController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
-
-    @PostMapping("/{id}")
-    public void testMailService(@PathVariable UUID id) {
-        try {
-            trailerOfferService.testMailService(id);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
 
 
