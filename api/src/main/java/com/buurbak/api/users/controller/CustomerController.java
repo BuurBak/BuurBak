@@ -1,6 +1,6 @@
 package com.buurbak.api.users.controller;
 
-import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecification;
 import com.buurbak.api.users.converter.CustomerConverter;
@@ -88,7 +88,7 @@ public class CustomerController {
     })
     @GetMapping(path = "/{id}/reservations")
     @PreAuthorize("authentication.principal.id == #id or hasRole('ROLE_ADMIN')")
-    public Page<ReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+    public Page<ReturnReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
         Page<Reservation> reservationPage = customerService.getAllReservations(id, pageable);
         return customerConverter.convertReservationPageToReservationDTOPage(reservationPage);
     }

@@ -1,6 +1,6 @@
 package com.buurbak.api.users.converter;
 
-import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
@@ -32,13 +32,13 @@ public class CustomerConverter {
         return new PageImpl<>(publicCustomerDTOList, customerPage.getPageable(), customerPage.getTotalElements());
     }
 
-    public ReservationDTO convertReservationToReservationDTO (Reservation reservation) {
+    public ReturnReservationDTO convertReservationToReservationDTO (Reservation reservation) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(reservation, ReservationDTO.class);
+        return modelMapper.map(reservation, ReturnReservationDTO.class);
     }
 
-    public Page<ReservationDTO> convertReservationPageToReservationDTOPage(Page<Reservation> reservationPage){
-        List<ReservationDTO> reservationDTOList = reservationPage
+    public Page<ReturnReservationDTO> convertReservationPageToReservationDTOPage(Page<Reservation> reservationPage){
+        List<ReturnReservationDTO> reservationDTOList = reservationPage
                 .stream()
                 .map(this::convertReservationToReservationDTO)
                 .toList();
