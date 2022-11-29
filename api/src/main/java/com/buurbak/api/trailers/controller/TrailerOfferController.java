@@ -109,7 +109,6 @@ public class TrailerOfferController {
         catch (TrailerOfferNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
-
     }
 }
 
