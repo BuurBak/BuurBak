@@ -42,7 +42,7 @@ class ReservationServiceTest {
         String username = "lucabergman@yahoo.com";
 
         when(customerService.findByUsername(username)).thenReturn(renter);
-        when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailer())).thenReturn(trailer);
+        when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId())).thenReturn(trailer);
 
         reservationService.addReservation(reservationDTO, username);
         ArgumentCaptor<Reservation> reservationArgumentCaptor = ArgumentCaptor.forClass(Reservation.class);
@@ -68,7 +68,7 @@ class ReservationServiceTest {
         TrailerOffer trailer = easyRandom.nextObject(TrailerOffer.class);
 
         when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
-        when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailer())).thenReturn(trailer);
+        when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId())).thenReturn(trailer);
 
         reservationService.updateReservation(reservation.getId(), reservationDTO);
         ArgumentCaptor<Reservation> reservationArgumentCaptor = ArgumentCaptor.forClass(Reservation.class);
