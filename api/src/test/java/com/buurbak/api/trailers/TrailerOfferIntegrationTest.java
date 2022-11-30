@@ -51,7 +51,7 @@ public class TrailerOfferIntegrationTest {
     }
 
     @Test
-    void addTrailerOffer() throws Exception {
+    void shouldAddTrailerOffer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .post("/traileroffers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class TrailerOfferIntegrationTest {
     }
 
     @Test
-    void updateTrailerOffer() throws Exception {
+    void shouldUpdateTrailerOffer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .put("/traileroffers/" + trailerId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class TrailerOfferIntegrationTest {
     }
 
     @Test
-    void deleteTrailerOffer() throws Exception {
+    void shouldDeleteTrailerOffer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .delete("/traileroffers/" + trailerId)
                         .contentType(MediaType.APPLICATION_JSON)

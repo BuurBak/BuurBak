@@ -47,7 +47,7 @@ public class ReservationIntegrationTest {
     }
 
     @Test
-    void addReservation() throws Exception {
+    void shouldAddReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .post("/reservations")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -58,7 +58,7 @@ public class ReservationIntegrationTest {
     }
 
     @Test
-    void updateReservation() throws Exception {
+    void shouldUpdateReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .put("/reservations/" + reservationId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ public class ReservationIntegrationTest {
     }
 
     @Test
-    void deleteReservation() throws Exception {
+    void shouldDeleteReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .delete("/reservations/" + reservationId)
                         .contentType(MediaType.APPLICATION_JSON)
