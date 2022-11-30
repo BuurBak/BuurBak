@@ -31,7 +31,7 @@ public class ReservationService {
 
     public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
         Customer customer = customerService.findByUsername(username);
-        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
+        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
         Reservation reservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
@@ -44,7 +44,7 @@ public class ReservationService {
 
     public void updateReservation(UUID reservationId, ReservationDTO reservationDTO) throws ReservationNotFoundException, TrailerOfferNotFoundException {
         Customer renter = getReservation(reservationId).getRenter();
-        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
+        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
         Reservation newReservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
         newReservation.setId(reservationId);
