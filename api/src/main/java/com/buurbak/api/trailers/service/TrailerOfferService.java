@@ -54,6 +54,7 @@ public class TrailerOfferService {
         newTrailerOffer.setId(trailerId);
         newTrailerOffer.setTrailerType(trailerType);
         newTrailerOffer.setOwner(trailerOffer.getOwner());
+        newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
 
         trailerOfferRepository.save(newTrailerOffer);
     }

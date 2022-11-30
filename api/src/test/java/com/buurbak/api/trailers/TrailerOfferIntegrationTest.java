@@ -2,9 +2,12 @@ package com.buurbak.api.trailers;
 
 import com.buurbak.api.randomData.RandomDataGenerator;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import com.buurbak.api.trailers.service.TrailerOfferService;
+import com.buurbak.api.trailers.model.TrailerOffer;
+import com.buurbak.api.trailers.repository.TrailerOfferRepository;
+import com.buurbak.api.users.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,30 +29,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "lucabergman@yahoo.com")
+@Slf4j
 public class TrailerOfferIntegrationTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
     private RandomDataGenerator rdg;
     @Autowired
-    private TrailerOfferService trailerOfferService;
+    private TrailerOfferRepository trailerOfferRepository;
+    @Autowired
+    private CustomerService customerService;
     private ObjectMapper mapper;
-    private String user = "lucabergman@yahoo.com";
+    private UUID trailerId;
 
     @BeforeEach
     void setUp() {
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        TrailerOffer trailerOffer = rdg.trailerOffer.nextObject(TrailerOffer.class);
+        trailerOffer.setCapacity(696);
+        trailerOfferRepository.save(trailerOffer);
+        trailerId = trailerOffer.getId();
     }
 
     @Test
     void addTrailerOffer() throws Exception {
-        CreateTrailerOfferDTO randomTrailer = rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class);
 
         mvc.perform(MockMvcRequestBuilders
                         .post("/traileroffers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(randomTrailer))
+                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
@@ -57,13 +66,10 @@ public class TrailerOfferIntegrationTest {
 
     @Test
     void updateTrailerOffer() throws Exception {
-        UUID trailerId = trailerOfferService.addTrailerOffer(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class), user).getId();
-        CreateTrailerOfferDTO randomTrailer = rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class);
-
         mvc.perform(MockMvcRequestBuilders
                         .put("/traileroffers/" + trailerId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(randomTrailer))
+                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -71,8 +77,6 @@ public class TrailerOfferIntegrationTest {
 
     @Test
     void deleteTrailerOffer() throws Exception {
-        UUID trailerId = trailerOfferService.addTrailerOffer(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class), user).getId();
-
         mvc.perform(MockMvcRequestBuilders
                         .delete("/traileroffers/" + trailerId)
                         .contentType(MediaType.APPLICATION_JSON)

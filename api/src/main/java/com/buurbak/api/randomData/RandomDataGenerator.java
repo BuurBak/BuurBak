@@ -18,6 +18,7 @@ import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.randomizers.CreditCardNumberRandomizer;
 import org.jeasy.random.randomizers.EmailRandomizer;
 import org.jeasy.random.randomizers.FullNameRandomizer;
+import org.jeasy.random.randomizers.misc.SkipRandomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -123,6 +124,7 @@ public class RandomDataGenerator implements CommandLineRunner {
 
         // Build TrailerOffer
         trailerOffer = new EasyRandom(new EasyRandomParameters()
+                .randomize(named("id"), new SkipRandomizer())
                 .randomize(named("owner"), new TrailerOwnerRandomizer(customers))
                 .randomize(named("trailerType").and(inClass(TrailerOffer.class)), new TrailerTypeRandomizer())
                 .randomize(named("trailerType").and(inClass(CreateTrailerOfferDTO.class)), new TrailerTypeStringRandomizer())
