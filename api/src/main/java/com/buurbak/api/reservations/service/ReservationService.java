@@ -36,6 +36,7 @@ public class ReservationService {
         Reservation reservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
         reservation.setTrailer(trailerOffer);
+        reservation.setCreatedAt(reservation.getCreatedAt());
 
         reservationRepository.save(reservation);
         return reservation;

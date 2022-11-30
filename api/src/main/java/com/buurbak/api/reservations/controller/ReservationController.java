@@ -71,12 +71,13 @@ public class ReservationController {
 
     @Operation(summary = "Delete reservation")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Entity not found")
+            @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrailerOffer(@PathVariable UUID id) {
         try {
             reservationService.deleteReservation(id);

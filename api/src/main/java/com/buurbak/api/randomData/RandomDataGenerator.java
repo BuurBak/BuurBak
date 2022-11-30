@@ -1,6 +1,8 @@
 package com.buurbak.api.randomData;
 
 import com.buurbak.api.randomData.randomizers.*;
+import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.security.model.Role;
 import com.buurbak.api.security.service.RoleService;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
@@ -54,6 +56,7 @@ public class RandomDataGenerator implements CommandLineRunner {
 
     public EasyRandom customer;
     public EasyRandom trailerOffer;
+    public EasyRandom reservation;
 
     public void run(String... args) {
         if (!GENERATE_RANDOM_DATA) {
@@ -64,6 +67,8 @@ public class RandomDataGenerator implements CommandLineRunner {
         LocalTime nine = LocalTime.of(9, 0);
         LocalTime five = LocalTime.of(17, 0);
         LocalDate today = LocalDate.now();
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDate nextWeek = LocalDate.now().plusWeeks(1);
         Role userRole = roleService.findByName("USER");
 
         // Build Customer
@@ -151,9 +156,26 @@ public class RandomDataGenerator implements CommandLineRunner {
         for (int i = 0; i < TRAILER_OFFERS_TO_GENERATE; i++) {
             trailerOffers.add(trailerOffer.nextObject(TrailerOffer.class));
         }
-        trailerOfferRepository.saveAll(trailerOffers);
+        Iterable<TrailerOffer> trailerOfferIterable = trailerOfferRepository.saveAll(trailerOffers);
+        trailerOffers = StreamSupport
+                .stream(trailerOfferIterable.spliterator(), false)
+                .collect(Collectors.toList());
         log.info("Generated: " + TRAILER_OFFERS_TO_GENERATE + " trailer offers");
 
         // TODO generate user profile pictures and trailer pictures
+
+        // Build Reservation
+        reservation = new EasyRandom(new EasyRandomParameters()
+                .randomize(named("id"), new SkipRandomizer())
+                .randomize(named("renter"), new TrailerOwnerRandomizer(customers))
+                .randomize(named("trailer").and(inClass(Reservation.class)), new TrailerOfferRandomizer(trailerOffers))
+                .randomize(named("trailer").and(inClass(ReservationDTO.class)), new TrailerIDRandomizer(trailerOffers))
+                .randomize(named("confirmed"), () -> false)
+                .randomize(named("confirmedAt"), () -> null)
+                .timeRange(nine, five)
+                .dateRange(tomorrow, nextWeek)
+                .charset(StandardCharsets.UTF_8)
+                .ignoreRandomizationErrors(false)
+                .bypassSetters(true));
     }
 }
