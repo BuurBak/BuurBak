@@ -39,7 +39,12 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
         p={2}
         sx={{ borderRadius: 4 }}
       >
-        <Typography variant="button" color="white">
+        <Typography
+          variant="button"
+          color="white"
+          display="flex"
+          alignItems="center"
+        >
           <TbCurrencyEuro /> {trailerOffer.price}
         </Typography>
       </Box>
