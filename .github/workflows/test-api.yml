@@ -18,6 +18,7 @@ env:
   JWT_SECRET: secret
   MAIL_HOST: localhost
   PORT: 8000
+  RANDOM_DATA: true
   SPRING_PROFILES_ACTIVE: iTest
 
 jobs:
