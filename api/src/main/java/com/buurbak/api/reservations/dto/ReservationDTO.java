@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ReservationDTO {
     @NotNull(message = "trailer may not be null")
-    private UUID trailer;
+    private UUID trailerId;
     @NotNull(message = "startTime may not be null") @Future(message = "startTime may only be in the future") @JsonAlias("start_time")
     private LocalDateTime startTime;
     @NotNull(message = "endTime may not be null") @Future(message = "endTime may only be in the future") @JsonAlias("end_time")
