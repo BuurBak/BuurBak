@@ -1,12 +1,12 @@
-package com.buurbak.api.trailers;
+package com.buurbak.api.reservations;
 
 import com.buurbak.api.randomData.RandomDataGenerator;
-import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import com.buurbak.api.trailers.model.TrailerOffer;
-import com.buurbak.api.trailers.repository.TrailerOfferRepository;
-import com.buurbak.api.users.service.CustomerService;
+import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
+import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,54 +28,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "lucabergman@yahoo.com")
-public class TrailerOfferIntegrationTest {
+@Slf4j
+public class ReservationIntegrationTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
     private RandomDataGenerator rdg;
     @Autowired
-    private TrailerOfferRepository trailerOfferRepository;
-    @Autowired
-    private CustomerService customerService;
+    private ReservationRepository reservationRepository;
     private ObjectMapper mapper;
-    private UUID trailerId;
+    private UUID reservationId;
 
     @BeforeEach
     void setUp() {
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        TrailerOffer trailerOffer = rdg.trailerOffer.nextObject(TrailerOffer.class);
-        trailerOffer.setCapacity(696);
-        trailerOfferRepository.save(trailerOffer);
-        trailerId = trailerOffer.getId();
+        reservationId = reservationRepository.save(rdg.reservation.nextObject(Reservation.class)).getId();
     }
 
     @Test
-    void shouldAddTrailerOffer() throws Exception {
+    void shouldAddReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                        .post("/traileroffers")
+                        .post("/reservations")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
+                        .content(mapper.writeValueAsString(rdg.reservation.nextObject(ReservationDTO.class)))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void shouldUpdateTrailerOffer() throws Exception {
+    void shouldUpdateReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                        .put("/traileroffers/" + trailerId)
+                        .put("/reservations/" + reservationId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(rdg.trailerOffer.nextObject(CreateTrailerOfferDTO.class)))
+                        .content(mapper.writeValueAsString(rdg.reservation.nextObject(ReservationDTO.class)))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void shouldDeleteTrailerOffer() throws Exception {
+    void shouldDeleteReservation() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                        .delete("/traileroffers/" + trailerId)
+                        .delete("/reservations/" + reservationId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

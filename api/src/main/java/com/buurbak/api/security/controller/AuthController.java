@@ -42,7 +42,11 @@ public class AuthController {
     @PostMapping("login")
     @ResponseStatus(HttpStatus.OK)
     public TokenDTO generateTokens(@RequestBody @Valid LoginUserDTO loginUserDTO) throws AuthenticationException {
-        return authService.generateTokens(loginUserDTO);
+        try {
+            return authService.generateTokens(loginUserDTO);
+        } catch (AuthenticationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @Operation(summary = "Register new Customer")

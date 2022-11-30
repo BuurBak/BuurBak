@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "95ad1bb6-b900-4f80-9e72-ccb5eef1a6ed",
+		"_postman_id": "13634795-6e83-4ac8-9541-8efbabe45269",
 		"name": "BuurBak",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17650310"
@@ -240,7 +240,7 @@
 					"response": []
 				},
 				{
-					"name": "UpdateCustomer",
+					"name": ".",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -281,27 +281,39 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffer",
+							"raw": "{{HOST}}/api/v1/traileroffers",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffer"
+								"traileroffers"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "trailerOffer",
+					"name": ".",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = pm.response.text()\r",
+									"pm.collectionVariables.set(\"TRAILEROFFER_ID\", body);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"length\": 300,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 650,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"17:00:00\",\r\n    \"pickUpTimeEnd\": \"19:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Small\"\r\n}",
+							"raw": "{\r\n    \"length\": 300,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 650,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"07:00:00\",\r\n    \"pickUpTimeEnd\": \"08:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Small\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,21 +321,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffer",
+							"raw": "{{HOST}}/api/v1/traileroffers",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffer"
+								"traileroffers"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "trailerOffer Copy",
+					"name": ".",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -337,22 +349,22 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffer/5de3e3ea-4ead-4270-b869-09c271084ff6",
+							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffer",
-								"5de3e3ea-4ead-4270-b869-09c271084ff6"
+								"traileroffers",
+								"{{TRAILEROFFER_ID}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "trailerOffer Copy",
+					"name": ".",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -366,15 +378,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffer/f4fa73ea-09ed-42cf-9d52-342ba9f5258a",
+							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffer",
-								"f4fa73ea-09ed-42cf-9d52-342ba9f5258a"
+								"traileroffers",
+								"{{TRAILEROFFER_ID}}"
 							]
 						}
 					},
@@ -386,7 +398,7 @@
 			"name": "Images",
 			"item": [
 				{
-					"name": "Upload images",
+					"name": ".",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -441,10 +453,100 @@
 			"name": "Reservations",
 			"item": [
 				{
-					"name": "Delete reservation",
+					"name": ".",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = pm.response.text()\r",
+									"pm.collectionVariables.set(\"RESERVATION_ID\", body);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trailer\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T17:00:00\",\r\n    \"endTime\": \"2023-12-03T19:00:00\",\r\n    \"confirmed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trailer\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T07:00:00\",\r\n    \"endTime\": \"2023-12-03T08:00:00\",\r\n    \"confirmed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"{{RESERVATION_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"{{RESERVATION_ID}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -494,6 +596,15 @@
 			"key": "REFRESH_TOKEN",
 			"value": "",
 			"type": "default"
+		},
+		{
+			"key": "TRAILEROFFER_ID",
+			"value": ""
+		},
+		{
+			"key": "RESERVATION_ID",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
