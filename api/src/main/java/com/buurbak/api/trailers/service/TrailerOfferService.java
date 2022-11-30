@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.service;
 
+import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -25,6 +26,7 @@ public class TrailerOfferService {
     private final TrailerOfferRepository trailerOfferRepository;
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
+    private final ContactExchangeEmailService contactExchangeEmailService;
 
     public TrailerOffer getTrailerOffer(UUID id) throws TrailerOfferNotFoundException {
         return trailerOfferRepository.findById(id).orElseThrow(TrailerOfferNotFoundException::new);
