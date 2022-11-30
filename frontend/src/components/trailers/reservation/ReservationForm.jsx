@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel, TextareaAutosize } from '@mui/material'
-import { useEffect, useState } from 'react'
-import LicenseWarning from '../trailerProfile/LicenseWarnign'
+import { useState } from 'react'
 import './ReservationForm.css'
 import { useParams } from 'react-router-dom'
 import Data from '../../../data/dummy/trailers.json'
@@ -50,7 +49,6 @@ export default function ReservationForm() {
               verhuurder met eventuele vragen of opmerkingen, dit is niet
               verplicht.
             </p>
-            <LicenseWarning />
             <div style={{ display: 'flex', width: '100%' }}>
               <div className="iconInputContainer" style={{ marginRight: '5%' }}>
                 <span>Voornaam</span>

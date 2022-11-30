@@ -1,20 +1,12 @@
-import {
-  Avatar,
-  Button,
-  IconButton,
-  Link,
-  Menu,
-  MenuItem,
-  Stack,
-} from '@mui/material'
+import { Button, Link, Menu, MenuItem, Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import PersonIcon from '@mui/icons-material/Person'
 import { useAuth } from '../../../hooks/use-auth'
 import {
-  usePopupState,
-  bindTrigger,
   bindMenu,
+  bindTrigger,
+  usePopupState,
 } from 'material-ui-popup-state/hooks'
+import ProfilePicture from '../../util/ProfilePicture'
 
 interface HeaderNavigationProps {
   onLoginRegister: () => void
@@ -52,19 +44,7 @@ export default function HeaderNavigation({
             <Button
               {...bindTrigger(popupState)}
               color="secondary"
-              endIcon={
-                user.profile_picture_url ? (
-                  <Avatar
-                    sizes="small"
-                    alt={user.name}
-                    src={user.profile_picture_url}
-                  />
-                ) : (
-                  <Avatar sizes="small">
-                    <PersonIcon />
-                  </Avatar>
-                )
-              }
+              endIcon={<ProfilePicture user={user} />}
             >
               {user.name ? user.name : 'Account'}
             </Button>

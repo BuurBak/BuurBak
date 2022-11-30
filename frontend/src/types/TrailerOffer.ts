@@ -1,5 +1,6 @@
 import { TrailerType } from './TrailerType'
 import { User } from './User'
+import { Image } from './Image'
 
 export interface TrailerOffer {
   id: string
@@ -20,4 +21,5 @@ export interface TrailerOffer {
   available: boolean
   createdAt: Date
   updatedAt: Date
+  images: Image[]
 }
