@@ -16,7 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
+
+import static java.lang.Math.cos;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +40,17 @@ public class TrailerOfferService {
     public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
         Customer customer = customerService.findByUsername(username);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
+
+        double pi = Math.PI;
+        double earth = 6378.137;  //radius of the earth in kilometer
+        double m = (1 / ((2 * pi / 360) * earth)) / 1000;  //1 meter in degree
+        Random randI = new Random();
+
+        int randomExtraLatitude = randI.ints(100, 250).findAny().getAsInt();
+        double new_latitude = createTrailerOfferDTO.getLatitude() + (randomExtraLatitude * m);
+
+        int randomExtraLongitude = randI.ints(100, 250).findAny().getAsInt();
+        var new_longitude = createTrailerOfferDTO.getLongitude() + (randomExtraLongitude * m) / cos(createTrailerOfferDTO.getLatitude() * (pi / 180));
 
         TrailerOffer trailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         trailerOffer.setTrailerType(trailerType);
