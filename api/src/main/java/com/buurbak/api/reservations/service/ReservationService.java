@@ -26,14 +26,15 @@ public class ReservationService {
     private final TrailerOfferService trailerOfferService;
 
     public Reservation getReservation(UUID id) throws ReservationNotFoundException {
-        return reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
+        return reservation;
     }
 
     public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
-        Reservation reservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
+        Reservation reservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
         reservation.setTrailer(trailerOffer);
         reservation.setCreatedAt(reservation.getCreatedAt());
@@ -46,7 +47,7 @@ public class ReservationService {
         Customer renter = getReservation(reservationId).getRenter();
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
-        Reservation newReservation = new ReservationConverter().convertReservationDTOtoReservation(reservationDTO);
+        Reservation newReservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         newReservation.setId(reservationId);
         newReservation.setRenter(renter);
         newReservation.setTrailer(trailerOffer);

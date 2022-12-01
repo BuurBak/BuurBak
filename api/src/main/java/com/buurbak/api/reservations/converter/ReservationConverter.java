@@ -5,8 +5,13 @@ import com.buurbak.api.reservations.model.Reservation;
 import org.modelmapper.ModelMapper;
 
 public class ReservationConverter {
-    public Reservation convertReservationDTOtoReservation (ReservationDTO reservationDTO) {
+    public static Reservation convertReservationDTOtoReservation (ReservationDTO reservationDTO) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(reservationDTO, Reservation.class);
+    }
+
+    public static ReservationDTO convertReservationToReservationDTO (Reservation reservation) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(reservation, ReservationDTO.class);
     }
 }
