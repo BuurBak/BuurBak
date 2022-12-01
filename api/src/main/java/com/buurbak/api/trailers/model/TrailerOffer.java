@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,10 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
+    private Address address;
+
     private int length;
     private int height;
     private int width;
@@ -40,8 +45,6 @@ public class TrailerOffer {
     private LocalTime pickUpTimeEnd;
     private LocalTime dropOffTimeStart;
     private LocalTime dropOffTimeEnd;
-    @Column(columnDefinition = "text")
-    private String location;
     private double price;
     private boolean available;
 
@@ -50,13 +53,14 @@ public class TrailerOffer {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
+    public TrailerOffer(TrailerType trailerType, Customer owner, Address address, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
                         LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
-                        String location, double price, boolean available) {
+                        double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
+        this.address = address;
         this.length = length;
         this.height = height;
         this.width = width;
@@ -67,7 +71,6 @@ public class TrailerOffer {
         this.pickUpTimeEnd = pickUpTimeEnd;
         this.dropOffTimeStart = dropOffTimeStart;
         this.dropOffTimeEnd = dropOffTimeEnd;
-        this.location = location;
         this.price = price;
         this.available = available;
     }
