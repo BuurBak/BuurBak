@@ -1,6 +1,7 @@
 package com.buurbak.api.trailers.model;
 
 import com.buurbak.api.users.model.Address;
+import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,19 +35,18 @@ public class TrailerOffer {
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
 
-    private int length;
-    private int height;
-    private int width;
-    private int weight;
-    private int capacity;
-    @Column(columnDefinition = "text")
-    private String licensePlateNumber;
-    private LocalTime pickUpTimeStart;
-    private LocalTime pickUpTimeEnd;
-    private LocalTime dropOffTimeStart;
-    private LocalTime dropOffTimeEnd;
-    private double price;
-    private boolean available;
+    @Column(nullable = false) private int length;
+    @Column(nullable = false) private int height;
+    @Column(nullable = false) private int width;
+    @Column(nullable = false) private int weight;
+    @Column(nullable = false) private int capacity;
+    @Column(columnDefinition = "text", nullable = false)  private String licensePlateNumber;
+    @Column(nullable = false) private LocalTime pickUpTimeStart;
+    @Column(nullable = false) private LocalTime pickUpTimeEnd;
+    @Column(nullable = false) private LocalTime dropOffTimeStart;
+    @Column(nullable = false) private LocalTime dropOffTimeEnd;
+    @Column(nullable = false) private double price;
+    @Column(nullable = false) private boolean available;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
