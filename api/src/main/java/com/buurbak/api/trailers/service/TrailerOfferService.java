@@ -8,7 +8,6 @@ import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
-import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -47,13 +46,16 @@ public class TrailerOfferService {
         return trailerOffer;
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
+        Customer customer = customerService.findByUsername(username);
+
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
         TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         newTrailerOffer.setId(trailerId);
         newTrailerOffer.setTrailerType(trailerType);
+        newTrailerOffer.setOwner(customer);
         trailerOfferRepository.save(newTrailerOffer);
     }
 

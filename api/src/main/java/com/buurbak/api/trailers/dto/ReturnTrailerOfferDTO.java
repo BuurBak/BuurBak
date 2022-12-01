@@ -59,9 +59,6 @@ public class ReturnTrailerOfferDTO {
     @JsonAlias("drop_off_time_end")
     private LocalTime dropOffTimeEnd;
 
-    @NotBlank(message = "Location may not be blank")
-    private String location;
-
     @PositiveOrZero(message = "Price may only be a positive number")
     private double price;
 
