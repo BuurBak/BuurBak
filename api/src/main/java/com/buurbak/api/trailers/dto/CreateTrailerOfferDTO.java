@@ -59,6 +59,12 @@ public class CreateTrailerOfferDTO{
     @JsonAlias("drop_off_time_end")
     private LocalTime dropOffTimeEnd;
 
+    @NotNull(message = "Latitude may not be null")
+    private double latitude;
+
+    @NotNull(message = "Longitude may not be null")
+    private double longitude;
+
     @PositiveOrZero(message = "Price may only be a positive number")
     private double price;
 

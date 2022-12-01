@@ -1,7 +1,6 @@
 package com.buurbak.api.trailers.model;
 
 import com.buurbak.api.users.model.Address;
-import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +46,11 @@ public class TrailerOffer {
     @Column(nullable = false) private LocalTime dropOffTimeEnd;
     @Column(nullable = false) private double price;
     @Column(nullable = false) private boolean available;
+    @Column(nullable = false) private double latitude;
+    @Column(nullable = false) private double longitude;
+    @Column(nullable = false) private double fakeLatitude;
+    @Column(nullable = false) private double fakeLongitude;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
