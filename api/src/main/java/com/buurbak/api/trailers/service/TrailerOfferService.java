@@ -44,8 +44,7 @@ public class TrailerOfferService {
         trailerOffer.setTrailerType(trailerType);
         trailerOffer.setOwner(customer);
 
-        trailerOfferRepository.save(trailerOffer);
-        return trailerOffer;
+        return trailerOfferRepository.save(trailerOffer);
     }
 
     public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {

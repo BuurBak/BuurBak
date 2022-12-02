@@ -1,6 +1,7 @@
 package com.buurbak.api.reservations.converter;
 
 import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,8 @@ public class ReservationConverter {
         return modelMapper.map(reservationDTO, Reservation.class);
     }
 
-    public static ReservationDTO convertReservationToReservationDTO (Reservation reservation) {
+    public static ReturnReservationDTO convertReservationToReturnReservationDTO (Reservation reservation) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(reservation, ReservationDTO.class);
+        return modelMapper.map(reservation, ReturnReservationDTO.class);
     }
 }

@@ -4,7 +4,6 @@ import com.buurbak.api.randomData.RandomDataGenerator;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
-import com.buurbak.api.users.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +35,6 @@ public class TrailerOfferIntegrationTest {
     private RandomDataGenerator rdg;
     @Autowired
     private TrailerOfferRepository trailerOfferRepository;
-    @Autowired
-    private CustomerService customerService;
     private ObjectMapper mapper;
     private UUID trailerId;
 

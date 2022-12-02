@@ -26,8 +26,7 @@ public class ReservationService {
     private final TrailerOfferService trailerOfferService;
 
     public Reservation getReservation(UUID id) throws ReservationNotFoundException {
-        Reservation reservation = reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
-        return reservation;
+        return reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
     }
 
     public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
@@ -39,8 +38,7 @@ public class ReservationService {
         reservation.setTrailer(trailerOffer);
         reservation.setCreatedAt(reservation.getCreatedAt());
 
-        reservationRepository.save(reservation);
-        return reservation;
+        return reservationRepository.save(reservation);
     }
 
     public void updateReservation(UUID reservationId, ReservationDTO reservationDTO) throws ReservationNotFoundException, TrailerOfferNotFoundException {
