@@ -2,6 +2,7 @@ package com.buurbak.api.trailers.controller;
 
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.dto.ReturnTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
@@ -39,8 +40,13 @@ public class TrailerOfferController {
             @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
     })
     @GetMapping(path = "/{id}")
-    public TrailerOffer getTrailerOffer(@PathVariable UUID id){
-         return trailerOfferService.getTrailerOffer(id);
+    public ReturnTrailerOfferDTO getTrailerOffer(@PathVariable UUID id){
+        try {
+            TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(id);
+            return trailerOfferConverter.convertTrailerOfferToReturnTrailerOfferDTO(trailerOffer);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
 
     @Operation(summary = "Return all trailerOffers")

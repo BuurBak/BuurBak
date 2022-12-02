@@ -8,6 +8,7 @@ import com.buurbak.api.users.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class TrailerOfferIntegrationTest {
         trailerId = trailerOffer.getId();
     }
 
+    @Disabled
     @Test
     void shouldAddTrailerOffer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
