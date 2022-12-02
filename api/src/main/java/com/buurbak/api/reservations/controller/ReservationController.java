@@ -87,4 +87,15 @@ public class ReservationController {
         }
 
     }
+
+    @PutMapping("/{id}/deny")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelReservation(@PathVariable UUID id) {
+        try {
+            reservationService.cancelReservation(id);
+        }
+        catch (ReservationNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
+        }
+    }
 }

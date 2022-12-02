@@ -58,4 +58,13 @@ public class ReservationService {
 
         reservationRepository.deleteById(reservationId);
     }
+
+    public void cancelReservation(UUID reservationId) {
+        if(!reservationRepository.existsById(reservationId)) throw new ReservationNotFoundException();
+
+        Reservation reservation = getReservation(reservationId);
+        reservation.setConfirmed(false);
+
+        reservationRepository.save(reservation);
+    }
 }
