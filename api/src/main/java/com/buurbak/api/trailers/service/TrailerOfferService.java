@@ -1,6 +1,7 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.email.service.ContactExchangeEmailService;
+import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
@@ -16,8 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
 
 @Service
@@ -29,9 +28,8 @@ public class TrailerOfferService {
     private final TrailerTypeService trailerTypeService;
     private final ContactExchangeEmailService contactExchangeEmailService;
 
-
-    public TrailerOffer getTrailerOffer(UUID id) throws EntityNotFoundException {
-        return trailerOfferRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public TrailerOffer getTrailerOffer(UUID id) throws TrailerOfferNotFoundException {
+        return trailerOfferRepository.findById(id).orElseThrow(TrailerOfferNotFoundException::new);
     }
 
     public Page<TrailerOffer> getAllTrailerOffers(Pageable pageable){
@@ -40,48 +38,26 @@ public class TrailerOfferService {
 
     public TrailerOffer addTrailerOffer(CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws CustomerNotFoundException, TrailerTypeNotFoundException {
         Customer customer = customerService.findByUsername(username);
-        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
-        TrailerOffer trailerOffer = new TrailerOffer(
-                trailerType,
-                customer,
-                createTrailerOfferDTO.length(),
-                createTrailerOfferDTO.height(),
-                createTrailerOfferDTO.width(),
-                createTrailerOfferDTO.weight(),
-                createTrailerOfferDTO.capacity(),
-                createTrailerOfferDTO.licensePlateNumber(),
-                createTrailerOfferDTO.pickUpTimeStart(),
-                createTrailerOfferDTO.pickUpTimeEnd(),
-                createTrailerOfferDTO.dropOffTimeStart(),
-                createTrailerOfferDTO.dropOffTimeEnd(),
-                createTrailerOfferDTO.location(),
-                createTrailerOfferDTO.price(),
-                createTrailerOfferDTO.available());
-        trailerOfferRepository.save(trailerOffer);
-        return trailerOffer;
+        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
+
+        TrailerOffer trailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
+        trailerOffer.setTrailerType(trailerType);
+        trailerOffer.setOwner(customer);
+
+        return trailerOfferRepository.save(trailerOffer);
     }
 
-    public TrailerOffer updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
-        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.trailerType());
+        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
-        trailerOffer.setTrailerType(trailerType);
-        trailerOffer.setLength(createTrailerOfferDTO.length());
-        trailerOffer.setHeight(createTrailerOfferDTO.height());
-        trailerOffer.setWidth(createTrailerOfferDTO.width());
-        trailerOffer.setWeight(createTrailerOfferDTO.weight());
-        trailerOffer.setCapacity(createTrailerOfferDTO.capacity());
-        trailerOffer.setLicensePlateNumber(createTrailerOfferDTO.licensePlateNumber());
-        trailerOffer.setPickUpTimeStart(createTrailerOfferDTO.pickUpTimeStart());
-        trailerOffer.setPickUpTimeEnd(createTrailerOfferDTO.pickUpTimeEnd());
-        trailerOffer.setDropOffTimeStart(createTrailerOfferDTO.dropOffTimeStart());
-        trailerOffer.setDropOffTimeEnd(createTrailerOfferDTO.dropOffTimeEnd());
-        trailerOffer.setLocation(createTrailerOfferDTO.location());
-        trailerOffer.setPrice(createTrailerOfferDTO.price());
-        trailerOffer.setAvailable(createTrailerOfferDTO.available());
+        TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
+        newTrailerOffer.setId(trailerId);
+        newTrailerOffer.setTrailerType(trailerType);
+        newTrailerOffer.setOwner(trailerOffer.getOwner());
+        newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
 
-        trailerOfferRepository.save(trailerOffer);
-        return trailerOffer;
+        trailerOfferRepository.save(newTrailerOffer);
     }
 
     public void deleteTrailerOffer(UUID trailerId) {

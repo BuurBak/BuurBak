@@ -1,8 +1,8 @@
 package com.buurbak.api.trailers.controller;
 
-import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.dto.ReturnTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
@@ -22,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -34,15 +33,20 @@ public class TrailerOfferController {
     private final TrailerOfferConverter trailerOfferConverter;
 
 
-    @Operation(summary = "Return all trailerOffers")
+    @Operation(summary = "Return a trailerOffer")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
     })
     @GetMapping(path = "/{id}")
-    public TrailerOffer getTrailerOffer(@PathVariable UUID id){
-         return trailerOfferService.getTrailerOffer(id);
+    public ReturnTrailerOfferDTO getTrailerOffer(@PathVariable UUID id){
+        try {
+            TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(id);
+            return trailerOfferConverter.convertTrailerOfferToReturnTrailerOfferDTO(trailerOffer);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
 
     @Operation(summary = "Return all trailerOffers")
@@ -90,16 +94,19 @@ public class TrailerOfferController {
             trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
 
     @Operation(summary = "Delete traileroffer")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Traileroffer deleted"),
+            @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Traileroffer not found"),
             @ApiResponse(responseCode = "500", description = "Could not delete traileroffer")
     })
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrailerOffer(@PathVariable UUID id) {
         try {
             trailerOfferService.deleteTrailerOffer(id);

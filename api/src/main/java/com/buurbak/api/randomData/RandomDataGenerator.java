@@ -1,10 +1,11 @@
-package com.buurbak.api.data;
+package com.buurbak.api.randomData;
 
-import com.buurbak.api.data.randomizers.*;
-import com.buurbak.api.security.model.AppUser;
+import com.buurbak.api.randomData.randomizers.*;
+import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.security.model.Role;
-import com.buurbak.api.security.repository.RoleRepository;
 import com.buurbak.api.security.service.RoleService;
+import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.model.TrailerType;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
@@ -16,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.FieldPredicates;
 import org.jeasy.random.randomizers.CreditCardNumberRandomizer;
 import org.jeasy.random.randomizers.EmailRandomizer;
 import org.jeasy.random.randomizers.FullNameRandomizer;
@@ -35,6 +35,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static org.jeasy.random.FieldPredicates.inClass;
+import static org.jeasy.random.FieldPredicates.named;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -46,11 +49,14 @@ public class RandomDataGenerator implements CommandLineRunner {
     private final TrailerOfferRepository trailerOfferRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TrailerTypeRepository trailerTypeRepository;
-    private final RoleRepository roleRepository;
     private final RoleService roleService;
 
     @Value("${data.generate-random-data:false}")
     private boolean GENERATE_RANDOM_DATA;
+
+    public EasyRandom customer;
+    public EasyRandom trailerOffer;
+    public EasyRandom reservation;
 
     public void run(String... args) {
         if (!GENERATE_RANDOM_DATA) {
@@ -60,47 +66,18 @@ public class RandomDataGenerator implements CommandLineRunner {
         // Constants
         LocalTime nine = LocalTime.of(9, 0);
         LocalTime five = LocalTime.of(17, 0);
-
         LocalDate today = LocalDate.now();
-
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDate nextWeek = LocalDate.now().plusWeeks(1);
         Role userRole = roleService.findByName("USER");
 
-        // Generate Customer Paramater
-        EasyRandomParameters customerParameters = new EasyRandomParameters()
-                .randomize(
-                        FieldPredicates.named("name")
-                                .and(FieldPredicates.ofType(String.class))
-                                .and(FieldPredicates.inClass(Customer.class)),
-                        new FullNameRandomizer()
-                )
-                .randomize(
-                        FieldPredicates.named("email")
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new EmailRandomizer()
-                )
-                .randomize(
-                        FieldPredicates.named("password")
-                                .and(FieldPredicates.ofType(String.class))
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new Hallo123PasswordRandomizer()
-                )
-                .randomize(
-                        FieldPredicates.named("iban")
-                                .and(FieldPredicates.inClass(Customer.class)),
-                        new CreditCardNumberRandomizer()
-                )
-                .randomize(
-                        FieldPredicates.named("deleted")
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new SkipRandomizer())
-                .randomize(
-                        FieldPredicates.named("locked")
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new SkipRandomizer())
-                .randomize(
-                        FieldPredicates.named("roles")
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new UserRoleRandomizer(userRole))
+        // Build Customer
+        customer = new EasyRandom(new EasyRandomParameters()
+                .randomize(named("name").and(inClass(Customer.class)), new FullNameRandomizer())
+                .randomize(named("email"), new EmailRandomizer())
+                .randomize(named("password"), new Hallo123PasswordRandomizer())
+                .randomize(named("iban"), new CreditCardNumberRandomizer())
+                .randomize(named("roles"), new UserRoleRandomizer(userRole))
                 .seed(123L)
                 .objectPoolSize(100)
                 .randomizationDepth(5)
@@ -112,10 +89,7 @@ public class RandomDataGenerator implements CommandLineRunner {
                 .scanClasspathForConcreteTypes(true)
                 .overrideDefaultInitialization(false)
                 .ignoreRandomizationErrors(true)
-                .bypassSetters(true);
-        EasyRandom customerRandom = new EasyRandom(customerParameters);
-
-
+                .bypassSetters(true));
 
         // Generate customers
         log.info("Generating customers");
@@ -137,7 +111,7 @@ public class RandomDataGenerator implements CommandLineRunner {
         );
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < CUSTOMERS_TO_GENERATE; i++) {
-            customers.add(customerRandom.nextObject(Customer.class));
+            customers.add(customer.nextObject(Customer.class));
         }
         customers.add(lucaBergman);
         Iterable<Customer> customerIterable = customerRepository.saveAll(customers);
@@ -146,8 +120,6 @@ public class RandomDataGenerator implements CommandLineRunner {
                 .collect(Collectors.toList());
         log.info("Generated: " + CUSTOMERS_TO_GENERATE + " customers");
 
-
-
         // Generate Trailer types
         List<TrailerType> trailerTypes = new ArrayList<>();
         trailerTypes.add(new TrailerType("Small"));
@@ -155,35 +127,17 @@ public class RandomDataGenerator implements CommandLineRunner {
         trailerTypes.add(new TrailerType("Big"));
         trailerTypeRepository.saveAll(trailerTypes);
 
-
-
-        // Build TrailerOfferParamaters
-        EasyRandomParameters trailerOfferParameters = new EasyRandomParameters()
-                .randomize(FieldPredicates.named("owner")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerOwnerRandomizer(customers))
-                .randomize(FieldPredicates.named("trailerType")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerTypeRandomizer(trailerTypes))
-                .randomize(FieldPredicates.named("length")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerDimensionRandomizer())
-                .randomize(FieldPredicates.named("width")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerDimensionRandomizer())
-                .randomize(FieldPredicates.named("height")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerDimensionRandomizer())
-                .randomize(FieldPredicates.named("weight")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerDimensionRandomizer())
-                .randomize(FieldPredicates.named("capacity")
-                                .and(FieldPredicates.inClass(TrailerOffer.class)),
-                        new TrailerDimensionRandomizer())
-                .randomize(
-                        FieldPredicates.named("deleted")
-                                .and(FieldPredicates.inClass(AppUser.class)),
-                        new SkipRandomizer())
+        // Build TrailerOffer
+        trailerOffer = new EasyRandom(new EasyRandomParameters()
+                .randomize(named("id"), new SkipRandomizer())
+                .randomize(named("owner"), new TrailerOwnerRandomizer(customers))
+                .randomize(named("trailerType").and(inClass(TrailerOffer.class)), new TrailerTypeRandomizer())
+                .randomize(named("trailerType").and(inClass(CreateTrailerOfferDTO.class)), new TrailerTypeStringRandomizer())
+                .randomize(named("length"), new TrailerDimensionRandomizer())
+                .randomize(named("height"), new TrailerDimensionRandomizer())
+                .randomize(named("width"), new TrailerDimensionRandomizer())
+                .randomize(named("weight"), new TrailerDimensionRandomizer())
+                .randomize(named("capacity"), new TrailerDimensionRandomizer())
                 .seed(123L)
                 .objectPoolSize(100)
                 .randomizationDepth(5)
@@ -194,20 +148,34 @@ public class RandomDataGenerator implements CommandLineRunner {
                 .scanClasspathForConcreteTypes(true)
                 .overrideDefaultInitialization(false)
                 .ignoreRandomizationErrors(true)
-                .bypassSetters(true);
-        EasyRandom trailerRandom = new EasyRandom(trailerOfferParameters);
-
-
+                .bypassSetters(true));
 
         // Generate trailer offers
         log.info("Generating trailers");
         List<TrailerOffer> trailerOffers = new ArrayList<>();
         for (int i = 0; i < TRAILER_OFFERS_TO_GENERATE; i++) {
-            trailerOffers.add(trailerRandom.nextObject(TrailerOffer.class));
+            trailerOffers.add(trailerOffer.nextObject(TrailerOffer.class));
         }
-        trailerOfferRepository.saveAll(trailerOffers);
+        Iterable<TrailerOffer> trailerOfferIterable = trailerOfferRepository.saveAll(trailerOffers);
+        trailerOffers = StreamSupport
+                .stream(trailerOfferIterable.spliterator(), false)
+                .collect(Collectors.toList());
         log.info("Generated: " + TRAILER_OFFERS_TO_GENERATE + " trailer offers");
 
         // TODO generate user profile pictures and trailer pictures
+
+        // Build Reservation
+        reservation = new EasyRandom(new EasyRandomParameters()
+                .randomize(named("id"), new SkipRandomizer())
+                .randomize(named("renter"), new TrailerOwnerRandomizer(customers))
+                .randomize(named("trailer").and(inClass(Reservation.class)), new TrailerOfferRandomizer(trailerOffers))
+                .randomize(named("trailerId").and(inClass(ReservationDTO.class)), new TrailerIDRandomizer(trailerOffers))
+                .randomize(named("confirmed"), () -> false)
+                .randomize(named("confirmedAt"), () -> null)
+                .timeRange(nine, five)
+                .dateRange(tomorrow, nextWeek)
+                .charset(StandardCharsets.UTF_8)
+                .ignoreRandomizationErrors(false)
+                .bypassSetters(true));
     }
 }
