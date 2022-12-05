@@ -33,7 +33,7 @@ public class TrailerOfferController {
     private final TrailerOfferConverter trailerOfferConverter;
 
 
-    @Operation(summary = "Return all trailerOffers")
+    @Operation(summary = "Return a trailerOffer")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
@@ -101,11 +101,12 @@ public class TrailerOfferController {
 
     @Operation(summary = "Delete traileroffer")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Traileroffer deleted"),
+            @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Traileroffer not found"),
             @ApiResponse(responseCode = "500", description = "Could not delete traileroffer")
     })
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrailerOffer(@PathVariable UUID id) {
         try {
             trailerOfferService.deleteTrailerOffer(id);

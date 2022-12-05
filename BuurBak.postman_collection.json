@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "973f3ad9-e856-4697-b2f9-970b38ad823f",
+		"_postman_id": "13634795-6e83-4ac8-9541-8efbabe45269",
 		"name": "BuurBak",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24202028"
+		"_exporter_id": "17650310"
 	},
 	"item": [
 		{
@@ -65,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"lucabergman@buurbak.com\",\n    \"password\": \"hello123\"\n}",
+							"raw": "{\n    \"username\": \"lucabergman@yahoo.com\",\n    \"password\": \"hallo123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -240,7 +240,7 @@
 					"response": []
 				},
 				{
-					"name": "UpdateCustomer",
+					"name": ".",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -281,14 +281,112 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffer",
+							"raw": "{{HOST}}/api/v1/traileroffers",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffer"
+								"traileroffers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = pm.response.text()\r",
+									"pm.collectionVariables.set(\"TRAILEROFFER_ID\", body);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 300,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 650,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"07:00:00\",\r\n    \"pickUpTimeEnd\": \"08:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Small\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 250,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 750,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"17:00:00\",\r\n    \"pickUpTimeEnd\": \"19:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Big\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{{TRAILEROFFER_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"length\": 250\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{{TRAILEROFFER_ID}}"
 							]
 						}
 					},
@@ -300,7 +398,7 @@
 			"name": "Images",
 			"item": [
 				{
-					"name": "Upload images",
+					"name": ".",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -344,6 +442,129 @@
 								"api",
 								"v1",
 								"images"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": ".",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"{{RESERVATION_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = pm.response.text()\r",
+									"pm.collectionVariables.set(\"RESERVATION_ID\", body);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trailerId\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T17:00:00\",\r\n    \"endTime\": \"2023-12-03T19:00:00\",\r\n    \"confirmed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trailerId\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T07:00:00\",\r\n    \"endTime\": \"2023-12-03T08:00:00\",\r\n    \"confirmed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"{{RESERVATION_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"{{RESERVATION_ID}}"
 							]
 						}
 					},
@@ -395,6 +616,15 @@
 			"key": "REFRESH_TOKEN",
 			"value": "",
 			"type": "default"
+		},
+		{
+			"key": "TRAILEROFFER_ID",
+			"value": ""
+		},
+		{
+			"key": "RESERVATION_ID",
+			"value": "",
+			"type": "string"
 		}
 	]
 }

@@ -1,4 +1,4 @@
-package com.buurbak.api.data.randomizers;
+package com.buurbak.api.randomData.randomizers;
 
 import com.buurbak.api.security.model.Role;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.buurbak.api.data.randomizers;
+package com.buurbak.api.randomData.randomizers;
 
 import org.jeasy.random.api.Randomizer;
 

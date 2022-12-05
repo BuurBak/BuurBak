@@ -4,6 +4,7 @@ import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.users.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class TrailerOfferServiceTest {
     @Mock private TrailerOfferRepository trailerOfferRepository;
     @Mock private TrailerTypeService trailerTypeService;
@@ -106,6 +108,8 @@ class TrailerOfferServiceTest {
 
 	@Test
 	void addTrailerOffer() {
+        log.info("Poop" + System.getenv("DATABASE_USERNAME"));
+
 		EasyRandom easyRandom = new EasyRandom();
 		CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 

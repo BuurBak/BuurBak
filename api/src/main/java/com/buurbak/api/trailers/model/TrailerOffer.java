@@ -1,12 +1,14 @@
 package com.buurbak.api.trailers.model;
 
 import com.buurbak.api.users.model.Address;
+import com.buurbak.api.randomData.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.jeasy.random.annotation.Randomizer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,6 +35,12 @@ public class TrailerOffer {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
+
+
+    @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
+    private int length;
+    @Column(nullable = false)
+    private int height;
 
     @Column(nullable = false) private int length;
     @Column(nullable = false) private int height;

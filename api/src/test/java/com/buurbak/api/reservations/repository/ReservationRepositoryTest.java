@@ -1,7 +1,6 @@
-package com.buurbak.api.reservations;
+package com.buurbak.api.reservations.repository;
 
 import com.buurbak.api.reservations.model.Reservation;
-import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.trailers.repository.TrailerTypeRepository;

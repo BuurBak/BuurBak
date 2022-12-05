@@ -24,7 +24,6 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerService customerService;
     private final TrailerOfferService trailerOfferService;
-    private final ReservationConverter reservationConverter;
 
     public Reservation getReservation(UUID id) throws ReservationNotFoundException {
         return reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
@@ -32,32 +31,30 @@ public class ReservationService {
 
     public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
         Customer customer = customerService.findByUsername(username);
-        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
+        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
-        Reservation reservation = reservationConverter.convertReservationDTOtoReservation(reservationDTO);
+        Reservation reservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
         reservation.setTrailer(trailerOffer);
+        reservation.setCreatedAt(reservation.getCreatedAt());
 
-        reservationRepository.save(reservation);
-        return reservation;
+        return reservationRepository.save(reservation);
     }
 
     public void updateReservation(UUID reservationId, ReservationDTO reservationDTO) throws ReservationNotFoundException, TrailerOfferNotFoundException {
-        Reservation reservation = getReservation(reservationId);
-        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailer());
+        Customer renter = getReservation(reservationId).getRenter();
+        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
 
-        Reservation newReservation = reservationConverter.convertReservationDTOtoReservation(reservationDTO);
+        Reservation newReservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         newReservation.setId(reservationId);
+        newReservation.setRenter(renter);
         newReservation.setTrailer(trailerOffer);
         reservationRepository.save(newReservation);
     }
 
     public void deleteReservation(UUID reservationId) {
-        if(!reservationRepository.existsById(reservationId)) {
-            throw new ReservationNotFoundException("Reservation with id " + reservationId + " does not exist");
-        }
+        if(!reservationRepository.existsById(reservationId)) throw new ReservationNotFoundException();
 
         reservationRepository.deleteById(reservationId);
-        log.info("Reservation with id " + reservationId + " has been deleted");
     }
 }
