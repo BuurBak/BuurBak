@@ -48,14 +48,16 @@ public class TrailerOfferService {
         double m = (1 / ((2 * pi / 360) * earth)) / 1000;  //1 meter in degree
         Random randI = new Random();
 
-        int randomExtraLatitude = randI.ints(100, 250).findAny().getAsInt();
+        int randomExtraLatitude = randI.ints(-150, 150).findAny().getAsInt();
         double new_latitude = createTrailerOfferDTO.getLatitude() + (randomExtraLatitude * m);
 
-        int randomExtraLongitude = randI.ints(100, 250).findAny().getAsInt();
+        int randomExtraLongitude = randI.ints(-150, 150).findAny().getAsInt();
         var new_longitude = createTrailerOfferDTO.getLongitude() + (randomExtraLongitude * m) / cos(createTrailerOfferDTO.getLatitude() * (pi / 180));
 
         TrailerOffer trailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         trailerOffer.setTrailerType(trailerType);
+        trailerOffer.setFakeLatitude(new_latitude);
+        trailerOffer.setFakeLongitude(new_longitude);
         trailerOffer.setOwner(customer);
 
         return trailerOfferRepository.save(trailerOffer);
