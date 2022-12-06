@@ -228,9 +228,36 @@
 				},
 				{
 					"name": "Get all reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "23be93b7-e226-4895-86d8-3a0924c4e177",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/customers/{id}/reservations",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"{id}",
+								"reservations"
+							]
+						}
 					},
 					"response": []
 				}
@@ -262,7 +289,19 @@
 					"name": "Get single",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{id}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -302,7 +341,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"price\": 287657436789987650,\r\n  \"available\": true\r\n}",
+							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"latitude\": 52.084495,\r\n  \"longitude\": 5.175734,\r\n  \"price\": 100000,\r\n  \"available\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -310,7 +349,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffers/4a92dd62-b428-485e-b68c-c7f460350410",
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
 							"host": [
 								"{{HOST}}"
 							],
@@ -318,7 +357,7 @@
 								"api",
 								"v1",
 								"traileroffers",
-								"4a92dd62-b428-485e-b68c-c7f460350410"
+								"{id}"
 							]
 						}
 					},
