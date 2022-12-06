@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.service;
 
+import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -25,6 +26,7 @@ public class TrailerOfferService {
     private final TrailerOfferRepository trailerOfferRepository;
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
+    private final ContactExchangeEmailService contactExchangeEmailService;
 
     public TrailerOffer getTrailerOffer(UUID id) throws TrailerOfferNotFoundException {
         return trailerOfferRepository.findById(id).orElseThrow(TrailerOfferNotFoundException::new);
@@ -42,8 +44,7 @@ public class TrailerOfferService {
         trailerOffer.setTrailerType(trailerType);
         trailerOffer.setOwner(customer);
 
-        trailerOfferRepository.save(trailerOffer);
-        return trailerOffer;
+        return trailerOfferRepository.save(trailerOffer);
     }
 
     public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
@@ -53,6 +54,9 @@ public class TrailerOfferService {
         TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         newTrailerOffer.setId(trailerId);
         newTrailerOffer.setTrailerType(trailerType);
+        newTrailerOffer.setOwner(trailerOffer.getOwner());
+        newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
+
         trailerOfferRepository.save(newTrailerOffer);
     }
 
