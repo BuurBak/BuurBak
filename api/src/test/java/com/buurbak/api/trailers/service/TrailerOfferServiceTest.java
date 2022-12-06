@@ -151,7 +151,7 @@ class TrailerOfferServiceTest {
 
         when(trailerOfferRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldTrailerOffer));
 
-        trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO, oldTrailerOffer.getOwner().getUsername());
+        trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO);
 
         ArgumentCaptor<TrailerOffer> trailerOfferArgumentCaptor = ArgumentCaptor.forClass(TrailerOffer.class);
 

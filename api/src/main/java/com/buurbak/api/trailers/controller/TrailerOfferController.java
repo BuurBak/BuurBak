@@ -89,9 +89,9 @@ public class TrailerOfferController {
     })
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
+    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO) {
         try {
-            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO, authentication.getName());
+            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
         } catch (TrailerOfferNotFoundException exception) {

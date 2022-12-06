@@ -63,9 +63,8 @@ public class TrailerOfferService {
         return trailerOfferRepository.save(trailerOffer);
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
-        Customer customer = customerService.findByUsername(username);
 
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
@@ -74,7 +73,7 @@ public class TrailerOfferService {
         newTrailerOffer.setTrailerType(trailerType);
         newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
 
-        newTrailerOffer.setOwner(customer);
+        newTrailerOffer.setOwner(trailerOffer.getOwner());
         trailerOfferRepository.save(newTrailerOffer);
     }
 
