@@ -1,0 +1,82 @@
+.previewContainer {
+    position: fixed;
+    width: 50%;
+    height: 300px;
+    background-color: white;
+    z-index: 98;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 10px;
+}
+
+.previewHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    box-sizing: border-box;
+    padding: 12px 25px;
+    color: var(--text) !important;
+    border-bottom: 1px solid var(--border);
+}
+
+.previewHeader>p {
+    font-weight: var(--bold);
+}
+
+.previewContent {
+    width: 100%;
+    height: fit-content;
+    min-height: 50px;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    border-radius: 0 0 10px 10px;
+}
+
+.previewImg {
+    width: 44%;
+    height: 350px;
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+
+.previewTrailerInfo {
+    flex: 1;
+    margin-left: 4%;
+    height: 200px;
+}
+
+.previewTrailerInfo>p {
+    font-size: 22px;
+    font-weight: var(--semibold);
+}
+
+.previewTrailerOwner {
+    display: flex;
+}
+
+.previewTrailerOwner {
+    display: flex;
+    margin-top: 30px;
+}
+
+.avatar {
+    width: 52px;
+    height: 52px;
+}
+
+.previewTrailerOwner>div>p:nth-child(1) {
+    font-size: 18px;
+    font-weight: var(--medium);
+}
+
+.previewTrailerOwner>div>p:nth-child(2) {
+    font-size: 14px;
+    max-width: 80%;
+    margin-top: 5px;
+    font-weight: var(--medium);
+}

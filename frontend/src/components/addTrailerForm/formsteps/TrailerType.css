@@ -1,0 +1,387 @@
+.formStepContainer {
+    display: flex;
+    flex-direction: column;
+    animation: slide-in 1s ease;
+    position: relative;
+    margin: auto;
+    max-width: 36%;
+    box-sizing: border-box;
+}
+
+.formStepContainer>h2 {
+    margin: 0px;
+    font-size: 30px;
+    color: var(--text);
+    font-weight: var(--bold);
+}
+
+.formStepContainer>p {
+    margin: 15px 0 40px 0;
+    color: #808080;
+    font-size: 17px;
+}
+
+.trailerTypeGrid {
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    justify-content: space-between;
+    column-gap: 4px;
+    row-gap: 20px;
+}
+
+.trailerTypeIcon,
+.trailerTypeIconLast,
+.trailerTypeIconActive,
+.customTrailerActive {
+    width: 98%;
+    min-height: 110px;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center;
+    justify-content: center; */
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: 0.2s ease;
+    position: relative;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.customTrailerActive {
+    background-color: var(--primary);
+    color: white;
+    font-weight: var(--medium);
+    cursor: pointer;
+    border: none;
+}
+
+.trailerTypeIconActive {
+    border: 1.8px solid var(--text);
+    color: var(--text) !important;
+}
+
+.trailerTypeIcon:hover {
+    cursor: pointer;
+    border: 1.8px solid var(--text);
+    transition: 0.2s ease;
+}
+
+.trailerTypeIcon>p,
+.trailerTypeIconActive>p {
+    text-align: left;
+    font-size: 14px;
+    font-weight: normal;
+    max-width: 80%;
+    margin-top: 10px;
+}
+
+.trailerTypeIconActive>p {
+    color: var(--text);
+}
+
+.trailerTypeIconLast {
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.trailerTypeIconLast>p {
+    text-align: left;
+    font-size: 14px;
+    font-weight: var(--medium);
+    max-width: 80%;
+    margin-top: 10px;
+    color: var(--primary);
+}
+
+.iconImage {
+    width: 50px;
+    height: 50px;
+    background-image: url(../../../data/svg/icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.infoIcon {
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
+    padding: 5px !important;
+    font-size: 18px !important;
+    color: var(--primary) !important;
+}
+
+.trailerInfoContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 98;
+    background-color: none;
+}
+
+.trailerTypeInfoContainer {
+    max-width: 20%;
+    width: fit-content;
+    height: fit-content;
+    min-height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 15px 15px 25px 15px;
+    display: flex;
+    flex-direction: column;
+    animation: slide 0.3s ease;
+    z-index: 98;
+}
+
+.trailerTypeInfoImage {
+    width: 100%;
+    height: 190px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+}
+
+.trailerTypeInfoContainer>p {
+    font-weight: var(--bold);
+    font-size: 14px;
+    margin-top: 15px;
+    color: var(--primary);
+}
+
+.trailerTypeInfoContainer>p:nth-child(3) {
+    font-weight: var(--medium);
+    margin-top: 8px;
+    color: var(--text);
+}
+
+.closeBtn {
+    margin: 10px auto 0 auto;
+    color: var(--primary);
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: var(--medium);
+}
+
+.closeBtn:hover {
+    font-weight: var(--semibold);
+}
+
+.backgroundBlur {
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    background-color: black;
+    opacity: 0.5;
+    animation: appear 0.3s ease;
+    z-index: 98;
+}
+
+@keyframes slide-in {
+    0% {
+        top: -50px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 0px;
+        opacity: 1;
+    }
+}
+
+.addCustomTrailerContainer {
+    max-width: 20%;
+    width: fit-content;
+    height: fit-content;
+    min-height: 300px;
+    border-radius: 10px;
+    background-color: var(--background);
+    z-index: 99;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.addTrailerImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.addTrailerContent {
+    width: 100%;
+    height: fit-content;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-sizing: border-box;
+    padding: 16px 20px 22px 20px;
+    font-size: 17px;
+    font-weight: var(--semibold);
+    display: flex;
+    flex-direction: column;
+}
+
+.closePopup {
+    position: absolute !important;
+    top: 10px;
+    right: 10px;
+    color: var(--text) !important;
+}
+
+.addTrailerContent>p:nth-child(3) {
+    font-size: 14px;
+    color: var(--subheader);
+    font-weight: normal;
+    margin-top: 6px;
+}
+
+.customTrailerInput {
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 0 12px;
+    outline: none;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: var(--medium);
+}
+
+.customTrailerInput::placeholder {
+    color: black;
+    font-weight: var(--medium);
+    font-size: 14px;
+}
+
+.customTrailerInput:focus,
+.customTrailerInput:active {
+    border: 1.8px solid var(--text);
+}
+
+.saveCustomTrailer {
+    padding: 11px 28px;
+    background-color: var(--primary);
+    border-radius: 5px;
+    color: white;
+    margin: 20px auto 0 auto;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1500px) {
+    .formStepContainer {
+        max-width: 50%;
+    }
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 26% !important;
+    }
+}
+
+@media (max-width: 1160px) {
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 30% !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .formStepContainer {
+        max-width: 60%;
+    }
+
+    .formStepContainer>h2 {
+        font-size: 26px !important;
+    }
+
+    .formStepContainer>p {
+        font-size: 16px !important;
+        margin-top: 6px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        width: 100% !important;
+    }
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 44% !important;
+    }
+}
+
+@media (max-width: 750px) {
+    .formStepContainer {
+        max-width: 80%;
+    }
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 50% !important;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 60% !important;
+    }
+}
+
+@media (max-width: 510px) {
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 70% !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .formStepContainer {
+        max-width: 88%;
+    }
+
+    .formStepContainer>p {
+        font-size: 15px !important;
+        margin-top: 10px !important;
+        max-width: 90%;
+    }
+
+    .trailerTypeInfoContainer,
+    .addCustomTrailerContainer {
+        max-width: 80% !important;
+    }
+
+    .formStepContainer {
+        margin-top: 0px;
+    }
+}
+
+@media (max-width: 60em) {
+    .trailerTypeGrid {
+        grid-template-columns: 50% 50%;
+        column-gap: 6px;
+        row-gap: 10px;
+        padding-bottom: 50px;
+    }
+}

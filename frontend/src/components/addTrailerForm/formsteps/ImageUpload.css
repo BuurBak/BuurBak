@@ -1,0 +1,89 @@
+.imageUploadContainer,
+.imageUploadContainerSmall {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dotted var(--subheader);
+    border-radius: 5px;
+    position: relative;
+}
+
+.imageUploadContainerSmall {
+    height: 190px;
+}
+
+.imageUploadContainerSmall:nth-child(2) {
+    margin-top: 18px;
+}
+
+.imageUploadContainer>p:nth-child(2) {
+    font-size: 22px;
+    font-weight: var(--medium);
+    margin-top: 15px;
+}
+
+.imageUploadContainerSmall>p:nth-child(2) {
+    font-size: 14px;
+    margin-top: 12px;
+    font-weight: var(--semibold);
+}
+
+.imageUploadContainer>p:nth-child(3) {
+    margin-top: 5px;
+}
+
+.uploadBtn {
+    margin-top: 80px;
+    font-weight: var(--semibold);
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.imageUploadGrid {
+    display: grid;
+    grid-template-columns: 65% 32%;
+    column-gap: 3%;
+}
+
+.imageUploadFlexBox {
+    width: 100%;
+    height: fit-content;
+}
+
+.previewImages {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 5px;
+}
+
+@media (max-width: 780px) {
+    .imageUploadGrid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .imageUploadFlexBox {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        gap: 2%;
+    }
+
+    .imageUploadContainer {
+        height: 350px;
+    }
+
+    .imageUploadContainerSmall {
+        margin-top: 15px !important;
+        width: 96%;
+        height: 170px;
+    }
+}

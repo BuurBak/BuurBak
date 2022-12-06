@@ -1,0 +1,126 @@
+.formInformationContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 80px auto;
+    box-sizing: border-box;
+    padding: 0 14%;
+    background-color: white;
+}
+
+.formInformationContent {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.introductionTitle {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.introductionTitle>p:nth-child(1) {
+    font-weight: var(--semibold);
+    margin: 0px;
+}
+
+.introductionTitle>h2 {
+    margin: 15px 0 0 0;
+    font-weight: var(--semibold);
+    color: var(--primary);
+    font-size: 30px;
+    max-width: 86%;
+}
+
+.introductionTitle>p:nth-child(3) {
+    margin-top: 20px;
+    font-size: 16px;
+    max-width: 76%;
+    font-weight: var(--semibold);
+}
+
+.introductionVideo {
+    width: 92%;
+    height: 500px;
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+
+@media (max-width: 1490px) {
+    .formInformationContainer {
+        padding: 0 10%;
+    }
+}
+
+@media (max-width: 1360px) {
+    .formInformationContainer {
+        flex-direction: column;
+        margin: 0px;
+    }
+
+    .formInformationContent {
+        flex-direction: column;
+        margin: 0px;
+        padding: 0;
+        width: 60%;
+    }
+
+    .introductionVideo {
+        margin-top: 30px;
+        height: 450px;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 1120px) {
+    .formInformationContent {
+        width: 70%;
+    }
+}
+
+@media (max-width: 800px) {
+    .formInformationContent {
+        width: 78%;
+    }
+}
+
+@media (max-width: 700px) {
+    .formInformationContent {
+        width: 86%;
+    }
+
+    .introductionVideo {
+        margin-top: 30px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 600px) {
+    .formInformationContent {
+        width: 100%;
+    }
+
+    .introductionVideo {
+        margin-top: 30px;
+        height: 360px;
+    }
+}
+
+@media (max-width: 420px) {
+    .formInformationContainer {
+        padding: 0 6%;
+    }
+
+    .introductionVideo {
+        height: 320px;
+    }
+
+    .introductionTitle>p:nth-child(3) {
+        font-size: 15px;
+    }
+}

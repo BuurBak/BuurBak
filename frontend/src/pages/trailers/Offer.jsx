@@ -8,7 +8,7 @@ import OfferHeader from '../../components/trailers/offer/OfferHeader'
 import OfferResults from '../../components/trailers/offer/OfferResults.jsx'
 import TrailerCard from '../../components/trailers/trailerCard/TrailerCard.jsx'
 import Filters from '../../components/trailers/filters/Filters.jsx'
-import useAxios from '../../data/useAxios.jsx'
+import useAxios from '../../hooks/use-axios'
 
 export default function Offer() {
   const [activeTrailer, setActiveTrailer] = useState()
@@ -27,17 +27,11 @@ export default function Offer() {
     method: 'get',
     url: '/traileroffers',
   })
-  const [trailers, setTrailers] = useState([])
 
   useEffect(() => {
-    if (response !== null) {
-      setTrailers(response.content)
-    }
+    if (!response) return
+    setFilteredTrailers(response.content)
   }, [response])
-
-  useEffect(() => {
-    setFilteredTrailers(trailers)
-  }, [trailers])
 
   useEffect(() => {
     let filterTrailers = filteredTrailers
@@ -67,7 +61,8 @@ export default function Offer() {
     setFilteredTrailers(filterTrailers)
   }, [sortType])
 
-  if (!filteredTrailers) return error
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{error}</p>
 
   return (
     <div style={{ display: 'flex' }}>
@@ -75,7 +70,7 @@ export default function Offer() {
       <div style={{ width: '43%' }}>
         <OfferHeader
           setShowFilters={setShowFilters}
-          trailers={trailers}
+          trailers={response.content}
           filteredTrailers={filteredTrailers}
           setFilteredTrailers={setFilteredTrailers}
           setSortType={setSortType}

@@ -1,5 +1,4 @@
 import * as icons from 'react-icons/tb'
-import { PlateauIcon } from '../../components/constants/icons/Icons.jsx'
 
 export const TrailerTypes = [
   {

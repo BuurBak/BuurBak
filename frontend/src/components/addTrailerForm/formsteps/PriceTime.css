@@ -1,0 +1,207 @@
+.priceDetailsContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.priceSelectContainer {
+    width: 44%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.priceSelectContainer>b {
+    font-size: 15px;
+}
+
+.priceSelectContainer>p:nth-child(2) {
+    color: var(--subheader);
+    font-size: 14px;
+    font-weight: var(--medium);
+    margin-top: 6px;
+}
+
+.priceSelectContainer>p:nth-child(3) {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: var(--medium);
+    color: var(--primary);
+}
+
+.priceSelectContainer>p:nth-child(4) {
+    font-size: 14px;
+    color: var(--subheader);
+    font-weight: var(--medium);
+    margin-top: 2px;
+}
+
+.priceActions {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.priceAction {
+    background-color: var(--primary);
+    width: 46%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+}
+
+.priceCompareContainer {
+    width: 56%;
+    margin-left: 2%;
+    height: 100%;
+    background-color: var(--border);
+    border-radius: 10px;
+}
+
+.trailerFormPickup {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px !important;
+}
+
+.formStepContainer>b {
+    margin: 20px 0 0 0;
+    font-size: 15px;
+    color: var(--text);
+}
+
+.dateSelectItem,
+.dateSelectItemActive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-weight: var(--semibold);
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    background-color: var(--white);
+}
+
+.dateSelectItemActive {
+    border: 1.5px solid var(--text);
+}
+
+.dateSelectItem:hover {
+    border: 1.5px solid var(--text);
+    transition: 0.2s ease;
+}
+
+.trailerFormTimePicker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.pickUpTimeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.timeSelectItem {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 48%;
+    height: 100%;
+}
+
+.timeSelectItem>p {
+    font-weight: var(--bold);
+    font-size: 14px;
+}
+
+.startTime {
+    width: 44%;
+}
+
+.smallDivider {
+    width: 10px;
+    height: 1.5px;
+    background-color: var(--text);
+}
+
+.timeSelectItemContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1140px) {
+    .priceDetailsContainer {
+        flex-direction: column;
+        min-height: fit-content;
+    }
+
+    .priceCompareContainer {
+        width: 100%;
+        height: 260px;
+        margin: 20px 0 0 0;
+    }
+
+    .priceSelectContainer {
+        width: 100%;
+    }
+
+    .trailerFormPickup {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .timeSelectItemContent {
+        flex-direction: column;
+        margin-top: auto;
+    }
+
+    .smallDivider {
+        display: none;
+    }
+
+    .startTime {
+        width: 100%;
+    }
+
+    .startTime {
+        margin-top: 25px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .trailerFormPickup {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 420px) {
+    .trailerFormTimePicker {
+        margin-bottom: 80px;
+    }
+}

@@ -1,0 +1,55 @@
+.trailerFormHeaderContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 90px;
+    background-color: var(--background);
+    z-index: 91;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 50px;
+    justify-content: space-between;
+}
+
+.saveFormProgress {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background-color: var(--background);
+    font-size: 14px;
+    font-weight: var(--semibold);
+    transition: 0.3s ease;
+}
+
+.saveFormProgress:hover {
+    border: 1px solid var(--primary);
+    transition: 0.3s ease;
+}
+
+.progressBar {
+    width: 55%;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1500px) {
+    .progressBar {
+        display: none;
+    }
+}
+
+
+@media (max-width: 750px) {
+    .trailerFormHeaderContainer {
+        padding: 14px 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .trailerFormHeaderContainer {
+        padding: 14px 15px;
+        height: 80px;
+    }
+}
