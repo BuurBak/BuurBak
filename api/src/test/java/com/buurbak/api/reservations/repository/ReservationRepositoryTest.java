@@ -41,16 +41,15 @@ public class ReservationRepositoryTest {
         trailerTypeRepository.deleteAll();
     }
 
-    @Test
     @Disabled
-    //TODO remove error from test
-    public void findAllByRenterId() {
+    @Test
+    //TODO Fix the error in the test
+    public void shouldFindAllByTrailerOwnerId() {
         // Given
         EasyRandom easyRandom = new EasyRandom();
 
         Customer customer = easyRandom.nextObject(Customer.class);
         customer = customerRepository.save(customer);
-        UUID id = customer.getId();
 
         TrailerOffer trailerOffer = easyRandom.nextObject(TrailerOffer.class);
         trailerTypeRepository.save(trailerOffer.getTrailerType());
@@ -71,8 +70,7 @@ public class ReservationRepositoryTest {
 
         // When
         Page<Reservation> foundReservation = reservationRepository.findAll(pageable);
-        Page<Reservation> foundReservations = reservationRepository.findAllByRenterId(id, pageable);
-
+        Page<Reservation> foundReservations = reservationRepository.findAllByTrailerOwnerId(trailerOffer.getOwner().getId(), pageable);
 
         // Then
         assertFalse(foundReservations.getContent().isEmpty());
@@ -80,13 +78,13 @@ public class ReservationRepositoryTest {
     }
 
     @Test
-    public void findNoneByRenterId() {
+    public void shouldfindNoneByTrailerOwnerId() {
         // Given
         Pageable pageable = PageRequest.of(0, 20);
         UUID id = UUID.randomUUID();
 
         // When
-        Page<Reservation> foundReservations = reservationRepository.findAllByRenterId(id, pageable);
+        Page<Reservation> foundReservations = reservationRepository.findAllByTrailerOwnerId(id, pageable);
 
         // Then
         assertTrue(foundReservations.getContent().isEmpty());
