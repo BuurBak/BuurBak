@@ -108,8 +108,6 @@ class TrailerOfferServiceTest {
 
 	@Test
 	void addTrailerOffer() {
-        log.info("Poop" + System.getenv("DATABASE_USERNAME"));
-
 		EasyRandom easyRandom = new EasyRandom();
 		CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 
@@ -140,6 +138,9 @@ class TrailerOfferServiceTest {
 		        .hasFieldOrPropertyWithValue("available", trailerOfferDTO.isAvailable())
 		        .hasFieldOrProperty("createdAt")
 		        .hasFieldOrProperty("updatedAt");
+
+        assertNotEquals(trailerOfferDTO.getLatitude(), capturedTrailerOffer.getFakeLatitude());
+        assertNotEquals(trailerOfferDTO.getLongitude(), capturedTrailerOffer.getFakeLongitude());
 	}
 
 	@Test
@@ -177,5 +178,8 @@ class TrailerOfferServiceTest {
                 .hasFieldOrPropertyWithValue("available", newTrailerOfferDTO.isAvailable())
                 .hasFieldOrProperty("createdAt")
                 .hasFieldOrProperty("updatedAt");
+
+        assertNotEquals(newTrailerOfferDTO.getLatitude(), capturedTrailerOffer.getFakeLatitude());
+        assertNotEquals(newTrailerOfferDTO.getLongitude(), capturedTrailerOffer.getFakeLongitude());
     }
 }
