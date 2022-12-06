@@ -1,11 +1,13 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.randomData.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.jeasy.random.annotation.Randomizer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,21 +31,21 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
+    @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
     private int length;
+    @Column(nullable = false)
     private int height;
-    private int width;
-    private int weight;
-    private int capacity;
-    @Column(columnDefinition = "text")
-    private String licensePlateNumber;
-    private LocalTime pickUpTimeStart;
-    private LocalTime pickUpTimeEnd;
-    private LocalTime dropOffTimeStart;
-    private LocalTime dropOffTimeEnd;
-    @Column(columnDefinition = "text")
-    private String location;
-    private double price;
-    private boolean available;
+    @Column(nullable = false) private int width;
+    @Column(nullable = false) private int weight;
+    @Column(nullable = false) private int capacity;
+    @Column(columnDefinition = "text", nullable = false)  private String licensePlateNumber;
+    @Column(nullable = false) private LocalTime pickUpTimeStart;
+    @Column(nullable = false) private LocalTime pickUpTimeEnd;
+    @Column(nullable = false) private LocalTime dropOffTimeStart;
+    @Column(nullable = false) private LocalTime dropOffTimeEnd;
+    @Column(columnDefinition = "text", nullable = false) private String location;
+    @Column(nullable = false) private double price;
+    @Column(nullable = false) private boolean available;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
