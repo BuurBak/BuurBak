@@ -25,17 +25,22 @@ export default function TrailerProfile() {
   return (
     <Container maxWidth="lg">
       <Stack gap={5} paddingTop={5}>
-        {/*<TrailerImages images={images} />*/}
-        <TrailerHeader trailerOffer={trailerOffer} />
+        {/*<TrailerHeader trailerOffer={trailerOffer} />*/}
         <Grid container>
           <Grid item xs={0} md={7}>
             <Divider />
           </Grid>
-          <Grid xs={0} md={1} />
+          <Grid item xs={0} md={1} />
 
           <Grid item xs={12} md={4}>
-            <TrailerOwner trailerOffer={trailerOffer} />
-            <ReservationForm trailerOffer={trailerOffer} />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TrailerOwner trailerOffer={trailerOffer} />
+              </Grid>
+              <Grid item xs={12}>
+                <ReservationForm trailerOffer={trailerOffer} />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Stack>
