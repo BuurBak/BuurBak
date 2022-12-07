@@ -3,11 +3,10 @@ import useAxios from '../../hooks/use-axios'
 import { TrailerOffer } from '../../types/TrailerOffer'
 import Loading from '../../components/util/Loading'
 import { Alert, Container, Divider, Grid, Stack } from '@mui/material'
-import { Image } from '../../types/Image'
-import TrailerImages from '../../components/trailers/trailerProfile/TrailerImages'
 import React from 'react'
 import TrailerHeader from '../../components/trailers/trailerProfile/TrailerHeader'
 import TrailerOwner from '../../components/trailers/trailerProfile/TrailerOwner'
+import ReservationForm from '../../components/trailers/reservation/ReservationForm'
 
 export default function TrailerProfile() {
   const { id } = useParams()
@@ -20,44 +19,23 @@ export default function TrailerProfile() {
     method: 'get',
   })
 
-  const images: Image[] = [
-    {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mallard2.jpg/640px-Mallard2.jpg',
-      title: 'duck',
-    },
-    {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mallard2.jpg/640px-Mallard2.jpg',
-      title: 'duck',
-    },
-    {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mallard2.jpg/640px-Mallard2.jpg',
-      title: 'duck',
-    },
-    {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mallard2.jpg/640px-Mallard2.jpg',
-      title: 'duck',
-    },
-    {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mallard2.jpg/640px-Mallard2.jpg',
-      title: 'duck',
-    },
-  ]
-
   if (loading) return <Loading />
   if (error) return <Alert severity="error">{error.message}</Alert>
 
   return (
     <Container maxWidth="lg">
-      <Stack gap={5}>
-        <TrailerImages images={images} />
+      <Stack gap={5} paddingTop={5}>
+        {/*<TrailerImages images={images} />*/}
         <TrailerHeader trailerOffer={trailerOffer} />
         <Grid container>
-          <Grid item xs={7}>
+          <Grid item xs={0} md={7}>
             <Divider />
           </Grid>
-          <Grid xs={1} />
-          <Grid item xs={4}>
+          <Grid xs={0} md={1} />
+
+          <Grid item xs={12} md={4}>
             <TrailerOwner trailerOffer={trailerOffer} />
+            <ReservationForm trailerOffer={trailerOffer} />
           </Grid>
         </Grid>
       </Stack>

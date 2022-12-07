@@ -13,7 +13,7 @@ export default function useAxios<T>(axiosParams: AxiosRequestConfig) {
 
   const fetchData = async (params: AxiosRequestConfig) => {
     try {
-      await delay(3000)
+      // await delay(3000)
       const result = await instance.request<T>(params)
       setResponse(result.data)
     } catch (error) {
