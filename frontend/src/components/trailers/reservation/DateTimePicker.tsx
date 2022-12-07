@@ -1,7 +1,16 @@
-import { MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
-import { DesktopDatePicker } from '@mui/x-date-pickers'
-import React, { useState } from 'react'
+import {
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { DesktopDatePicker, MobileDatePicker } from '@mui/x-date-pickers'
+import React from 'react'
 import { DateTime } from 'luxon'
+
 const options = [
   '00:00',
   '00:30',
@@ -65,21 +74,37 @@ export default function DateTimePicker({
   minDate,
   onChange,
 }: DateTimePickerProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
+
   return (
     <>
       <Typography variant="h5">{title}</Typography>
       <Stack direction="row" gap={2}>
-        <DesktopDatePicker
-          label="Datum"
-          inputFormat="dd/MM/yyyy"
-          value={value}
-          minDate={minDate}
-          onChange={onChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
+        {isMobile ? (
+          <MobileDatePicker
+            label="Datum"
+            inputFormat="dd/MM/yyyy"
+            value={value}
+            minDate={minDate}
+            onChange={onChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        ) : (
+          <DesktopDatePicker
+            label="Datum"
+            inputFormat="dd/MM/yyyy"
+            value={value}
+            minDate={minDate}
+            onChange={onChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        )}
         <Select defaultValue={options[0]}>
           {options.map((option) => (
-            <MenuItem value={option}>{option}</MenuItem>
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
           ))}
         </Select>
       </Stack>
