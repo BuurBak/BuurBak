@@ -75,7 +75,7 @@ export default function DateTimePicker({
   onChange,
 }: DateTimePickerProps) {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <>
