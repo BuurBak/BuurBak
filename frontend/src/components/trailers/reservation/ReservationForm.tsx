@@ -1,18 +1,7 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Card, CardContent, Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { TrailerOffer } from '../../../types/TrailerOffer'
-import { DesktopDatePicker } from '@mui/x-date-pickers'
 import { DateTime } from 'luxon'
-import NativeSelect from '@mui/material/NativeSelect'
 import DateTimePicker from './DateTimePicker'
 
 export default function ReservationForm(props: { trailerOffer: TrailerOffer }) {
