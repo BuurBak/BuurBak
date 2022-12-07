@@ -9,6 +9,13 @@ export default function ReservationForm(props: { trailerOffer: TrailerOffer }) {
   const [fromDate, setFromDate] = useState(now)
   const [toDate, setToDate] = useState(now)
 
+  const handleSetFromDate = (newValue: DateTime) => {
+    if (toDate < newValue) {
+      setToDate(newValue)
+    }
+    setFromDate(newValue)
+  }
+
   return (
     <Card variant="outlined">
       <CardContent>
@@ -17,7 +24,7 @@ export default function ReservationForm(props: { trailerOffer: TrailerOffer }) {
             title={'Van'}
             value={fromDate}
             minDate={now}
-            onChange={(newValue) => setFromDate(newValue)}
+            onChange={handleSetFromDate}
           />
           <DateTimePicker
             title={'Tot'}
