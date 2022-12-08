@@ -88,7 +88,7 @@ export default function DateTimePicker({
             value={value}
             minDate={minDate}
             onChange={onChange}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => <TextField fullWidth {...params} />}
           />
         ) : (
           <DesktopDatePicker
@@ -97,7 +97,7 @@ export default function DateTimePicker({
             value={value}
             minDate={minDate}
             onChange={onChange}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => <TextField fullWidth {...params} />}
           />
         )}
         <Select defaultValue={options[0]}>
