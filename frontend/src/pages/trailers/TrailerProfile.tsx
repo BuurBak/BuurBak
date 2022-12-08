@@ -25,7 +25,7 @@ export default function TrailerProfile() {
   return (
     <Container maxWidth="lg">
       <Stack gap={5} paddingTop={5}>
-        {/*<TrailerHeader trailerOffer={trailerOffer} />*/}
+        <TrailerHeader trailerOffer={trailerOffer} />
         <Grid container>
           <Grid item xs={0} md={7}>
             <Divider />
