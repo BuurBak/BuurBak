@@ -8,28 +8,66 @@ interface TrailerHeaderProps {
 }
 export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
   return (
-    <Stack direction={'row'} justifyContent="space-between">
-      <Stack>
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Stack maxWidth="100%">
         <Typography variant="h4" color="primary">
           {trailerOffer.trailerType.name}
         </Typography>
-        <Stack direction="row" gap={2} display="flex" alignItems="center">
-          <Typography display="flex" alignItems="center">
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            gap: 1,
+          }}
+        >
+          <Typography
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             <TbStar /> rating
           </Typography>
 
-          <Divider variant="middle" flexItem orientation="vertical" />
+          {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
 
-          <Typography display="flex" alignItems="center">
+          <Typography
+            sx={{
+              display: 'flex',
+              whiteSpace: 'nowrap',
+              alignItems: 'center',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             <TbCurrencyEuro /> {trailerOffer.price}
           </Typography>
 
-          <Divider variant="middle" flexItem orientation="vertical" />
+          {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
 
-          <Typography display="flex" alignItems="center">
+          <Typography
+            sx={{
+              display: 'flex',
+              whiteSpace: 'nowrap',
+              alignItems: 'center',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              width: 'initial',
+            }}
+          >
             <TbMapPin /> {trailerOffer.location}
           </Typography>
-        </Stack>
+        </Box>
       </Stack>
       <Box
         bgcolor="primary.main"
@@ -48,6 +86,6 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
           <TbCurrencyEuro /> {trailerOffer.price}
         </Typography>
       </Box>
-    </Stack>
+    </Box>
   )
 }
