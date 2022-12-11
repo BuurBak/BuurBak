@@ -87,4 +87,28 @@ public class ReservationController {
         }
 
     }
+
+    @PutMapping(path = "/{id}/confirm")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void confirmReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
+        try {
+            reservationService.confirmReservation(id, reservationDTO);
+        } catch (ReservationNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
+        } catch (TrailerOfferNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
+        }
+    }
+
+    @PutMapping(path = "/{id}/deny")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void denyReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
+        try {
+            reservationService.denyReservation(id, reservationDTO);
+        } catch (ReservationNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
+        } catch (TrailerOfferNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
+        }
+    }
 }

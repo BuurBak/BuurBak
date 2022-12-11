@@ -59,4 +59,12 @@ public class ReservationService {
 
         reservationRepository.deleteById(reservationId);
     }
+
+    public void confirmReservation(UUID id, ReservationDTO reservationDTO) {
+        Reservation reservation = getReservation(id);
+
+    }
+
+    public void denyReservation(UUID id, ReservationDTO reservationDTO) {
+    }
 }
