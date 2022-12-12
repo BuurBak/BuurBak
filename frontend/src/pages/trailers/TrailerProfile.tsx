@@ -34,10 +34,10 @@ export default function TrailerProfile() {
 
           <Grid item xs={12} md={4}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} order={{ xs: 2, md: 1 }}>
                 <TrailerOwner trailerOffer={trailerOffer} />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} order={{ xs: 1, md: 2 }}>
                 <ReservationForm trailerOffer={trailerOffer} />
               </Grid>
             </Grid>

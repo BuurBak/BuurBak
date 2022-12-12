@@ -1,12 +1,16 @@
 import { TrailerOffer } from '../../../types/TrailerOffer'
-import { Box, Divider, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { TbCurrencyEuro, TbMapPin, TbStar } from 'react-icons/tb'
 import React from 'react'
+import UnderTextHeader from './UnderTextHeader'
+import useMediumBreakpoint from '../../../hooks/use-medium-breakpoint'
 
 interface TrailerHeaderProps {
   trailerOffer: TrailerOffer
 }
 export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
+  const matches = useMediumBreakpoint()
+
   return (
     <Box
       sx={{
@@ -27,46 +31,23 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
             gap: 1,
           }}
         >
-          <Typography
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
+          <UnderTextHeader>
             <TbStar /> rating
-          </Typography>
+          </UnderTextHeader>
 
           {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
 
-          <Typography
-            sx={{
-              display: 'flex',
-              whiteSpace: 'nowrap',
-              alignItems: 'center',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            <TbCurrencyEuro /> {trailerOffer.price}
-          </Typography>
+          {matches ? (
+            <UnderTextHeader>
+              <TbCurrencyEuro /> {trailerOffer.price}
+            </UnderTextHeader>
+          ) : null}
 
           {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
 
-          <Typography
-            sx={{
-              display: 'flex',
-              whiteSpace: 'nowrap',
-              alignItems: 'center',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              width: 'initial',
-            }}
-          >
+          <UnderTextHeader>
             <TbMapPin /> {trailerOffer.location}
-          </Typography>
+          </UnderTextHeader>
         </Box>
       </Stack>
       <Box
@@ -77,14 +58,9 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
         p={2}
         sx={{ borderRadius: 4 }}
       >
-        <Typography
-          variant="button"
-          color="white"
-          display="flex"
-          alignItems="center"
-        >
+        <UnderTextHeader sx={{ color: 'primary.contrastText' }}>
           <TbCurrencyEuro /> {trailerOffer.price}
-        </Typography>
+        </UnderTextHeader>
       </Box>
     </Box>
   )
