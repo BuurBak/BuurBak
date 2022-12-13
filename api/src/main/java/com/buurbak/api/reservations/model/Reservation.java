@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Reservation {
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.EAGER)

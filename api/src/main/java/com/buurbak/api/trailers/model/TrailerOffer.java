@@ -1,13 +1,11 @@
 package com.buurbak.api.trailers.model;
 
-import com.buurbak.api.randomData.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.jeasy.random.annotation.Randomizer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +19,7 @@ import java.util.UUID;
 public class TrailerOffer {
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -31,7 +30,7 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
-    @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
+    @Column(nullable = false)
     private int length;
     @Column(nullable = false)
     private int height;
