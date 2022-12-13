@@ -64,7 +64,7 @@ public class TrailerOfferService {
         return trailerOfferRepository.save(trailerOffer);
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException, AccessDeniedExeption {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws AccessDeniedExeption, TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
         Customer customer = customerService.findByUsername(username);
         if(customer.getId() == trailerOffer.getOwner().getId()) {

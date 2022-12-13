@@ -1,6 +1,7 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.users.service.CustomerService;
@@ -143,15 +144,16 @@ class TrailerOfferServiceTest {
         assertNotEquals(trailerOfferDTO.getLongitude(), capturedTrailerOffer.getFakeLongitude());
 	}
 
-	@Test
-    void updateTrailerOffer() {
+    @Test
+    void updateTrailerOffer() throws AccessDeniedExeption {
         EasyRandom easyRandom = new EasyRandom();
         TrailerOffer oldTrailerOffer = easyRandom.nextObject(TrailerOffer.class);
         CreateTrailerOfferDTO newTrailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
 
         when(trailerOfferRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldTrailerOffer));
+        when(customerService.findByUsername(any())).thenReturn(oldTrailerOffer.getOwner());
 
-        trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO);
+        trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO, oldTrailerOffer.getOwner().getUsername());
 
         ArgumentCaptor<TrailerOffer> trailerOfferArgumentCaptor = ArgumentCaptor.forClass(TrailerOffer.class);
 
