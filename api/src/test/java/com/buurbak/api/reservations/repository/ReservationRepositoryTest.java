@@ -8,13 +8,13 @@ import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class ReservationRepositoryTest {
     @Autowired
     private ReservationRepository reservationRepository;
@@ -41,9 +42,7 @@ public class ReservationRepositoryTest {
         trailerTypeRepository.deleteAll();
     }
 
-    @Disabled
     @Test
-    //TODO Fix the error in the test
     public void shouldFindAllByTrailerOwnerId() {
         // Given
         EasyRandom easyRandom = new EasyRandom();
@@ -69,7 +68,6 @@ public class ReservationRepositoryTest {
         Pageable pageable = PageRequest.of(0, 20);
 
         // When
-        Page<Reservation> foundReservation = reservationRepository.findAll(pageable);
         Page<Reservation> foundReservations = reservationRepository.findAllByTrailerOwnerId(trailerOffer.getOwner().getId(), pageable);
 
         // Then

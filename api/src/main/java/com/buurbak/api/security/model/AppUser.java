@@ -22,6 +22,7 @@ import java.util.UUID;
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @Column(columnDefinition = "text", nullable = false)
