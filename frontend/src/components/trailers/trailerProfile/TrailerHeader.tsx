@@ -50,18 +50,20 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
           </UnderTextHeader>
         </Box>
       </Stack>
-      <Box
-        bgcolor="primary.main"
-        alignItems="center"
-        justifyContent="center"
-        display="flex"
-        p={2}
-        sx={{ borderRadius: 4 }}
-      >
-        <UnderTextHeader sx={{ color: 'primary.contrastText' }}>
-          <TbCurrencyEuro /> {trailerOffer.price}
-        </UnderTextHeader>
-      </Box>
+      {matches ? (
+        <Box
+          bgcolor="primary.main"
+          alignItems="center"
+          justifyContent="center"
+          display="flex"
+          p={2}
+          sx={{ borderRadius: 4 }}
+        >
+          <UnderTextHeader sx={{ color: 'primary.contrastText' }}>
+            <TbCurrencyEuro /> {trailerOffer.price}
+          </UnderTextHeader>
+        </Box>
+      ) : null}
     </Box>
   )
 }

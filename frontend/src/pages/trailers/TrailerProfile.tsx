@@ -8,8 +8,12 @@ import TrailerHeader from '../../components/trailers/trailerProfile/TrailerHeade
 import TrailerOwner from '../../components/trailers/trailerProfile/TrailerOwner'
 import ReservationForm from '../../components/trailers/reservation/ReservationForm'
 import { TrailerDescription } from '../../components/trailers/trailerProfile/TrailerDescription'
+import useMediumBreakpoint from '../../hooks/use-medium-breakpoint'
+import MobileBottomReservationBar from '../../components/trailers/trailerProfile/MobileBottomReservationBar'
 
 export default function TrailerProfile() {
+  const matches = useMediumBreakpoint()
+
   const { id } = useParams()
   const {
     response: trailerOffer,
@@ -32,16 +36,23 @@ export default function TrailerProfile() {
             <TrailerDescription trailer={trailerOffer} />
           </Grid>
           <Grid item xs={0} md={1}></Grid>
-          <Grid item xs={12} md={4}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} order={{ xs: 2, md: 1 }}>
-                <TrailerOwner trailerOffer={trailerOffer} />
-              </Grid>
-              <Grid item xs={12} order={{ xs: 1, md: 2 }}>
-                <ReservationForm trailerOffer={trailerOffer} />
+
+          {/*Sidebar for making reservations and owner*/}
+          {matches ? (
+            <Grid item xs={12} md={4}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} order={{ xs: 2, md: 1 }}>
+                  <TrailerOwner trailerOffer={trailerOffer} />
+                </Grid>
+                <Grid item xs={12} order={{ xs: 1, md: 2 }}>
+                  <ReservationForm trailerOffer={trailerOffer} />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <MobileBottomReservationBar price={trailerOffer.price} />
+          )}
+
           <Grid item xs={12} md={7}></Grid>
         </Grid>
       </Stack>
