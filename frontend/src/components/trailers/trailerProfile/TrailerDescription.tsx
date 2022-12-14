@@ -1,7 +1,7 @@
-import { Divider, Stack } from '@mui/material'
-import TrailerDimension from './TrailerDimension'
+import { Divider, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { TrailerOffer } from '../../../types/TrailerOffer'
+import { TrailerDimensions } from './TrailerDimensions'
 
 interface TrailerDescriptionI {
   trailer: TrailerOffer
@@ -11,22 +11,15 @@ export function TrailerDescription({ trailer }: TrailerDescriptionI) {
   return (
     <Stack gap={2}>
       <Divider />
-      <Stack direction="row" gap={2} justifyContent="space-around">
-        <TrailerDimension
-          measurement={`${trailer.length} meter`}
-          dimension="Lengte"
-        />
-        <Divider orientation="vertical" />
-        <TrailerDimension
-          measurement={`${trailer.width} meter`}
-          dimension="Breedte"
-        />
-        <Divider orientation="vertical" />
-        <TrailerDimension
-          measurement={`${trailer.weight} kilogram`}
-          dimension="Gewicht"
-        />
-      </Stack>
+      <TrailerDimensions
+        length={trailer.length}
+        width={trailer.width}
+        weight={trailer.weight}
+      />
+      <Typography variant="h4" color="primary.main">
+        Omschrijving
+      </Typography>
+      <Typography>{trailer.weight}</Typography>
     </Stack>
   )
 }

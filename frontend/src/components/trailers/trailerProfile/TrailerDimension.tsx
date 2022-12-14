@@ -13,16 +13,25 @@ export default function TrailerDimension({
   dimension,
 }: TrailerDimensionI) {
   return (
-    <Grid container gap={1} justifyContent="space-around">
-      <Grid item xs={4}>
+    <Grid container gap={1} alignItems="center" justifyContent="center">
+      <Grid item xs={4} textAlign="center">
         {dimension === 'Lengte' ? <TbArrowsLeftRight size={40} /> : null}
         {dimension === 'Breedte' ? <TbArrowsLeftRight size={40} /> : null}
         {dimension === 'Gewicht' ? <GiWeight size={40} /> : null}
       </Grid>
-      <Grid item xs={7}>
-        <Box display="flex" flexDirection="column">
-          <Typography variant="h6">{dimension}</Typography>
-          <Typography variant="body2">{measurement}</Typography>
+      <Grid item xs={8}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="start"
+          alignItems="center"
+        >
+          <Typography variant="h6" textAlign="center">
+            {dimension}
+          </Typography>
+          <Typography variant="body2" textAlign="center">
+            {measurement}
+          </Typography>
         </Box>
       </Grid>
     </Grid>
