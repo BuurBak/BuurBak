@@ -1,15 +1,14 @@
 package com.buurbak.api.images.model;
 
+import com.buurbak.api.trailers.model.TrailerOffer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,6 +21,11 @@ public class Image {
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(nullable = false)
+    @JsonIgnore
+    private TrailerOffer trailerOffer;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
@@ -33,6 +37,7 @@ public class Image {
     private String dirName;
     @Column(columnDefinition = "text")
     private String bucketId;
+
 
     public Image(String originalFileName, String dirName, String bucketId) {
         this.originalFileName = originalFileName;

@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.images.model.Image;
 import com.buurbak.api.randomData.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import org.jeasy.random.annotation.Randomizer;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
