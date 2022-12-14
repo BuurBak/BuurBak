@@ -58,6 +58,7 @@ public class CustomerService {
     }
 
     public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
+        // if guard
         Customer customer = getCustomer(id);
         Image image = imageService.findById(updateCustomerDTO.getProfilePicture().getId());
         Customer newCustomer = new CustomerConverter().convertUploadCustomerDTOToCustomer(updateCustomerDTO);
@@ -67,32 +68,11 @@ public class CustomerService {
         newCustomer.setCreatedAt(customer.getCreatedAt());
         newCustomer.setPassword(bCryptPasswordEncoder.encode(newCustomer.getPassword()));
 
-
-//        Address address = customer.getAddress();
-//
-//        address.setCity(updateCustomerDTO.getAddress().getCity());
-//        address.setStreetName(updateCustomerDTO.getAddress().getStreetName());
-//        address.setNumber(updateCustomerDTO.getAddress().getNumber());
-//        address.setPostalCode(updateCustomerDTO.getAddress().getPostalCode());
-//
-//        customer.setEmail(updateCustomerDTO.getEmail());
-//        customer.setName(updateCustomerDTO.getName());
-//
-//        customer.setPassword(bCryptPasswordEncoder.encode(updateCustomerDTO.getPassword()));
-//
-//        customer.setNumber(updateCustomerDTO.getNumber());
-//
-//        customer.setAddress(address);
-//
-//        customer.setDateOfBirth(updateCustomerDTO.getDateOfBirth());
-//        customer.setIban(updateCustomerDTO.getIban());
-
-        //TODO fix that adress doesnt save twice (could edit customer instead of replacing it)
         customerRepository.save(newCustomer);
 
         log.info("Customer with id " + id + " has been updated");
 
-        return customer;
+        return newCustomer;
     }
 
     public void deleteUser(UUID id) throws CustomerNotFoundException {
