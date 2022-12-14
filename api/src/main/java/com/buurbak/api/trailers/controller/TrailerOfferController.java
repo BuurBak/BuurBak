@@ -4,6 +4,7 @@ import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.ReturnTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
+import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
@@ -89,13 +90,15 @@ public class TrailerOfferController {
     })
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO) {
+    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
         try {
-            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
+            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO, authentication.getName());
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
         } catch (TrailerOfferNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        } catch (AccessDeniedExeption accessDeniedExeption) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You don't have the permissions to change this trailer");
         }
     }
 

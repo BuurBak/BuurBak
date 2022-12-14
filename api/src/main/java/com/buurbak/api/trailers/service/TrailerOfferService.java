@@ -3,6 +3,7 @@ package com.buurbak.api.trailers.service;
 import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
@@ -17,7 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
+
+import static java.lang.Math.cos;
 
 @Service
 @AllArgsConstructor
@@ -40,24 +44,44 @@ public class TrailerOfferService {
         Customer customer = customerService.findByUsername(username);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
+        double pi = Math.PI;
+        double earth = 6378.137;  //radius of the earth in kilometer
+        double m = (1 / ((2 * pi / 360) * earth)) / 1000;  //1 meter in degree
+        Random randI = new Random();
+
+        int randomExtraLatitude = randI.ints(-150, 150).findAny().getAsInt();
+        double new_latitude = createTrailerOfferDTO.getLatitude() + (randomExtraLatitude * m);
+
+        int randomExtraLongitude = randI.ints(-150, 150).findAny().getAsInt();
+        var new_longitude = createTrailerOfferDTO.getLongitude() + (randomExtraLongitude * m) / cos(createTrailerOfferDTO.getLatitude() * (pi / 180));
+
         TrailerOffer trailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
         trailerOffer.setTrailerType(trailerType);
+        trailerOffer.setFakeLatitude(new_latitude);
+        trailerOffer.setFakeLongitude(new_longitude);
         trailerOffer.setOwner(customer);
 
         return trailerOfferRepository.save(trailerOffer);
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws AccessDeniedExeption, TrailerOfferNotFoundException, TrailerTypeNotFoundException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
-        TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
+        Customer customer = customerService.findByUsername(username);
+        if(customer.getId() == trailerOffer.getOwner().getId()) {
 
-        TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
-        newTrailerOffer.setId(trailerId);
-        newTrailerOffer.setTrailerType(trailerType);
-        newTrailerOffer.setOwner(trailerOffer.getOwner());
-        newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
+            TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
-        trailerOfferRepository.save(newTrailerOffer);
+            TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
+            newTrailerOffer.setId(trailerId);
+            newTrailerOffer.setTrailerType(trailerType);
+            newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
+
+            newTrailerOffer.setOwner(trailerOffer.getOwner());
+            trailerOfferRepository.save(newTrailerOffer);
+        } else {
+            throw new AccessDeniedExeption("This user doesn't have the permissions to change the trailer");
+        }
+
     }
 
     public void deleteTrailerOffer(UUID trailerId) {

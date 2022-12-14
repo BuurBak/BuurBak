@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "13634795-6e83-4ac8-9541-8efbabe45269",
+		"_postman_id": "42ee38e9-2bd8-4b45-9926-18453c3c75ed",
 		"name": "BuurBak",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17650310"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -43,24 +42,7 @@
 				},
 				{
 					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var jsonData = pm.response.json();",
-									"",
-									"pm.collectionVariables.set(\"ACCESS_TOKEN\", jsonData[\"access_token\"]);",
-									"pm.collectionVariables.set(\"REFRESH_TOKEN\", jsonData[\"refresh_token\"]);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -121,7 +103,12 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": []
+							"urlencoded": [],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{HOST}}/api/v1/auth/refresh",
@@ -240,31 +227,35 @@
 					"response": []
 				},
 				{
-					"name": ".",
+					"name": "Get all reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"acrbvansomeren@gmail.com\",\r\n    \"password\": \"Hallo123\",\r\n    \"name\": \"Anton van Someren\",\r\n    \"number\": \"06-12345436\",\r\n    \"address\": {\r\n        \"postal_code\": \"fake postal_code\",\r\n        \"street_name\": \"fake street_name\",\r\n        \"number\": \"100\",\r\n        \"city\": \"New York\"\r\n    },\r\n    \"date_of_birth\": \"2000-01-11\",\r\n    \"iban\": \"dit-is-een-iban\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "23be93b7-e226-4895-86d8-3a0924c4e177",
+									"type": "default",
+									"disabled": true
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/v1/customers/ffad4c51-2a62-4256-95e7-60ffeef11341",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/customers/{id}/reservations",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"customers",
-								"ffad4c51-2a62-4256-95e7-60ffeef11341"
+								"{id}",
+								"reservations"
 							]
 						}
 					},
@@ -281,39 +272,47 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffers",
+							"raw": "{{HOST}}/api/v1/traileroffer",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffers"
+								"traileroffer"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": ".",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var body = pm.response.text()\r",
-									"pm.collectionVariables.set(\"TRAILEROFFER_ID\", body);"
-								],
-								"type": "text/javascript"
-							}
+					"name": "Get single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{id}"
+							]
 						}
-					],
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"length\": 300,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 650,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"07:00:00\",\r\n    \"pickUpTimeEnd\": \"08:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Small\"\r\n}",
+							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"price\": 23298472300,\r\n  \"available\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -321,27 +320,28 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffers",
+							"raw": "{{HOST}}/api/v1/traileroffers/6e325925-ce39-42a3-9993-60e5675c854a",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"traileroffers"
+								"traileroffers",
+								"6e325925-ce39-42a3-9993-60e5675c854a"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": ".",
+					"name": "Update",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"length\": 250,\r\n    \"height\": 120,\r\n    \"width\": 245,\r\n    \"weight\": 750,\r\n    \"capacity\": 1000,\r\n    \"licensePlateNumber\": \"AB-C12-34\",\r\n    \"pickUpTimeStart\": \"17:00:00\",\r\n    \"pickUpTimeEnd\": \"19:00:00\",\r\n    \"dropOffTimeStart\": \"17:00:00\",\r\n    \"dropOffTimeEnd\": \"18:00:00\",\r\n    \"location\": \"Amersfoort\",\r\n    \"price\": 20,\r\n    \"available\": true,\r\n    \"trailerType\": \"Big\"\r\n}",
+							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"latitude\": 52.084495,\r\n  \"longitude\": 5.175734,\r\n  \"price\": 100000,\r\n  \"available\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -349,7 +349,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
 							"host": [
 								"{{HOST}}"
 							],
@@ -357,36 +357,7 @@
 								"api",
 								"v1",
 								"traileroffers",
-								"{{TRAILEROFFER_ID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": ".",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"length\": 250\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{HOST}}/api/v1/traileroffers/{{TRAILEROFFER_ID}}",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"traileroffers",
-								"{{TRAILEROFFER_ID}}"
+								"{id}"
 							]
 						}
 					},
@@ -398,7 +369,7 @@
 			"name": "Images",
 			"item": [
 				{
-					"name": ".",
+					"name": "Upload images",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -442,129 +413,6 @@
 								"api",
 								"v1",
 								"images"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Reservations",
-			"item": [
-				{
-					"name": ".",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations",
-								"{{RESERVATION_ID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": ".",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var body = pm.response.text()\r",
-									"pm.collectionVariables.set(\"RESERVATION_ID\", body);"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"trailerId\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T17:00:00\",\r\n    \"endTime\": \"2023-12-03T19:00:00\",\r\n    \"confirmed\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{HOST}}/api/v1/reservations",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": ".",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"trailerId\": \"{{TRAILEROFFER_ID}}\",\r\n    \"startTime\": \"2023-12-03T07:00:00\",\r\n    \"endTime\": \"2023-12-03T08:00:00\",\r\n    \"confirmed\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations",
-								"{{RESERVATION_ID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": ".",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{HOST}}/api/v1/reservations/{{RESERVATION_ID}}",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations",
-								"{{RESERVATION_ID}}"
 							]
 						}
 					},
@@ -616,15 +464,6 @@
 			"key": "REFRESH_TOKEN",
 			"value": "",
 			"type": "default"
-		},
-		{
-			"key": "TRAILEROFFER_ID",
-			"value": ""
-		},
-		{
-			"key": "RESERVATION_ID",
-			"value": "",
-			"type": "string"
 		}
 	]
 }
