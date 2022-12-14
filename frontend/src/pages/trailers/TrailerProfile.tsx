@@ -50,7 +50,7 @@ export default function TrailerProfile() {
                   <TrailerOwner trailerOffer={trailerOffer} />
                 </Grid>
                 <Grid item xs={12} order={{ xs: 1, md: 2 }}>
-                  <ReservationForm trailerOffer={trailerOffer} />
+                  <ReservationForm />
                 </Grid>
               </Grid>
             </Grid>
