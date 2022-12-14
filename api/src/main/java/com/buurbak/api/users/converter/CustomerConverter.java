@@ -4,6 +4,7 @@ import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -43,5 +44,9 @@ public class CustomerConverter {
                 .map(this::convertReservationToReservationDTO)
                 .toList();
         return new PageImpl<>(reservationDTOList, reservationPage.getPageable(), reservationPage.getTotalElements());
+    }
+    public Customer convertUploadCustomerDTOToCustomer (UpdateCustomerDTO updateCustomerDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(updateCustomerDTO, Customer.class);
     }
 }
