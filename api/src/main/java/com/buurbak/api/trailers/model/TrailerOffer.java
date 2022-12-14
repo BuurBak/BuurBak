@@ -10,9 +10,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jeasy.random.annotation.Randomizer;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +35,10 @@ public class TrailerOffer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Customer owner;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
+    private Collection<Image> trailerOfferPictures = new ArrayList<>();
 
     @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
     private int length;
@@ -61,6 +68,7 @@ public class TrailerOffer {
                         String location, double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
+//        this.trailerOfferPictures = trailerOfferPictures;
         this.length = length;
         this.height = height;
         this.width = width;

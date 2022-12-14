@@ -21,10 +21,10 @@ public class Image {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
-    @JsonIgnore
-    private TrailerOffer trailerOffer;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(nullable = false)
+//    @JsonIgnore
+//    private TrailerOffer trailerOffer;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
