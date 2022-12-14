@@ -65,7 +65,7 @@ public class ReturnTrailerOfferDTO {
     @NotNull(message = "Longitude may not be null")
     private double fakeLongitude;
 
-    @NotBlank(message = "Location may not be blank")
+    @NotBlank(message = "Description may not be blank")
     @Size(max = 1000)
     private String description;
 
