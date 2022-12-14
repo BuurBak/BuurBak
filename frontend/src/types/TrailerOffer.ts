@@ -1,6 +1,5 @@
 import { TrailerType } from './TrailerType'
 import { User } from './User'
-import { Image } from './Image'
 
 export interface TrailerOffer {
   id: string
@@ -16,11 +15,11 @@ export interface TrailerOffer {
   pickUpTimeEnd: string
   dropOffTimeStart: string
   dropOffTimeEnd: string
-  location: string
+  fakeLatitude: number
+  fakeLongitude: number
   description: string
   price: number
   available: boolean
   createdAt: Date
   updatedAt: Date
-  images: Image[]
 }
