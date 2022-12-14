@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.model;
 
+import com.buurbak.api.users.model.Address;
 import com.buurbak.api.randomData.randomizers.TrailerDimensionRandomizer;
 import com.buurbak.api.users.model.Customer;
 import lombok.Getter;
@@ -31,6 +32,11 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
+    private Address address;
+
+
     @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
     private int length;
     @Column(nullable = false)
@@ -43,19 +49,28 @@ public class TrailerOffer {
     @Column(nullable = false) private LocalTime pickUpTimeEnd;
     @Column(nullable = false) private LocalTime dropOffTimeStart;
     @Column(nullable = false) private LocalTime dropOffTimeEnd;
-    @Column(columnDefinition = "text", nullable = false) private String location;
     @Column(columnDefinition = "text", nullable = false) private String description;
     @Column(nullable = false) private double price;
     @Column(nullable = false) private boolean available;
+    @Column(nullable = false) private double latitude;
+    @Column(nullable = false) private double longitude;
+    @Column(nullable = false) private double fakeLatitude;
+    @Column(nullable = false) private double fakeLongitude;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height, int width, int weight, int capacity, String licensePlateNumber, LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd, LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd, String location, String description, double price, boolean available) {
+    public TrailerOffer(TrailerType trailerType, Customer owner, Address address, int length, int height,
+                        int width, int weight, int capacity, String licensePlateNumber, String description,
+                        LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
+                        LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
+                        double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
+        this.address = address;
         this.length = length;
         this.height = height;
         this.width = width;
@@ -66,7 +81,6 @@ public class TrailerOffer {
         this.pickUpTimeEnd = pickUpTimeEnd;
         this.dropOffTimeStart = dropOffTimeStart;
         this.dropOffTimeEnd = dropOffTimeEnd;
-        this.location = location;
         this.description = description;
         this.price = price;
         this.available = available;
