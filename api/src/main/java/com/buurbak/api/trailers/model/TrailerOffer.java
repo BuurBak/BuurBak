@@ -44,6 +44,7 @@ public class TrailerOffer {
     @Column(nullable = false) private LocalTime dropOffTimeStart;
     @Column(nullable = false) private LocalTime dropOffTimeEnd;
     @Column(columnDefinition = "text", nullable = false) private String location;
+    @Column(columnDefinition = "text", nullable = false) private String description;
     @Column(nullable = false) private double price;
     @Column(nullable = false) private boolean available;
 
@@ -52,11 +53,7 @@ public class TrailerOffer {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
-                        int width, int weight, int capacity, String licensePlateNumber,
-                        LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
-                        LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
-                        String location, double price, boolean available) {
+    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height, int width, int weight, int capacity, String licensePlateNumber, LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd, LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd, String location, String description, double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
         this.length = length;
@@ -70,6 +67,7 @@ public class TrailerOffer {
         this.dropOffTimeStart = dropOffTimeStart;
         this.dropOffTimeEnd = dropOffTimeEnd;
         this.location = location;
+        this.description = description;
         this.price = price;
         this.available = available;
     }

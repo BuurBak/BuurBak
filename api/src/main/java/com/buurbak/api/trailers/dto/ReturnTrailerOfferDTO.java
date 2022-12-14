@@ -62,6 +62,10 @@ public class ReturnTrailerOfferDTO {
     @NotBlank(message = "Location may not be blank")
     private String location;
 
+    @NotBlank(message = "Location may not be blank")
+    @Size(max = 1000)
+    private String description;
+
     @PositiveOrZero(message = "Price may only be a positive number")
     private double price;
 
