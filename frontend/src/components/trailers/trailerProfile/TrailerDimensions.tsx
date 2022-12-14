@@ -1,6 +1,8 @@
 import { Stack } from '@mui/material'
-import TrailerDimension from './TrailerDimension'
+import TrailerInfoIcon from './TrailerInfoIcon'
 import React from 'react'
+import { TbArrowsLeftRight } from 'react-icons/tb'
+import { GiWeight } from 'react-icons/gi'
 
 export function TrailerDimensions(props: {
   length: number
@@ -9,17 +11,20 @@ export function TrailerDimensions(props: {
 }) {
   return (
     <Stack direction="row" gap={2}>
-      <TrailerDimension
-        measurement={`${props.length} meter`}
-        dimension="Lengte"
+      <TrailerInfoIcon
+        icon={<TbArrowsLeftRight size={40} />}
+        subHeader={`${props.length} meter`}
+        title="Lengte"
       />
-      <TrailerDimension
-        measurement={`${props.width} meter`}
-        dimension="Breedte"
+      <TrailerInfoIcon
+        icon={<TbArrowsLeftRight size={40} />}
+        subHeader={`${props.width} meter`}
+        title="Breedte"
       />
-      <TrailerDimension
-        measurement={`${props.weight} kilogram`}
-        dimension="Gewicht"
+      <TrailerInfoIcon
+        icon={<GiWeight size={40} />}
+        subHeader={`${props.weight} kilogram`}
+        title="Gewicht"
       />
     </Stack>
   )

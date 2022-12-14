@@ -1,23 +1,21 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React from 'react'
-import { TbArrowsLeftRight } from 'react-icons/tb'
-import { GiWeight } from 'react-icons/gi'
+import React, { ReactNode } from 'react'
 
-interface TrailerDimensionI {
-  measurement: string
-  dimension: 'Lengte' | 'Breedte' | 'Gewicht'
+interface TrailerInfoIconI {
+  subHeader: string
+  title: string
+  icon: ReactNode
 }
 
-export default function TrailerDimension({
-  measurement,
-  dimension,
-}: TrailerDimensionI) {
+export default function TrailerInfoIcon({
+  subHeader,
+  title,
+  icon,
+}: TrailerInfoIconI) {
   return (
     <Grid container gap={1} alignItems="center" justifyContent="center">
       <Grid item xs={4} textAlign="center">
-        {dimension === 'Lengte' ? <TbArrowsLeftRight size={40} /> : null}
-        {dimension === 'Breedte' ? <TbArrowsLeftRight size={40} /> : null}
-        {dimension === 'Gewicht' ? <GiWeight size={40} /> : null}
+        {icon}
       </Grid>
       <Grid item xs={8}>
         <Box
@@ -27,10 +25,10 @@ export default function TrailerDimension({
           alignItems="center"
         >
           <Typography variant="h6" textAlign="center">
-            {dimension}
+            {title}
           </Typography>
           <Typography variant="body2" textAlign="center">
-            {measurement}
+            {subHeader}
           </Typography>
         </Box>
       </Grid>

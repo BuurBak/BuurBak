@@ -1,10 +1,9 @@
-import { Card, CardContent, Stack } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Stack } from '@mui/material'
 import React, { useState } from 'react'
-import { TrailerOffer } from '../../../types/TrailerOffer'
 import { DateTime } from 'luxon'
 import DateTimePicker from './DateTimePicker'
 
-export default function ReservationForm(props: { trailerOffer: TrailerOffer }) {
+export default function ReservationForm() {
   const now = DateTime.now()
   const [fromDate, setFromDate] = useState(now)
   const [toDate, setToDate] = useState(now)
@@ -34,6 +33,11 @@ export default function ReservationForm(props: { trailerOffer: TrailerOffer }) {
           />
         </Stack>
       </CardContent>
+      <CardActions>
+        <Button sx={{ marginX: 1 }} fullWidth variant="contained" size="large">
+          Reserveer nu
+        </Button>
+      </CardActions>
     </Card>
   )
 }

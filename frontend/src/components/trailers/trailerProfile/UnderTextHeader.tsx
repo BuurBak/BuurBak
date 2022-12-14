@@ -1,26 +1,19 @@
-import { SxProps, Typography } from '@mui/material'
+import { Box, SxProps, Typography } from '@mui/material'
 import React, { ReactNode } from 'react'
 
 interface UnderTextHeaderI {
-  children: ReactNode
+  icon: ReactNode
+  text: ReactNode
   sx?: SxProps
 }
 
-export default function UnderTextHeader({ children, sx }: UnderTextHeaderI) {
+export default function UnderTextHeader({ icon, sx, text }: UnderTextHeaderI) {
   return (
-    <Typography
-      noWrap
-      sx={{
-        display: 'flex',
-        whiteSpace: 'nowrap',
-        alignItems: 'center',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        width: 'initial',
-        ...sx,
-      }}
-    >
-      {children}
-    </Typography>
+    <Box display="flex" alignItems="center" sx={sx}>
+      <Box flexShrink={0}>{icon}</Box>
+      <Typography noWrap sx={sx}>
+        {text}
+      </Typography>
+    </Box>
   )
 }

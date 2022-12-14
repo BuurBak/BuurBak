@@ -1,5 +1,5 @@
 import { TrailerOffer } from '../../../types/TrailerOffer'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Grid, Stack, Typography } from '@mui/material'
 import { TbCurrencyEuro, TbMapPin, TbStar } from 'react-icons/tb'
 import React from 'react'
 import UnderTextHeader from './UnderTextHeader'
@@ -8,6 +8,7 @@ import useMediumBreakpoint from '../../../hooks/use-medium-breakpoint'
 interface TrailerHeaderProps {
   trailerOffer: TrailerOffer
 }
+
 export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
   const matches = useMediumBreakpoint()
 
@@ -23,32 +24,24 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
         <Typography variant="h4" color="primary">
           {trailerOffer.trailerType.name}
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            gap: 1,
-          }}
-        >
-          <UnderTextHeader>
-            <TbStar /> rating
-          </UnderTextHeader>
-
-          {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
+        <Grid container spacing={1}>
+          <Grid item xs>
+            <UnderTextHeader icon={<TbStar />} text="rating" />
+          </Grid>
 
           {matches ? (
-            <UnderTextHeader>
-              <TbCurrencyEuro /> {trailerOffer.price}
-            </UnderTextHeader>
+            <Grid item xs>
+              <UnderTextHeader
+                icon={<TbCurrencyEuro />}
+                text={trailerOffer.price}
+              />
+            </Grid>
           ) : null}
 
-          {/*<Divider variant="middle" flexItem orientation="vertical" />*/}
-
-          <UnderTextHeader>
-            <TbMapPin /> {trailerOffer.location}
-          </UnderTextHeader>
-        </Box>
+          <Grid item xs>
+            <UnderTextHeader icon={<TbMapPin />} text={trailerOffer.location} />
+          </Grid>
+        </Grid>
       </Stack>
       {matches ? (
         <Box
@@ -59,9 +52,11 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
           p={2}
           sx={{ borderRadius: 4 }}
         >
-          <UnderTextHeader sx={{ color: 'primary.contrastText' }}>
-            <TbCurrencyEuro /> {trailerOffer.price}
-          </UnderTextHeader>
+          <UnderTextHeader
+            icon={<TbCurrencyEuro />}
+            text={trailerOffer.price}
+            sx={{ color: 'primary.contrastText' }}
+          />
         </Box>
       ) : null}
     </Box>

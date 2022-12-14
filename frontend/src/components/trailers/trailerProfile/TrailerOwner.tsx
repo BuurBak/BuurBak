@@ -27,11 +27,11 @@ export default function TrailerOwner(props: { trailerOffer: TrailerOffer }) {
       />
       <CardContent>
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="body2" display="flex" alignItems="center">
+          <Typography variant="body2" display="flex" alignItems="center" noWrap>
             {/* TODO add response time */}
             <TbClock /> 2 uur response tijd
           </Typography>
-          <Typography variant="body2" display="flex" alignItems="center">
+          <Typography variant="body2" display="flex" alignItems="center" noWrap>
             {/* TODO add response time */}
             <TbCheck /> 73% acceptatiegraad
           </Typography>

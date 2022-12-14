@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import useAxios from '../../hooks/use-axios'
 import { TrailerOffer } from '../../types/TrailerOffer'
 import Loading from '../../components/util/Loading'
-import { Alert, Container, Grid, Stack } from '@mui/material'
+import { Alert, Container, Divider, Grid, Stack } from '@mui/material'
 import React from 'react'
 import TrailerHeader from '../../components/trailers/trailerProfile/TrailerHeader'
 import TrailerOwner from '../../components/trailers/trailerProfile/TrailerOwner'
@@ -10,6 +10,7 @@ import ReservationForm from '../../components/trailers/reservation/ReservationFo
 import { TrailerDescription } from '../../components/trailers/trailerProfile/TrailerDescription'
 import useMediumBreakpoint from '../../hooks/use-medium-breakpoint'
 import MobileBottomReservationBar from '../../components/trailers/trailerProfile/MobileBottomReservationBar'
+import TrailerInfoIcons from '../../components/trailers/trailerProfile/TrailerInfoIcons'
 
 export default function TrailerProfile() {
   const matches = useMediumBreakpoint()
@@ -28,12 +29,16 @@ export default function TrailerProfile() {
   if (error) return <Alert severity="error">{error.message}</Alert>
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ marginBottom: matches ? 0 : 8 }}>
       <Stack gap={5} paddingTop={5}>
         <TrailerHeader trailerOffer={trailerOffer} />
         <Grid container rowGap={4}>
           <Grid item xs={12} md={7}>
-            <TrailerDescription trailer={trailerOffer} />
+            <Stack gap={2}>
+              <TrailerDescription trailer={trailerOffer} />
+              <Divider />
+              <TrailerInfoIcons trailer={trailerOffer} />
+            </Stack>
           </Grid>
           <Grid item xs={0} md={1}></Grid>
 

@@ -17,6 +17,7 @@ export interface TrailerOffer {
   dropOffTimeStart: string
   dropOffTimeEnd: string
   location: string
+  description: string
   price: number
   available: boolean
   createdAt: Date

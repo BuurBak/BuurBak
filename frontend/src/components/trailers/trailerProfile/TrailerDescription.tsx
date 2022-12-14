@@ -19,7 +19,9 @@ export function TrailerDescription({ trailer }: TrailerDescriptionI) {
       <Typography variant="h4" color="primary.main">
         Omschrijving
       </Typography>
-      <Typography>{trailer.weight}</Typography>
+      <Typography sx={{ wordWrap: 'break-word' }}>
+        {trailer.description}
+      </Typography>
     </Stack>
   )
 }
