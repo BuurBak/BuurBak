@@ -1,5 +1,6 @@
 import { TrailerType } from './TrailerType'
 import { User } from './User'
+import { Address } from './Address'
 
 export interface TrailerOffer {
   id: string
@@ -20,6 +21,7 @@ export interface TrailerOffer {
   description: string
   price: number
   available: boolean
+  address: Pick<Address, 'city'>
   createdAt: Date
   updatedAt: Date
 }

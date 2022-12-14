@@ -39,7 +39,10 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
           ) : null}
 
           <Grid item xs>
-            <UnderTextHeader icon={<TbMapPin />} text={trailerOffer.location} />
+            <UnderTextHeader
+              icon={<TbMapPin />}
+              text={trailerOffer.address.city}
+            />
           </Grid>
         </Grid>
       </Stack>
