@@ -11,7 +11,8 @@ export default function MobileBottomReservationBar({
     <Paper
       sx={{
         display: 'flex',
-        justifyContent: 'space-around',
+        paddingX: 2,
+        justifyContent: 'space-between',
         alignItems: 'center',
         height: 80,
         position: 'fixed',
