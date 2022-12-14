@@ -1,10 +1,10 @@
 import { TrailerOffer } from '../../../types/TrailerOffer'
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   Rating,
-  Stack,
   Typography,
 } from '@mui/material'
 import ProfilePicture from '../../util/ProfilePicture'
@@ -26,16 +26,16 @@ export default function TrailerOwner(props: { trailerOffer: TrailerOffer }) {
         subheader={<Rating value={2} readOnly />}
       />
       <CardContent>
-        <Stack direction="row" justifyContent="space-between">
+        <Box display="flex" justifyContent="space-between" flexWrap="wrap">
           <Typography variant="body2" display="flex" alignItems="center" noWrap>
             {/* TODO add response time */}
             <TbClock /> 2 uur response tijd
           </Typography>
           <Typography variant="body2" display="flex" alignItems="center" noWrap>
-            {/* TODO add response time */}
+            {/* TODO add acceptance grade */}
             <TbCheck /> 73% acceptatiegraad
           </Typography>
-        </Stack>
+        </Box>
       </CardContent>
     </Card>
   )
