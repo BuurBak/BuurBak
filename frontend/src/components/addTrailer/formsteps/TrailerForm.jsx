@@ -8,11 +8,16 @@ import Location from './Location'
 import General from './General'
 import Accessoires from './Accessoires'
 import PersonalInfo from './PersonalInfo'
+import TrailerOverview from './TrailerOverview'
+import ImageUpload from './ImageUpload'
+import Introduction from '../formInformation/Introduction'
 
 export default function TrailerForm() {
   const [formstep, setFormstep] = useState(0)
   const [trailerType, setTrailerType] = useState()
-  const [license, setLicense] = useState('')
+  const [license, setLicense] = useState('none')
+  const [description, setDescription] = useState('')
+  const [trailerImage, setTrailerImage] = useState()
 
   const currentUser = {
     name: 'John Appleseed',
@@ -23,22 +28,53 @@ export default function TrailerForm() {
   }
 
   return (
-    <div className="TrailerFormContainer">
-      <ProgressBar formstep={formstep} setFormstep={setFormstep} />
-      {formstep === 0 ? (
-        <TrailerType
+    <div className="addTrailerPage">
+      {formstep === 0 ? null : (
+        <ProgressBar
+          formstep={formstep}
+          setFormstep={setFormstep}
           trailerType={trailerType}
-          setTrailerType={setTrailerType}
+          license={license}
         />
-      ) : null}
-      {formstep === 1 ? (
-        <DriverLicense license={license} setLicense={setLicense} />
-      ) : null}
-      {formstep === 2 ? <General /> : null}
-      {formstep === 3 ? <Location /> : null}
-      {formstep === 4 ? <Accessoires /> : null}
-      {formstep === 5 ? <PersonalInfo currentUser={currentUser} /> : null}
-      <FormFooter formstep={formstep} setFormstep={setFormstep} />
+      )}
+      {formstep === 0 ? <Introduction /> : null}
+      <div className="TrailerFormContainer">
+        {formstep === 1 ? (
+          <TrailerType
+            trailerType={trailerType}
+            setTrailerType={setTrailerType}
+          />
+        ) : null}
+        {formstep === 2 ? (
+          <DriverLicense license={license} setLicense={setLicense} />
+        ) : null}
+        {formstep === 3 ? (
+          <General description={description} setDescription={setDescription} />
+        ) : null}
+        {formstep === 4 ? (
+          <ImageUpload
+            trailerImage={trailerImage}
+            setTrailerImage={setTrailerImage}
+            trailerType={trailerType}
+          />
+        ) : null}
+        {formstep === 5 ? <Location /> : null}
+        {formstep === 6 ? <Accessoires /> : null}
+        {formstep === 7 ? <PersonalInfo currentUser={currentUser} /> : null}
+        {formstep === 8 ? (
+          <TrailerOverview
+            trailerType={trailerType}
+            description={description}
+          />
+        ) : null}
+      </div>
+      <FormFooter
+        formstep={formstep}
+        setFormstep={setFormstep}
+        trailerType={trailerType}
+        license={license}
+        description={description}
+      />
     </div>
   )
 }

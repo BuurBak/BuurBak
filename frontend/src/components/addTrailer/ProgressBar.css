@@ -2,12 +2,16 @@
   height: fit-content;
   display: flex;
   align-items: center;
-  position: relative;
-  top: 12%;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: white;
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
+  z-index: 98;
+  box-sizing: border-box;
+  padding: 40px 25% 30px 25%;
+  /* border-bottom: 1px solid var(--border); */
 }
 
 .progressBarStep,
@@ -24,8 +28,8 @@
   color: var(--primary);
 }
 
-.progressBarStep > div,
-.progressBarStepActive > div {
+.progressBarStep>div,
+.progressBarStepActive>div {
   display: flex;
   align-items: center;
   margin-top: 20px;
@@ -60,4 +64,57 @@
   font-size: 12px;
   font-weight: var(--semibold);
   margin-top: 10px;
+}
+
+.logo {
+  position: absolute;
+  left: 50px;
+  width: 140px;
+}
+
+.formAction {
+  position: absolute;
+  right: 50px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background-color: transparent;
+  font-weight: var(--semibold);
+  transition: 0.3s ease;
+}
+
+.formAction:hover {
+  border: 1px solid var(--text);
+  transition: 0.3s ease;
+}
+
+
+
+
+
+
+
+
+.progressContainer {
+  width: fit-content;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.progressStepDotActive {
+  background-color: var(--primary) !important;
+  color: white;
+}
+
+.progressStepDot,
+.progressStepDotActive {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
 }

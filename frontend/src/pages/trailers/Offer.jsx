@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import '../../components/trailers/offer/Map.css'
 import { IoIosArrowBack, IoIosArrowForward, IoIosMenu } from 'react-icons/io'
 import OfferHeader from '../../components/trailers/offer/OfferHeader'
-import OfferRestults from '../../components/trailers/offer/OfferResults.jsx'
+import OfferResults from '../../components/trailers/offer/OfferResults.jsx'
 import TrailerCard from '../../components/trailers/trailerCard/TrailerCard.jsx'
 import Filters from '../../components/trailers/filters/Filters.jsx'
 import useAxios from '../../hooks/use-axios'
@@ -75,7 +75,7 @@ export default function Offer() {
           setFilteredTrailers={setFilteredTrailers}
           setSortType={setSortType}
         />
-        <OfferRestults filteredTrailers={filteredTrailers} />
+        <OfferResults filteredTrailers={filteredTrailers} />
       </div>
       <div className="map" style={scaleMap ? { width: '100%' } : null}>
         <GoogleMap
@@ -102,7 +102,7 @@ export default function Offer() {
               <IoIosMenu size="26px" color="white" />
             </button>
           ) : null}
-          {filteredTrailers.map((trailer) => (
+          {filteredTrailers?.map((trailer) => (
             <MarkerF
               key={trailer?.id}
               onClick={() => setActiveTrailer(trailer)}

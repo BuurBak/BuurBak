@@ -21,6 +21,8 @@ export default function OfferRestults({ filteredTrailers, loading }) {
     setPageNumber(selected)
   }
 
+  if (!filteredTrailers) return
+
   return (
     <>
       <div className="offerResultsContainer">

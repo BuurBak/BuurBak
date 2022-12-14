@@ -1,0 +1,111 @@
+.mapContainer {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-top: 30px;
+}
+
+.locationInput {
+    width: 90%;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    padding: 0 20px 0 20px;
+    border-radius: 30px;
+    height: 48px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    font-weight: var(--semibold);
+}
+
+.locationInput::placeholder {
+    color: var(--text);
+    font-weight: var(--semibold);
+}
+
+.pac-container {
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: none;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.pac-item,
+.pac-item-query {
+    color: black;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+.pac-item:hover {
+    cursor: pointer;
+    background-color: var(--border);
+}
+
+.pac-item:last-child {
+    margin-bottom: 10px;
+}
+
+/* Exact location information */
+
+.exactLocationInput {
+    width: 100%;
+    height: fit-content;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+
+.exactLocationInputItem {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    box-sizing: border-box;
+    padding: 12px 0 0 0;
+    position: relative;
+}
+
+.exactLocationInputItem input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 12px 8px 15px;
+    border: none;
+    outline: none;
+    transition: .5s;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.exactLocationInputItem span {
+    position: absolute;
+    font-weight: var(--medium);
+    left: 15px;
+    pointer-events: none;
+    font-size: 15px;
+    transition: .3s;
+    top: 50%;
+    transform: translateY(-55%);
+    color: var(--subheader);
+}
+
+.exactLocationInputItem input:valid~span,
+.exactLocationInputItem input:focus~span {
+    color: var(--subheader);
+    transform: translateX(0px) translateY(-20px);
+    font-size: 11px;
+}
+
+.locationInputDivider {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+@media (max-width: 500px) {
+    .mapContainer {
+        height: 360px;
+    }
+}

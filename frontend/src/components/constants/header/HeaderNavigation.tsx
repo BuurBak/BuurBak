@@ -28,7 +28,7 @@ export default function HeaderNavigation({
 
   return (
     <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-      <Stack spacing={1} direction="row">
+      <Stack spacing={4} direction="row">
         <Button href="/aanbod" color="secondary">
           Aanbod
         </Button>
@@ -41,7 +41,7 @@ export default function HeaderNavigation({
           variant="contained"
           disableElevation
         >
-          Ik wil Verhuren
+          Ik wil verhuren
         </Button>
         <Button href="/contact" color="secondary">
           Contact

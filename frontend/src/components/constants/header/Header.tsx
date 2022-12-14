@@ -41,6 +41,7 @@ export default function Header() {
         component="nav"
         sx={{
           boxShadow: 'none',
+          zIndex: 90,
         }}
       >
         <Toolbar

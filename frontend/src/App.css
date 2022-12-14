@@ -5,6 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
+  overflow-x: hidden;
 }
 
 :root {
@@ -15,7 +16,7 @@ body {
   --error: #ed6c6c;
   --border: #dddddd;
   --text: #373530;
-  --subheader: #747474;
+  --subheader: #808080;
   --background: #ffffff;
   --darkBackground: #000000;
 
@@ -70,7 +71,7 @@ h3 {
   width: 100%;
 }
 
-.iconInputContainer > span {
+.iconInputContainer>span {
   font-size: 14px;
   font-weight: 600;
   margin: 20px 0 15px 0;
@@ -95,7 +96,7 @@ h3 {
   border-radius: 5px 0 0 5px;
 }
 
-.iconInput > input {
+.iconInput>input {
   border-radius: 0 5px 5px 0;
   border: 1px solid var(--border);
   border-left: none;
@@ -107,8 +108,14 @@ h3 {
 }
 
 .TrailerFormContainer {
-  width: 50%;
+  width: 100%;
+  height: fit-content;
   position: relative;
   box-sizing: border-box;
-  margin: 120px auto;
+  margin: 120px auto 0 auto;
+}
+
+.addTrailerPage {
+  width: 100vw;
+  height: 80vh;
 }

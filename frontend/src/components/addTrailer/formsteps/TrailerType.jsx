@@ -1,7 +1,6 @@
-import { FaPlus, FaTrailer } from 'react-icons/fa'
 import './TrailerType.css'
-import { TbInfoCircle, TbShoppingCart } from 'react-icons/tb'
-import TypeOfTrailers from '../../../data/dummy/trailerTypes.json'
+import { TbInfoCircle, TbPlus } from 'react-icons/tb'
+import { TrailerTypes } from '../../../data/dummy/TrailerTypes.jsx'
 import { useEffect, useState } from 'react'
 import { IconButton } from '@mui/material'
 
@@ -10,8 +9,8 @@ export default function TrailerType({ trailerType, setTrailerType }) {
   const [trailerInfo, setTrailerInfo] = useState(false)
 
   useEffect(() => {
-    setTypes(TypeOfTrailers)
-  }, [TypeOfTrailers])
+    setTypes(TrailerTypes)
+  }, [])
 
   return (
     <div className="formStepContainer">
@@ -31,7 +30,7 @@ export default function TrailerType({ trailerType, setTrailerType }) {
             key={type.id}
             onClick={() => setTrailerType(type)}
           >
-            <FaTrailer size="28px" />
+            {type.icon}
             <p>{type.trailerType}</p>
             <IconButton
               className="infoIcon"
@@ -42,7 +41,7 @@ export default function TrailerType({ trailerType, setTrailerType }) {
           </div>
         ))}
         <div className="trailerTypeIconLast">
-          <FaPlus size="26px" color="var(--white)" />
+          <TbPlus size="24px" color="var(--primary)" />
           <p>Anders namelijk</p>
         </div>
         {trailerType && trailerInfo ? (

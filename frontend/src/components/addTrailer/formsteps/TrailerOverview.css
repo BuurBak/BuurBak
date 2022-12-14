@@ -1,0 +1,106 @@
+.overviewImageGrid {
+    width: 100%;
+    height: 250px;
+    background-color: var(--secondary);
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.overviewTrailerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.overviewTrailerHeader>div>h2 {
+    font-size: 16px;
+    color: var(--primary);
+    margin: 0;
+}
+
+.overviewTrailerHeader>div>div {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    margin-top: 5px;
+    color: var(--text);
+    font-weight: var(--medium);
+}
+
+.overviewTrailerHeader>div>div>p {
+    margin-left: 5px;
+}
+
+.overviewTrailerHeader>div>div>span {
+    margin: 0 8px;
+}
+
+.priceContainer {
+    width: fit-content;
+    width: fit-content;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: var(--semibold);
+    border-radius: 5px;
+    height: 30px;
+    background-color: var(--primary);
+    font-size: 14px;
+}
+
+.overviewTrailerGrid {
+    display: grid;
+    grid-template-columns: 64% 36%;
+    column-gap: 6.9%;
+}
+
+.overviewTrailerGrid>div>b {
+    font-weight: var(--bold);
+    color: var(--primary);
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.overviewTrailerGrid>div>p {
+    font-size: 14px;
+    /* font-weight: var(--medium); */
+    margin-top: 10px;
+    color: var(--text);
+}
+
+.trailerOwnerContainer {
+    width: 80%;
+    height: 50px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+
+.overviewTrailerMeasurements {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.verticalDivider {
+    height: 50px;
+    width: 1px;
+    background-color: var(--border);
+    margin: 0 30px;
+}
+
+.overviewTrailerMeasurements>div {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.overviewTrailerMeasurements>div>div {
+    margin-left: 15px;
+}
+
+.overviewTrailerMeasurements>div>div>p:nth-child(1) {
+    font-weight: var(--semibold);
+}

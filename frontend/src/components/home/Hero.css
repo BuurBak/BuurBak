@@ -5,7 +5,7 @@
   background-color: var(--secondary);
   box-sizing: border-box;
   padding: 100px 8%;
-  top: 80px;
+  top: 58px;
   background-image: url(../../data/images/BuurBak_Duurzaam-Delen_Aanhanger02972022.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -25,7 +25,7 @@
   z-index: 1;
 }
 
-.heroContainer > h1 {
+.heroContainer>h1 {
   margin: 100px auto 0 auto;
   font-weight: var(--bold);
   color: var(--white);
@@ -54,7 +54,7 @@
   margin-top: 30px;
 }
 
-.heroIncludedItem > p {
+.heroIncludedItem>p {
   margin-left: 20px;
   font-weight: var(--semibold);
 }
@@ -69,7 +69,7 @@
   position: relative;
 }
 
-.heroCtaItem > span {
+.heroCtaItem>span {
   font-weight: var(--bold);
   color: var(--white);
   font-size: 14px;
@@ -87,8 +87,8 @@
   justify-content: space-between;
 }
 
-.inputContainer > input,
-.inputContainer > select {
+.inputContainer>input,
+.inputContainer>select {
   height: 100%;
   padding: 0px;
   border: none;
@@ -101,14 +101,14 @@
   background-color: var(--background);
 }
 
-.inputContainer > input::placeholder,
-.inputContainer > select {
+.inputContainer>input::placeholder,
+.inputContainer>select {
   color: var(--primary);
   font-weight: 500;
   font-size: 15px;
 }
 
-.inputContainer > select {
+.inputContainer>select {
   cursor: pointer;
 }
 
