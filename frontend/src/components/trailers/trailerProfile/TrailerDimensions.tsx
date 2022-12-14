@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import TrailerInfoIcon from './TrailerInfoIcon'
 import React from 'react'
 import { TbArrowsLeftRight } from 'react-icons/tb'
@@ -10,7 +10,11 @@ export function TrailerDimensions(props: {
   weight: number
 }) {
   return (
-    <Stack direction="row" gap={2}>
+    <Stack
+      direction="row"
+      gap={2}
+      divider={<Divider orientation="vertical" variant="middle" flexItem />}
+    >
       <TrailerInfoIcon
         icon={<TbArrowsLeftRight size={40} />}
         subHeader={`${props.length} meter`}
