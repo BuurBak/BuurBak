@@ -138,9 +138,10 @@ class CustomerServiceTest {
         image.setId(newCustomerDTO.getProfilePicture().getId());
 
         when(customerRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldCustomer));
-        when(imageService.findById(any(UUID.class))).thenReturn(Optional.ofNullable(image));
+        when(imageService.findById(any(UUID.class))).thenReturn(image);
+        when(customerRepository.findByEmail(any())).thenReturn(Optional.ofNullable(oldCustomer));
 
-        Customer customer = customerService.updateUser(oldCustomer.getId(), newCustomerDTO);
+        customerService.updateUser(oldCustomer.getId(), newCustomerDTO, oldCustomer.getUsername());
 
         ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
 

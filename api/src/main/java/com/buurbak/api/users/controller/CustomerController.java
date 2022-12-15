@@ -89,9 +89,9 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO, Authentication authentication) {
         try {
-            customerService.updateUser(id, updateCustomerDTO);
+            customerService.updateUser(id, updateCustomerDTO, authentication.getName());
         }
         catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);

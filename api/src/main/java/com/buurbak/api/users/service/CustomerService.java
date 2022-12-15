@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +58,15 @@ public class CustomerService {
         return reservationRepository.findAllByRenterId(customerId, pageable);
     }
 
-    public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
-        // if guard
+    public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO, String username) throws CustomerNotFoundException, AccessDeniedException {
+        UUID authenticationUser = findByUsername(username).getId();
+        if(id != authenticationUser) {
+            log.info(String.valueOf(id));
+            log.info(String.valueOf(authenticationUser));
+            log.info("User doesn't have the premissions to change this user");
+            throw new AccessDeniedException("This user doesn't have the permissions to change this user");
+        }
+
         Customer customer = getCustomer(id);
         Image image = imageService.findById(updateCustomerDTO.getProfilePicture().getId());
         Customer newCustomer = new CustomerConverter().convertUploadCustomerDTOToCustomer(updateCustomerDTO);
