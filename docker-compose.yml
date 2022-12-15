@@ -50,5 +50,34 @@ services:
       traefik.http.routers.adminer.rule: Host(`adminer.localhost`)
       traefik.http.services.adminer.loadbalancer.server.port: 8080
 
+  api:
+    image: buurbak-api
+    container_name: api
+    build:
+      context: api
+    depends_on:
+      db:
+          condition: service_healthy
+    ports:
+      - "8000:80"
+    environment:
+      DATABASE_NAME: buurbak
+      DATABASE_USERNAME: buurbak
+      DATABASE_PASSWORD: buurbak
+      DATABASE_HOST: db
+      MAIL_HOST: maildev
+      GCP_AUTH_FILE: not_the_auth_file
+      GCP_BUCKET_DIR_NAME: dev
+      GCP_BUCKET_ID: buurbak_public
+      GCP_PROJECT_ID: celestial-sonar-365614
+      RANDOM_DATA: true
+      JWT_SECRET: secret
+      PORT: 80
+      SPRING_PROFILES_ACTIVE: dev
+    labels:
+      traefik.enable: true
+      traefik.http.routers.backend.rule: Host(`localhost`) && PathPrefix(`/api/v1`)
+      traefik.http.services.backend.loadbalancer.server.port: 8000
+
 volumes:
   db:

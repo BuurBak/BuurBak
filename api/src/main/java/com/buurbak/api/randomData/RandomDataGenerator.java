@@ -172,6 +172,7 @@ public class RandomDataGenerator implements CommandLineRunner {
                 .randomize(named("trailerId").and(inClass(ReservationDTO.class)), new TrailerIDRandomizer(trailerOffers))
                 .randomize(named("confirmed"), () -> false)
                 .randomize(named("confirmedAt"), () -> null)
+                .stringLengthRange(5, 50)
                 .timeRange(nine, five)
                 .dateRange(tomorrow, nextWeek)
                 .charset(StandardCharsets.UTF_8)

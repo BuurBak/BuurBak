@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalTime;
 
 @Getter
@@ -64,6 +61,10 @@ public class CreateTrailerOfferDTO{
 
     @NotNull(message = "Longitude may not be null")
     private double longitude;
+
+    @NotBlank(message = "Description may not be blank")
+    @Size(max = 1000)
+    private String description;
 
     @PositiveOrZero(message = "Price may only be a positive number")
     private double price;
