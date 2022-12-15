@@ -94,13 +94,13 @@ class CustomerServiceTest {
         UUID id = UUID.randomUUID();
 
         // When
-        when(reservationRepository.findAllByRenterId(id, pageable)).thenReturn(new PageImpl<>(reservationList));
+        when(reservationRepository.findAllByTrailerOwnerId(id, pageable)).thenReturn(new PageImpl<>(reservationList));
 
         Page<Reservation> result = customerService.getAllReservations(id, pageable);
 
         // Then
         assertTrue(result.getContent().isEmpty());
-        verify(reservationRepository, times(1)).findAllByRenterId(id, pageable);
+        verify(reservationRepository, times(1)).findAllByTrailerOwnerId(id, pageable);
         verifyNoMoreInteractions(reservationRepository);
     }
 
@@ -118,14 +118,14 @@ class CustomerServiceTest {
         Pageable pageable = PageRequest.of(0, 20);
 
         // When
-        when(reservationRepository.findAllByRenterId(customer.getId(), pageable)).thenReturn(new PageImpl<>(reservationList));
+        when(reservationRepository.findAllByTrailerOwnerId(customer.getId(), pageable)).thenReturn(new PageImpl<>(reservationList));
 
 
         Page<Reservation> result = customerService.getAllReservations(customer.getId(), pageable);
 
         // Then
         assertEquals(reservationList, result.getContent());
-        verify(reservationRepository, times(1)).findAllByRenterId(customer.getId(), pageable);
+        verify(reservationRepository, times(1)).findAllByTrailerOwnerId(customer.getId(), pageable);
         verifyNoMoreInteractions(reservationRepository);
     }
 

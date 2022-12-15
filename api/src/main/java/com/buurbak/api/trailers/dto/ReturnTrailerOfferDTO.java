@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.dto;
 
+import com.buurbak.api.security.dto.ReturnAddressCityDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,9 +22,14 @@ public class ReturnTrailerOfferDTO {
     @NotBlank(message = "id may not be blank")
     private UUID id;
 
+    @Valid
     private TrailerTypeDTO trailerType;
 
+    @Valid
     private PublicCustomerDTO owner;
+
+    @Valid
+    private ReturnAddressCityDTO address;
 
     @Positive(message = "Length may only be a positive number above 0")
     private int length;
@@ -59,8 +66,15 @@ public class ReturnTrailerOfferDTO {
     @JsonAlias("drop_off_time_end")
     private LocalTime dropOffTimeEnd;
 
-    @NotBlank(message = "Location may not be blank")
-    private String location;
+    @NotNull(message = "Latitude may not be null")
+    private double fakeLatitude;
+
+    @NotNull(message = "Longitude may not be null")
+    private double fakeLongitude;
+
+    @NotBlank(message = "Description may not be blank")
+    @Size(max = 1000)
+    private String description;
 
     @PositiveOrZero(message = "Price may only be a positive number")
     private double price;

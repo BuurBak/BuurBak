@@ -70,7 +70,24 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"ACCESS_TOKEN\", jsonData[\"access_token\"]);",
+									"pm.collectionVariables.set(\"REFRESH_TOKEN\", jsonData[\"refresh_token\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -217,6 +234,30 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"name": "Get single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"price\": 23298472300,\r\n  \"available\": true\r\n}",
 						"url": {
 							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
 							"host": [

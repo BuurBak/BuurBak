@@ -35,7 +35,7 @@ export default function Header() {
     window !== undefined ? () => window.document.body : undefined
 
   return (
-    <Box>
+    <Box component="nav">
       <AppBar
         color="default"
         component="nav"

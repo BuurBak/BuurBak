@@ -4,10 +4,11 @@ import com.buurbak.api.randomData.RandomDataGenerator;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
+import com.buurbak.api.users.model.Customer;
+import com.buurbak.api.users.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class TrailerOfferIntegrationTest {
     private RandomDataGenerator rdg;
     @Autowired
     private TrailerOfferRepository trailerOfferRepository;
+    @Autowired
+    private CustomerService customerService;
     private ObjectMapper mapper;
     private UUID trailerId;
 
@@ -42,13 +45,14 @@ public class TrailerOfferIntegrationTest {
     void setUp() {
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        Customer customer = customerService.findByUsername("lucabergman@yahoo.com");
         TrailerOffer trailerOffer = rdg.trailerOffer.nextObject(TrailerOffer.class);
         trailerOffer.setCapacity(696);
-        trailerOfferRepository.save(trailerOffer);
+        trailerOffer.setOwner(customer);
+        trailerOffer = trailerOfferRepository.save(trailerOffer);
         trailerId = trailerOffer.getId();
     }
 
-    @Disabled
     @Test
     void shouldAddTrailerOffer() throws Exception {
         mvc.perform(MockMvcRequestBuilders

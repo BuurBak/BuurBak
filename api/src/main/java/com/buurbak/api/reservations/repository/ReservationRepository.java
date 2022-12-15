@@ -5,10 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+
 import java.util.UUID;
 
 public interface ReservationRepository extends PagingAndSortingRepository<Reservation, UUID> {
-    Page<Reservation> findAllByRenterId(UUID renterId, Pageable pageable);
+    Page<Reservation> findAllByTrailerOwnerId(UUID renterId, Pageable pageable);
 
 
 

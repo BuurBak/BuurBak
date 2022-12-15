@@ -55,7 +55,7 @@ public class CustomerService {
 
     public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
 //        return reservationRepository.findAll(pageable);
-        return reservationRepository.findAllByRenterId(customerId, pageable);
+        return reservationRepository.findAllByTrailerOwnerId(customerId, pageable);
     }
 
     public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO, String username) throws CustomerNotFoundException, AccessDeniedException {
