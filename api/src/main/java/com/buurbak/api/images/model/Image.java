@@ -21,9 +21,8 @@ public class Image {
     @GeneratedValue
     private UUID id;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @ManyToOne
 //    @JoinColumn(nullable = false)
-//    @JsonIgnore
 //    private TrailerOffer trailerOffer;
 
     @CreationTimestamp

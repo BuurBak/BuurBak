@@ -69,4 +69,8 @@ public class TrailerOfferService {
         trailerOfferRepository.deleteById(trailerId);
         log.info("TrailerOffer with id " + trailerId + " has been deleted");
     }
+
+    public void addTrailerOfferPictures(UUID trailerId) {
+
+    }
 }

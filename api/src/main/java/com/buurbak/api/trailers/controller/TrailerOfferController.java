@@ -111,6 +111,9 @@ public class TrailerOfferController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
+
+    @PutMapping("/{id}")
+    
 }
 
 

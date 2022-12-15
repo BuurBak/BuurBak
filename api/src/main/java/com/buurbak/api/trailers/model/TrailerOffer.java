@@ -36,8 +36,8 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false)
+    @OneToMany
+    @JoinColumn
     private Collection<Image> trailerOfferPictures = new ArrayList<>();
 
     @Column(nullable = false) @Randomizer(TrailerDimensionRandomizer.class)
@@ -61,14 +61,14 @@ public class TrailerOffer {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, Customer owner, int length, int height,
+    public TrailerOffer(TrailerType trailerType, Customer owner, Collection<Image> trailerOfferPictures, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
                         LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
                         String location, double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
-//        this.trailerOfferPictures = trailerOfferPictures;
+        this.trailerOfferPictures = trailerOfferPictures;
         this.length = length;
         this.height = height;
         this.width = width;
