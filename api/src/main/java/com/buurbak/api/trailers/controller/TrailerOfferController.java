@@ -1,8 +1,8 @@
 package com.buurbak.api.trailers.controller;
 
-import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
+import com.buurbak.api.trailers.dto.ReturnTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
@@ -18,11 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -34,15 +34,20 @@ public class TrailerOfferController {
     private final TrailerOfferConverter trailerOfferConverter;
 
 
-    @Operation(summary = "Return all trailerOffers")
+    @Operation(summary = "Return a trailerOffer")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
     })
     @GetMapping(path = "/{id}")
-    public TrailerOffer getTrailerOffer(@PathVariable UUID id){
-         return trailerOfferService.getTrailerOffer(id);
+    public ReturnTrailerOfferDTO getTrailerOffer(@PathVariable UUID id){
+        try {
+            TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(id);
+            return trailerOfferConverter.convertTrailerOfferToReturnTrailerOfferDTO(trailerOffer);
+        } catch (TrailerOfferNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
 
     @Operation(summary = "Return all trailerOffers")
@@ -85,13 +90,15 @@ public class TrailerOfferController {
     })
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO) {
+    public void updateTrailerOffer(@PathVariable UUID id, @Valid @RequestBody CreateTrailerOfferDTO createTrailerOfferDTO, Authentication authentication) {
         try {
-            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO);
+            trailerOfferService.updateTrailerOffer(id, createTrailerOfferDTO, authentication.getName());
         } catch (TrailerTypeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
         } catch (TrailerOfferNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        } catch (AccessDeniedException accessDeniedExeption) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You don't have the permissions to change this trailer", accessDeniedExeption);
         }
     }
 

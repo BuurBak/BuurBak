@@ -1,25 +1,35 @@
 package com.buurbak.api.trailers.dto;
 
-import com.buurbak.api.security.dto.CreateAddressDTO;
+import com.buurbak.api.security.dto.ReturnAddressCityDTO;
+import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class CreateTrailerOfferDTO{
-    @NotBlank(message = "TrailerType may not be blank")
-    @JsonAlias("trailer_type")
-    private String trailerType;
+@NoArgsConstructor
+public class ReturnTrailerOfferDTO {
+    @NotBlank(message = "id may not be blank")
+    private UUID id;
 
-    private CreateAddressDTO address;
+    @Valid
+    private TrailerTypeDTO trailerType;
+
+    @Valid
+    private PublicCustomerDTO owner;
+
+    @Valid
+    private ReturnAddressCityDTO address;
 
     @Positive(message = "Length may only be a positive number above 0")
     private int length;
@@ -57,10 +67,10 @@ public class CreateTrailerOfferDTO{
     private LocalTime dropOffTimeEnd;
 
     @NotNull(message = "Latitude may not be null")
-    private double latitude;
+    private double fakeLatitude;
 
     @NotNull(message = "Longitude may not be null")
-    private double longitude;
+    private double fakeLongitude;
 
     @NotBlank(message = "Description may not be blank")
     @Size(max = 1000)
@@ -70,4 +80,10 @@ public class CreateTrailerOfferDTO{
     private double price;
 
     private boolean available;
+
+    @Past
+    private LocalDateTime createdAt;
+
+    @Past
+    private LocalDateTime updatedAt;
 }

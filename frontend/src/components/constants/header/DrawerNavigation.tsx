@@ -1,21 +1,18 @@
 import {
-  Avatar,
   Box,
   Collapse,
   Divider,
   List,
-  ListItem,
   ListItemAvatar,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import PersonIcon from '@mui/icons-material/Person'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import { useAuth } from '../../../hooks/use-auth'
 import Logo from './Logo'
 import { useState } from 'react'
+import ProfilePicture from '../../util/ProfilePicture'
 
 interface DrawerNavigationProps {
   onLoginRegister: () => void
@@ -67,13 +64,7 @@ export default function DrawerNavigation({
               sx={{ display: 'flex', justifyContent: 'end' }}
             >
               <ListItemAvatar>
-                {user.profile_picture_url ? (
-                  <Avatar alt={user.name} src={user.profile_picture_url} />
-                ) : (
-                  <Avatar>
-                    <PersonIcon />
-                  </Avatar>
-                )}
+                <ProfilePicture user={user} />
               </ListItemAvatar>
               <ListItemText primary={user.name ? user.name : 'Account'} />
               {accountOpen ? <ExpandLess /> : <ExpandMore />}

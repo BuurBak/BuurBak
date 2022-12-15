@@ -1,8 +1,12 @@
 package com.buurbak.api.users.service;
 
+import com.buurbak.api.images.model.Image;
+import com.buurbak.api.images.service.ImageService;
+import com.buurbak.api.reservations.model.Reservation;
+import com.buurbak.api.reservations.repository.ReservationRepository;
+import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
-import com.buurbak.api.users.model.Address;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -11,11 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -29,6 +32,10 @@ public class CustomerService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private ImageService imageService;
+
+    private final ReservationRepository reservationRepository;
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
@@ -46,34 +53,31 @@ public class CustomerService {
         return customerRepository.findAll(specification, pageable);
     }
 
-    public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
+    public Page<Reservation> getAllReservations(UUID customerId, Pageable pageable){
+//        return reservationRepository.findAll(pageable);
+        return reservationRepository.findAllByTrailerOwnerId(customerId, pageable);
+    }
+
+    public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO, String username) throws CustomerNotFoundException, AccessDeniedException {
+        if(!id.equals(findByUsername(username).getId())) {
+            log.info("User doesn't have the premissions to change this user");
+            throw new AccessDeniedException("This user doesn't have the permissions to change this user");
+        }
+
         Customer customer = getCustomer(id);
+        Image image = imageService.findById(updateCustomerDTO.getProfilePicture().getId());
+        Customer newCustomer = new CustomerConverter().convertUploadCustomerDTOToCustomer(updateCustomerDTO);
 
-        Address address = customer.getAddress();
+        newCustomer.setId(id);
+        newCustomer.setProfilePicture(image);
+        newCustomer.setCreatedAt(customer.getCreatedAt());
+        newCustomer.setPassword(bCryptPasswordEncoder.encode(newCustomer.getPassword()));
 
-        address.setCity(updateCustomerDTO.getAddress().getCity());
-        address.setStreetName(updateCustomerDTO.getAddress().getStreetName());
-        address.setNumber(updateCustomerDTO.getAddress().getNumber());
-        address.setPostalCode(updateCustomerDTO.getAddress().getPostalCode());
-
-        customer.setEmail(updateCustomerDTO.getEmail());
-        customer.setName(updateCustomerDTO.getName());
-
-        customer.setPassword(bCryptPasswordEncoder.encode(updateCustomerDTO.getPassword()));
-
-        customer.setNumber(updateCustomerDTO.getNumber());
-
-        customer.setAddress(address);
-
-        customer.setDateOfBirth(updateCustomerDTO.getDateOfBirth());
-        customer.setIban(updateCustomerDTO.getIban());
-
-
-        customerRepository.save(customer);
+        customerRepository.save(newCustomer);
 
         log.info("Customer with id " + id + " has been updated");
 
-        return customer;
+        return newCustomer;
     }
 
     public void deleteUser(UUID id) throws CustomerNotFoundException {

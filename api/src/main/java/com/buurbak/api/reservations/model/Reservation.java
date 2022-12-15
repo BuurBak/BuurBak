@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -23,25 +22,27 @@ public class Reservation {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false)
     private Customer renter;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private TrailerOffer trailer;
 
-    @Column(nullable = false) private LocalDateTime startTime;
+    @Column(nullable = false)
+    private LocalDateTime startTime;
 
-    @Column(nullable = false) private LocalDateTime endTime;
+    @Column(nullable = false)
+    private LocalDateTime endTime;
 
-    @Column(nullable = false) private boolean confirmed;
+    @Column(nullable = false)
+    private boolean confirmed;
 
     private LocalDateTime confirmedAt;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     public Reservation(Customer renter, TrailerOffer trailer, LocalDateTime startTime, LocalDateTime endTime, boolean confirmed) {
         this.renter = renter;

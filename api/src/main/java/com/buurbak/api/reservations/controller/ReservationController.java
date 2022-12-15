@@ -1,6 +1,8 @@
 package com.buurbak.api.reservations.controller;
 
+import com.buurbak.api.reservations.converter.ReservationConverter;
 import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.service.ReservationService;
@@ -26,8 +28,13 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @GetMapping(path = "/{id}")
-    public Reservation getReservation(@PathVariable UUID id){
-        return reservationService.getReservation(id);
+    public ReturnReservationDTO getReservation(@PathVariable UUID id){
+        try {
+            Reservation reservation = reservationService.getReservation(id);
+            return ReservationConverter.convertReservationToReturnReservationDTO(reservation);
+        } catch (ReservationNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
+        }
     }
 
     @Operation(summary = "Add new reservation")

@@ -1,5 +1,11 @@
 package com.buurbak.api.users.service;
 
+import com.buurbak.api.images.model.Image;
+import com.buurbak.api.images.repository.ImageRepository;
+import com.buurbak.api.images.service.ImageService;
+import com.buurbak.api.reservations.model.Reservation;
+import com.buurbak.api.reservations.repository.ReservationRepository;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
 import com.buurbak.api.users.model.Customer;
 import com.buurbak.api.users.repository.CustomerRepository;
@@ -7,22 +13,40 @@ import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
     @Mock
     private CustomerRepository customerRepository;
+    @Mock
+    private ReservationRepository reservationRepository;
+    @Mock
+    private ImageRepository imageRepository;
+    @Mock
+    private ImageService imageService;
+    @Mock
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @InjectMocks
     private CustomerService customerService;
+
 
     @Test
     void should_save_customer() {
@@ -60,6 +84,80 @@ class CustomerServiceTest {
         assertThrows(CustomerNotFoundException.class, () -> customerService.findByUsername(email));
         verify(customerRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(customerRepository);
+    }
+
+    @Test
+    void shouldReturnEmtpyReservationPage(){
+        // Given
+        List<Reservation> reservationList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(0, 20);
+        UUID id = UUID.randomUUID();
+
+        // When
+        when(reservationRepository.findAllByTrailerOwnerId(id, pageable)).thenReturn(new PageImpl<>(reservationList));
+
+        Page<Reservation> result = customerService.getAllReservations(id, pageable);
+
+        // Then
+        assertTrue(result.getContent().isEmpty());
+        verify(reservationRepository, times(1)).findAllByTrailerOwnerId(id, pageable);
+        verifyNoMoreInteractions(reservationRepository);
+    }
+
+    @Test
+    void shouldReturnCustomerPage(){
+        // Given
+        EasyRandom easyRandom = new EasyRandom();
+        Customer customer = easyRandom.nextObject(Customer.class);
+        List<Reservation> reservationList = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            Reservation reservation = easyRandom.nextObject(Reservation.class);
+            reservation.setRenter(customer);
+            reservationList.add(reservation);
+        }
+        Pageable pageable = PageRequest.of(0, 20);
+
+        // When
+        when(reservationRepository.findAllByTrailerOwnerId(customer.getId(), pageable)).thenReturn(new PageImpl<>(reservationList));
+
+
+        Page<Reservation> result = customerService.getAllReservations(customer.getId(), pageable);
+
+        // Then
+        assertEquals(reservationList, result.getContent());
+        verify(reservationRepository, times(1)).findAllByTrailerOwnerId(customer.getId(), pageable);
+        verifyNoMoreInteractions(reservationRepository);
+    }
+
+    @Test
+    void shouldUpdateCustomer() {
+        EasyRandom easyRandom = new EasyRandom();
+        Customer oldCustomer = easyRandom.nextObject(Customer.class);
+        UpdateCustomerDTO newCustomerDTO = easyRandom.nextObject(UpdateCustomerDTO.class);
+        Image image = easyRandom.nextObject(Image.class);
+        image.setId(newCustomerDTO.getProfilePicture().getId());
+
+        when(customerRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldCustomer));
+        when(imageService.findById(any(UUID.class))).thenReturn(image);
+        when(customerRepository.findByEmail(any())).thenReturn(Optional.ofNullable(oldCustomer));
+
+        customerService.updateUser(oldCustomer.getId(), newCustomerDTO, oldCustomer.getUsername());
+
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
+
+        verify(customerRepository).save(customerArgumentCaptor.capture());
+        Customer capturedCustomer = customerArgumentCaptor.getValue();
+
+        assertThat(capturedCustomer)
+                .hasFieldOrPropertyWithValue("id", oldCustomer.getId())
+                .hasFieldOrPropertyWithValue("name", newCustomerDTO.getName())
+                .hasFieldOrPropertyWithValue("email", newCustomerDTO.getEmail())
+                .hasFieldOrPropertyWithValue("iban", newCustomerDTO.getIban())
+                .hasFieldOrPropertyWithValue("number", newCustomerDTO.getNumber())
+                .hasFieldOrPropertyWithValue("dateOfBirth", newCustomerDTO.getDateOfBirth())
+                .hasFieldOrPropertyWithValue("profilePicture", image)
+                .hasFieldOrProperty("createdAt")
+                .hasFieldOrProperty("updatedAt");
     }
 
     @Test

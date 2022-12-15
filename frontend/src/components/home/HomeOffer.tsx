@@ -1,11 +1,10 @@
 // import TrailerCard from '../trailers/trailerCard/TrailerCard.jsx'
 import useAxios from '../../hooks/use-axios'
 import Loading from '../util/Loading'
-import { Alert, Typography, Box, Stack } from '@mui/material'
+import { Alert, Box, Stack, Typography } from '@mui/material'
 import { PaginatedResponse } from '../../types/PaginatedResponse'
 import { TrailerOfferInfo } from '../../types/TrailerOfferInfo'
 import TrailerOfferInfoCard from './TrailerOfferInfoCard'
-import TrailerCard from '../trailers/trailerCard/TrailerCard'
 
 export default function HomeOffer() {
   const { response, loading, error } = useAxios<
@@ -35,6 +34,7 @@ export default function HomeOffer() {
           gap: '1rem',
           justifyContent: 'center',
           marginY: 4,
+          paddingX: 2,
         }}
       >
         {response.content.map((trailer) => (
