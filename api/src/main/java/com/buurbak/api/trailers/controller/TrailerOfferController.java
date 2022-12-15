@@ -4,7 +4,6 @@ import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.ReturnTrailerOfferDTO;
 import com.buurbak.api.trailers.dto.TrailerInfoDTO;
-import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -97,8 +97,8 @@ public class TrailerOfferController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer type in database", e);
         } catch (TrailerOfferNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
-        } catch (AccessDeniedExeption accessDeniedExeption) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You don't have the permissions to change this trailer");
+        } catch (AccessDeniedException accessDeniedExeption) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You don't have the permissions to change this trailer", accessDeniedExeption);
         }
     }
 

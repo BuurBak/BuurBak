@@ -59,10 +59,7 @@ public class CustomerService {
     }
 
     public Customer updateUser(UUID id, UpdateCustomerDTO updateCustomerDTO, String username) throws CustomerNotFoundException, AccessDeniedException {
-        UUID authenticationUser = findByUsername(username).getId();
-        if(id != authenticationUser) {
-            log.info(String.valueOf(id));
-            log.info(String.valueOf(authenticationUser));
+        if(!id.equals(findByUsername(username).getId())) {
             log.info("User doesn't have the premissions to change this user");
             throw new AccessDeniedException("This user doesn't have the permissions to change this user");
         }
