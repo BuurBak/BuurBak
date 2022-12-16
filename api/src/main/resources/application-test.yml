@@ -1,25 +1,48 @@
+data:
+  generate-random-data: ${RANDOM_DATA}
+
+gcp:
+  auth-file: ${GCP_AUTH_FILE}
+jwt:
+  secret-key: ${JWT_SECRET}
+
 spring:
   datasource:
-    username: sa
-    password: sa
-    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
-    driver-class-name: org.h2.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
 
   jpa:
-    show-sql: false
     hibernate:
       ddl-auto: create-drop
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
 
   cloud:
     gcp:
-      core:
+      sql:
         enabled: false
       secretmanager:
         enabled: false
-      sql:
-        enabled: false
+        bootstrap:
+          enabled: false
 
-  properties:
-    hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      format_sql: true
+  mail:
+    host: ${MAIL_HOST}
+    port: 1025
+
+    # Username & Password not used but must be set
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true

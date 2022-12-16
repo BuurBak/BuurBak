@@ -24,6 +24,9 @@ spring:
   cloud:
     gcp:
       project-id: ${GCP_PROJECT_ID}
+      sql:
+        enabled: false
+
 
   data:
     web:

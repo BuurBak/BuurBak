@@ -30,10 +30,8 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
-    @Column(nullable = false)
-    private int length;
-    @Column(nullable = false)
-    private int height;
+    @Column(nullable = false) private int length;
+    @Column(nullable = false) private int height;
     @Column(nullable = false) private int width;
     @Column(nullable = false) private int weight;
     @Column(nullable = false) private int capacity;

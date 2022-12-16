@@ -2,7 +2,9 @@ package com.buurbak.api.reservations.service;
 
 import com.buurbak.api.reservations.converter.ReservationConverter;
 import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.exception.ReservationAlreadyConfirmedException;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
+import com.buurbak.api.reservations.exception.ReservationRenterIsOwnerException;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -33,6 +35,9 @@ public class ReservationService {
     public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
+        if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer))
+            throw new ReservationAlreadyConfirmedException();
+        if (customer == trailerOffer.getOwner()) throw new ReservationRenterIsOwnerException();
 
         Reservation reservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
@@ -40,6 +45,9 @@ public class ReservationService {
         reservation.setCreatedAt(reservation.getCreatedAt());
 
         reservationRepository.save(reservation);
+
+
+
         return reservation;
     }
 
