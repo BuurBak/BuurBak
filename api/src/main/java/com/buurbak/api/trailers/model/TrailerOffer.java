@@ -40,6 +40,7 @@ public class TrailerOffer {
     @OneToMany
     @JoinColumn
     private Collection<Image> trailerOfferPictures = new ArrayList<>();
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
@@ -71,13 +72,14 @@ public class TrailerOffer {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public TrailerOffer(TrailerType trailerType, Customer owner, Address address, int length, int height,
+    public TrailerOffer(TrailerType trailerType, Customer owner, Collection<Image> trailerOfferPictures, Address address, int length, int height,
                         int width, int weight, int capacity, String licensePlateNumber, String description,
                         LocalTime pickUpTimeStart, LocalTime pickUpTimeEnd,
                         LocalTime dropOffTimeStart, LocalTime dropOffTimeEnd,
                         double price, boolean available) {
         this.trailerType = trailerType;
         this.owner = owner;
+        this.trailerOfferPictures = trailerOfferPictures;
         this.address = address;
         this.length = length;
         this.height = height;

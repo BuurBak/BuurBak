@@ -1,6 +1,8 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.email.service.ContactExchangeEmailService;
+import com.buurbak.api.images.model.Image;
+import com.buurbak.api.images.service.ImageService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -18,8 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import static java.lang.Math.cos;
 
@@ -31,6 +32,7 @@ public class TrailerOfferService {
     private final CustomerService customerService;
     private final TrailerTypeService trailerTypeService;
     private final ContactExchangeEmailService contactExchangeEmailService;
+    private final ImageService imageService;
 
     public TrailerOffer getTrailerOffer(UUID id) throws TrailerOfferNotFoundException {
         return trailerOfferRepository.findById(id).orElseThrow(TrailerOfferNotFoundException::new);
@@ -73,8 +75,13 @@ public class TrailerOfferService {
 
             TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
+            Collection<UUID> uuidList = new ArrayList<>();
+            uuidList.addAll(createTrailerOfferDTO.getTrailerOfferPictures());
+            System.out.println(uuidList);
+
             TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
             newTrailerOffer.setId(trailerId);
+//            newTrailerOffer.setTrailerOfferPictures(uuidList);
             newTrailerOffer.setTrailerType(trailerType);
             newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
 
@@ -92,9 +99,5 @@ public class TrailerOfferService {
 
         trailerOfferRepository.deleteById(trailerId);
         log.info("TrailerOffer with id " + trailerId + " has been deleted");
-    }
-
-    public void addTrailerOfferPictures(UUID trailerId) {
-
     }
 }

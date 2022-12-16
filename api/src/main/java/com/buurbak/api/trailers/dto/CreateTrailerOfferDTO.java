@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.dto;
 
+import com.buurbak.api.images.dto.PublicImageDTO;
 import com.buurbak.api.security.dto.CreateAddressDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -70,4 +75,7 @@ public class CreateTrailerOfferDTO{
     private double price;
 
     private boolean available;
+
+    @Valid
+    private Collection<UUID> trailerOfferPictures;
 }

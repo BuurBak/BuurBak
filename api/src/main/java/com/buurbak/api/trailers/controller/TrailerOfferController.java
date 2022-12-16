@@ -119,7 +119,7 @@ public class TrailerOfferController {
         }
     }
 
-    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
     
 }
 
