@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.mail.MessagingException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ class ReservationServiceTest {
     }
 
     @Test
-    void shouldAddReservation() {
+    void shouldAddReservation() throws MessagingException {
         EasyRandom easyRandom = new EasyRandom();
         ReservationDTO reservationDTO = easyRandom.nextObject(ReservationDTO.class);
         Customer renter = easyRandom.nextObject(Customer.class);

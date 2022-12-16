@@ -1,7 +1,9 @@
 package com.buurbak.api.reservations.controller;
 
 import com.buurbak.api.reservations.dto.ReservationDTO;
+import com.buurbak.api.reservations.exception.ReservationAlreadyConfirmedException;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
+import com.buurbak.api.reservations.exception.ReservationRenterIsOwnerException;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.service.ReservationService;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -47,6 +50,12 @@ public class ReservationController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", e);
         } catch (TrailerOfferNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
+        } catch (ReservationAlreadyConfirmedException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trailer in Reservation already has a confirmed Reservation", e);
+        } catch (ReservationRenterIsOwnerException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ReservationOwner cannot rent their own Trailer", e);
+        } catch (MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Email could not be send", e);
         }
     }
 
@@ -88,7 +97,7 @@ public class ReservationController {
 
     }
 
-    @PutMapping(path = "/{id}/confirm")
+    @PostMapping(path = "/{id}/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void confirmReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
         try {
@@ -100,7 +109,7 @@ public class ReservationController {
         }
     }
 
-    @PutMapping(path = "/{id}/deny")
+    @DeleteMapping(path = "/{id}/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void denyReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
         try {

@@ -1,5 +1,6 @@
 package com.buurbak.api.reservations.service;
 
+import com.buurbak.api.email.service.ReservationEmailService;
 import com.buurbak.api.reservations.converter.ReservationConverter;
 import com.buurbak.api.reservations.dto.ReservationDTO;
 import com.buurbak.api.reservations.exception.ReservationAlreadyConfirmedException;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 @Service
@@ -26,13 +28,14 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerService customerService;
     private final TrailerOfferService trailerOfferService;
+    private final ReservationEmailService reservationEmailService;
 
     public Reservation getReservation(UUID id) throws ReservationNotFoundException {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
         return reservation;
     }
 
-    public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException {
+    public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyConfirmedException, ReservationRenterIsOwnerException, MessagingException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
         if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer))
@@ -46,7 +49,7 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
 
-
+        reservationEmailService.sendRequestMails(trailerOffer.getOwner().getEmail(), trailerOffer, customer, reservation.getStartTime(), reservation.getEndTime());
 
         return reservation;
     }

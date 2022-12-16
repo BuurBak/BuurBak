@@ -2,7 +2,6 @@ package com.buurbak.api.email.service;
 
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.users.model.Customer;
-import com.buurbak.api.users.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,10 @@ import java.util.List;
 public class ReservationEmailService {
     @Autowired
     private EmailService emailService;
-    @Autowired
-    private CustomerService customerService;
 
     public void sendRequestMails(String ownerEmail, TrailerOffer trailerOffer, Customer renter,  LocalDateTime from, LocalDateTime to) throws MessagingException {
         emailService.sendHtmlMessage(renter.getEmail(), "Reservation requested", buildEmail(List.of(
-                "Reservation for TrailerOffer: " + trailerOffer + " has been requested from " + from + " to " + to,
+                "Reservation for TrailerOffer: " + trailerOffer.getId() + " has been requested from " + from + " to " + to,
                 "Please wait for the TrailerOwner to confirm the reservation",
                 "or cancel/change the reservation below"
         ), new HashMap<String, String>() {{
@@ -29,7 +26,7 @@ public class ReservationEmailService {
         }}));
 
         emailService.sendHtmlMessage(ownerEmail, "Reservation requested", buildEmail(List.of(
-                renter.getName() + " want to reserve your trailer from " + from + " to " + to,
+                renter.getName() + " wants to reserve your trailer from " + from + " to " + to,
                 "Confirm or deny the request below"
         ), new HashMap<String, String>() {{
             put("Confirm", "");
