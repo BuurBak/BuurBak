@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/auth/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/customers").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/traileroffers", "/traileroffers/*").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/reservations/*/email/confirm", "/reservations/*/email/cancel", "/reservations/*/email/change-dates").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
 
         http.exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint);

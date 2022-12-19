@@ -14,12 +14,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -42,9 +50,9 @@ public class ReservationController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String addReservation(@Valid @RequestBody ReservationDTO reservationDTO, Authentication authentication) {
+    public String addReservation(@Valid @RequestBody ReservationDTO reservationDTO, Authentication authentication, HttpServletRequest request) {
         try {
-            Reservation reservation = reservationService.addReservation(reservationDTO, authentication.getName());
+            Reservation reservation = reservationService.addReservation(reservationDTO, authentication.getName(), request);
             return reservation.getId().toString();
         } catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find customer in database", e);
@@ -99,9 +107,9 @@ public class ReservationController {
 
     @PostMapping(path = "/{id}/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void confirmReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
+    public void confirmReservation(@PathVariable UUID id) {
         try {
-            reservationService.confirmReservation(id, reservationDTO);
+            reservationService.confirmReservation(id);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         } catch (TrailerOfferNotFoundException e) {
@@ -111,13 +119,76 @@ public class ReservationController {
 
     @DeleteMapping(path = "/{id}/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void denyReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO) {
+    public void denyReservation(@PathVariable UUID id) {
         try {
-            reservationService.denyReservation(id, reservationDTO);
+            reservationService.denyReservation(id);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         } catch (TrailerOfferNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
         }
+    }
+
+    // Temporary GET requests for Reservation mail system.
+    // Needs to be replaced by front end mails, since authentication header is forced to be in query parameter instead of header.
+    @PostMapping(path = "/{id}/email/confirm", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String confirmReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
+        System.out.println(htmlFormData);
+        return "Reservation confirmed! You can close this page now.";
+    }
+
+    @PostMapping(path = "/{id}/email/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String cancelReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
+        try {
+            System.out.println(htmlFormData);
+            HttpClient client = HttpClient.newBuilder().build();
+
+            // Set the URI for the request
+            URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id + "/confirm");
+
+            // Create the request
+            HttpRequest request2 = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header("Authorization", htmlFormData.get("auth"))
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            // Send the request and get the response
+            HttpResponse<String> response = client.send(request2, HttpResponse.BodyHandlers.ofString());
+
+            // Print the response status code
+            System.out.println(response.statusCode());
+
+            return "Reservation canceled! You can close this page now.";
+
+//            CloseableHttpClient httpClient = HttpClients.createDefault();
+//            HttpPost httpPost = new HttpPost("http://www.example.com/post");
+//            httpPost.setHeader("Content-Type", "application/json");
+//            httpPost.setEntity(new StringEntity(""));
+//            CloseableHttpResponse response2 = httpClient.execute(httpPost);
+//            HttpEntity entity = response2.getEntity();
+//            InputStream content = entity.getContent();
+//            httpClient.close();
+//            response2.close();
+//
+//            URL url = new URL("http://www.example.com/post");
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setRequestMethod("POST");
+//            OutputStream requestBody = connection.getOutputStream();
+//            requestBody.write("{\"key\": \"value\"}".getBytes());
+//            requestBody.close();
+//            connection.setRequestProperty("Content-Type", "application/json");
+//            connection.connect();
+//            InputStream response3 = connection.getInputStream();
+//            connection.disconnect();
+        } catch (IOException | InterruptedException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        }
+    }
+
+    @PostMapping(path = "/{id}/email/change-dates", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String changeReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
+        System.out.println(htmlFormData);
+        return "Reservation dates changed! You can close this page now.";
     }
 }

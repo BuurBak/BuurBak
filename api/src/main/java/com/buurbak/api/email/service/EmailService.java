@@ -39,8 +39,6 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);
-//        helper.addInline("attachment.png", resourceFile);
         emailSender.send(message);
     }
-
 }

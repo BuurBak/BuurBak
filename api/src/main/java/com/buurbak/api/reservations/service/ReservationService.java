@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @Service
@@ -35,7 +36,7 @@ public class ReservationService {
         return reservation;
     }
 
-    public Reservation addReservation(ReservationDTO reservationDTO, String username) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyConfirmedException, ReservationRenterIsOwnerException, MessagingException {
+    public Reservation addReservation(ReservationDTO reservationDTO, String username, HttpServletRequest request) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyConfirmedException, ReservationRenterIsOwnerException, MessagingException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
         if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer))
@@ -49,7 +50,7 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
 
-        reservationEmailService.sendRequestMails(trailerOffer.getOwner().getEmail(), trailerOffer, customer, reservation.getStartTime(), reservation.getEndTime());
+        reservationEmailService.sendRequestMails(reservation.getId(), request, trailerOffer.getOwner().getEmail(), trailerOffer, customer, reservation.getStartTime(), reservation.getEndTime());
 
         return reservation;
     }
@@ -71,11 +72,11 @@ public class ReservationService {
         reservationRepository.deleteById(reservationId);
     }
 
-    public void confirmReservation(UUID id, ReservationDTO reservationDTO) {
-        Reservation reservation = getReservation(id);
+    public void confirmReservation(UUID id) {
+//        Reservation reservation = getReservation(id);
 
     }
 
-    public void denyReservation(UUID id, ReservationDTO reservationDTO) {
+    public void denyReservation(UUID id) {
     }
 }

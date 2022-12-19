@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ class ReservationServiceTest {
         when(customerService.findByUsername(username)).thenReturn(renter);
         when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId())).thenReturn(trailer);
 
-        reservationService.addReservation(reservationDTO, username);
+        reservationService.addReservation(reservationDTO, username, easyRandom.nextObject(HttpServletRequest.class));
         ArgumentCaptor<Reservation> reservationArgumentCaptor = ArgumentCaptor.forClass(Reservation.class);
         verify(reservationRepository).save(reservationArgumentCaptor.capture());
         Reservation capturedReservation = reservationArgumentCaptor.getValue();
