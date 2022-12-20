@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -89,12 +90,14 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO, Authentication authentication) {
         try {
-            customerService.updateUser(id, updateCustomerDTO);
+            customerService.updateUser(id, updateCustomerDTO, authentication.getName());
         }
         catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
+        } catch (AccessDeniedException accessDeniedExeption) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user doesn't have the permissions to change this user", accessDeniedExeption);
         }
     }
 

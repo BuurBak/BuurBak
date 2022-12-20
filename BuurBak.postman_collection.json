@@ -10,15 +10,36 @@
 			"item": [
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"ACCESS_TOKEN\", jsonData[\"access_token\"]);",
+									"pm.collectionVariables.set(\"REFRESH_TOKEN\", jsonData[\"refresh_token\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{REFRESH_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Luca Bergman\",\n    \"email\": \"lucabergman@buurbak.com\",\n    \"number\": \"06-12345678\",\n    \"password\": \"hello123\",\n    \"address\": {\n        \"postal_code\": \"fake postal_code\",\n        \"street_name\": \"fake street_name\",\n        \"number\": \"100\",\n        \"city\": \"New York\"\n    }\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -35,6 +56,13 @@
 								"v1",
 								"auth",
 								"register"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Julia Michels",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -42,7 +70,24 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"ACCESS_TOKEN\", jsonData[\"access_token\"]);",
+									"pm.collectionVariables.set(\"REFRESH_TOKEN\", jsonData[\"refresh_token\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -163,107 +208,6 @@
 			]
 		},
 		{
-			"name": "Customers",
-			"item": [
-				{
-					"name": "Get self",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{HOST}}/api/v1/customers/self",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"customers",
-								"self"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{HOST}}/api/v1/customers",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"customers"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "lucabergman@hotmail.nl",
-									"disabled": true
-								},
-								{
-									"key": "page",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "200",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "name,asc",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all reservations",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "id",
-									"value": "23be93b7-e226-4895-86d8-3a0924c4e177",
-									"type": "default",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{HOST}}/api/v1/customers/{id}/reservations",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"customers",
-								"{id}",
-								"reservations"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "TrailerOffers",
 			"item": [
 				{
@@ -290,6 +234,30 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"traileroffers",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"name": "Get single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"trailerType\": \"Big\",\r\n  \"address\": {\r\n    \"city\": \"Utrecht\",\r\n    \"number\": \"15\",\r\n    \"street_name\": \"Heidelberglaan\",\r\n    \"postal_code\": \"1234AB\"\r\n  },\r\n  \"length\": 200,\r\n  \"height\": 50,\r\n  \"width\": 150,\r\n  \"weight\": 100,\r\n  \"capacity\": 1000,\r\n  \"licensePlateNumber\": \"NFDHSBF\",\r\n  \"pickUpTimeStart\": \"09:00:00\",\r\n  \"pickUpTimeEnd\": \"10:00:00\",\r\n  \"dropOffTimeStart\": \"17:00:00\",\r\n  \"dropOffTimeEnd\": \"20:00:00\",\r\n  \"price\": 23298472300,\r\n  \"available\": true\r\n}",
 						"url": {
 							"raw": "{{HOST}}/api/v1/traileroffers/{id}",
 							"host": [
@@ -413,6 +381,136 @@
 								"api",
 								"v1",
 								"images"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get self",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/customers/self",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/customers",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "lucabergman@hotmail.nl",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "200",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name,asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "23be93b7-e226-4895-86d8-3a0924c4e177",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/customers/{id}/reservations",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"{id}",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Luca Bergman\",\r\n    \"email\": \"lucabergman@yahoo.com\",\r\n    \"password\":\"Hello123\",\r\n    \"iban\": \"This is NOT an IBAN\",\r\n    \"number\": \"06-12345678\",\r\n    \"address\": {\r\n        \"id\": \"2eeeb9fd-bbad-41e3-9241-ab3d52e16ace\",\r\n        \"city\": \"Amsterdam\",\r\n        \"number\": \"258\",\r\n        \"street_name\": \"Oudezijds Voorburgwal\",\r\n        \"postal_code\": \"1012 GK\"\r\n    },\r\n    \"date_of_birth\": \"2001-03-10\",\r\n    \"profilePicture\": {\r\n        \"id\": \"b9036ab4-19e5-4ed4-936a-2de1c4633eb9\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/customers/79f5601a-cd94-4dfd-8246-dbc3ddf0704d",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"79f5601a-cd94-4dfd-8246-dbc3ddf0704d"
 							]
 						}
 					},

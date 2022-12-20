@@ -1,7 +1,6 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
 import com.buurbak.api.users.service.CustomerService;
@@ -145,7 +144,7 @@ class TrailerOfferServiceTest {
 	}
 
     @Test
-    void updateTrailerOffer() throws AccessDeniedExeption {
+    void updateTrailerOffer() {
         EasyRandom easyRandom = new EasyRandom();
         TrailerOffer oldTrailerOffer = easyRandom.nextObject(TrailerOffer.class);
         CreateTrailerOfferDTO newTrailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);

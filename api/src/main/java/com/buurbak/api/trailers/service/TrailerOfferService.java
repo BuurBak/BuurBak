@@ -3,7 +3,6 @@ package com.buurbak.api.trailers.service;
 import com.buurbak.api.email.service.ContactExchangeEmailService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
 import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
-import com.buurbak.api.trailers.exception.AccessDeniedExeption;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.trailers.exception.TrailerTypeNotFoundException;
 import com.buurbak.api.trailers.model.TrailerOffer;
@@ -16,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -64,10 +64,12 @@ public class TrailerOfferService {
         return trailerOfferRepository.save(trailerOffer);
     }
 
-    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws AccessDeniedExeption, TrailerOfferNotFoundException, TrailerTypeNotFoundException {
+    public void updateTrailerOffer(UUID trailerId, CreateTrailerOfferDTO createTrailerOfferDTO, String username) throws TrailerOfferNotFoundException, TrailerTypeNotFoundException, AccessDeniedException {
         TrailerOffer trailerOffer = getTrailerOffer(trailerId);
-        Customer customer = customerService.findByUsername(username);
-        if(customer.getId() == trailerOffer.getOwner().getId()) {
+        if(!trailerOffer.getOwner().getId().equals(customerService.findByUsername(username).getId())) {
+            log.info("This user doesn't have the permissions to change the trailer");
+            throw new AccessDeniedException("This user doesn't have the permissions to change the trailer");
+        }
 
             TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
@@ -78,9 +80,8 @@ public class TrailerOfferService {
 
             newTrailerOffer.setOwner(trailerOffer.getOwner());
             trailerOfferRepository.save(newTrailerOffer);
-        } else {
-            throw new AccessDeniedExeption("This user doesn't have the permissions to change the trailer");
-        }
+
+
 
     }
 
