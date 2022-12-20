@@ -33,5 +33,6 @@ public class UpdateCustomerDTO {
     private LocalDate dateOfBirth;
     @NotBlank
     private String iban;
+    @Valid
     private ImageIdDTO profilePicture;
 }
