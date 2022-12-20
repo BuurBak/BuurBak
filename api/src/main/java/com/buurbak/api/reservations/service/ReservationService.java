@@ -73,10 +73,12 @@ public class ReservationService {
     }
 
     public void confirmReservation(UUID id) {
-//        Reservation reservation = getReservation(id);
+        Reservation reservation = getReservation(id);
 
     }
 
     public void denyReservation(UUID id) {
+        Reservation reservation = getReservation(id);
+
     }
 }

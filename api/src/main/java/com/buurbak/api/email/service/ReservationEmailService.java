@@ -111,11 +111,17 @@ public class ReservationEmailService {
         }}, reservationId, request));
     }
 
-    public void sendUnauthorizedErrorMail(String email, String action) throws MessagingException {
+    public void sendUnauthorizedErrorMail(String email) throws MessagingException {
         emailService.sendHtmlMessage(email, "Reservation error: action unauthorized", buildEmail(List.of(
-                "Error: Reservation " + action + " didn't go through",
-                "Unauthorized to perform chosen action.",
-                "Please contact Buurbak."
+                "Error: Unauthorized to perform chosen action.",
+                "Please try to log out and log in again."
+        )));
+    }
+
+    public void sendReservationNotFoundErrorMail(String email) throws MessagingException {
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "Error: Reservation was not found",
+                "Please contact Buurbak"
         )));
     }
 
@@ -139,14 +145,14 @@ public class ReservationEmailService {
 
     public void sendDatesErrorMail(String email) throws MessagingException {
         emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "New dates of Reservation can not be in the past",
+                "Error: New dates of Reservation can not be in the past",
                 "You could try again in the previous email."
         )));
     }
 
     public void sendOutdatedReservationMail(String email) throws MessagingException {
         emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Reservation action didn't go through, because the Reservation is out of date",
+                "Error: Reservation is out of date",
                 "Check your inbox for the most recent information of the Reservation."
         )));
     }

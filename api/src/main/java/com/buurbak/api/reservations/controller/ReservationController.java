@@ -117,8 +117,6 @@ public class ReservationController {
             reservationService.confirmReservation(id);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
-        } catch (TrailerOfferNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
         }
     }
 
@@ -129,8 +127,6 @@ public class ReservationController {
             reservationService.denyReservation(id);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
-        } catch (TrailerOfferNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
         }
     }
 
@@ -155,7 +151,7 @@ public class ReservationController {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 204) {
                 if (response.statusCode() == 401) {
-                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "confirmation");
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"));
                 }
                 return "Something went wrong, check your inbox or contact Buurbak.";
             }
@@ -169,8 +165,6 @@ public class ReservationController {
     @PostMapping(path = "/{id}/email/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String cancelReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
         try {
-            Reservation reservation = reservationService.getReservation(id);
-
             // Set the URI for the request
             HttpClient client = HttpClient.newBuilder().build();
             URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id + "/confirm");
@@ -179,14 +173,16 @@ public class ReservationController {
             HttpRequest request = HttpRequest.newBuilder()
                     .DELETE()
                     .uri(uri)
-                    .header("Authorization", "")
+                    .header("Authorization", htmlFormData.get("auth"))
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 204) {
                 if (response.statusCode() == 401) {
-                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "denial");
-                }
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"));
+                } else if (response.statusCode() == 404) {
+                    reservationEmailService.sendReservationNotFoundErrorMail(htmlFormData.get("email"));
+                } else if (response.statusCode() == 4)
                 return "Something went wrong, check your inbox or contact Buurbak.";
             }
 
@@ -224,8 +220,8 @@ public class ReservationController {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 204) {
-                if (response.statusCode() == 401) {
-                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "date change");
+                if (response.statusCode() == 404) {
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"));
                 }
                 return "Something went wrong, check your inbox or contact Buurbak.";
             }
