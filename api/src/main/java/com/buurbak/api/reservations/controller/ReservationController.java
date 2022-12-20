@@ -1,5 +1,6 @@
 package com.buurbak.api.reservations.controller;
 
+import com.buurbak.api.email.service.ReservationEmailService;
 import com.buurbak.api.reservations.dto.ReservationDTO;
 import com.buurbak.api.reservations.exception.ReservationAlreadyConfirmedException;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
@@ -38,6 +39,7 @@ import java.util.UUID;
 @RequestMapping("reservations")
 public class ReservationController {
     private final ReservationService reservationService;
+    private final ReservationEmailService reservationEmailService;
 
     @GetMapping(path = "/{id}")
     public Reservation getReservation(@PathVariable UUID id){
@@ -137,7 +139,7 @@ public class ReservationController {
     // Now, auth token is sent with html form in POST request hidden input field
     // Not completely sure if auth Bearer token in request body is safe enough
     @PostMapping(path = "/{id}/email/confirm", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String confirmReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
+    public String confirmReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData, Authentication authentication) {
         try {
             // Set the URI for the request
             HttpClient client = HttpClient.newBuilder().build();
@@ -150,17 +152,25 @@ public class ReservationController {
                     .header("Authorization", htmlFormData.get("auth"))
                     .build();
 
-            client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 204) {
+                if (response.statusCode() == 401) {
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "confirmation");
+                }
+                return "Something went wrong, check your inbox or contact Buurbak.";
+            }
 
             return "Reservation confirmed! You can close this page now.";
-        } catch (IOException | InterruptedException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        } catch (IOException | InterruptedException | MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action went wrong, please contact the developers", e);
         }
     }
 
     @PostMapping(path = "/{id}/email/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String cancelReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
         try {
+            Reservation reservation = reservationService.getReservation(id);
+
             // Set the URI for the request
             HttpClient client = HttpClient.newBuilder().build();
             URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id + "/confirm");
@@ -169,19 +179,25 @@ public class ReservationController {
             HttpRequest request = HttpRequest.newBuilder()
                     .DELETE()
                     .uri(uri)
-                    .header("Authorization", htmlFormData.get("auth"))
+                    .header("Authorization", "")
                     .build();
 
-            client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 204) {
+                if (response.statusCode() == 401) {
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "denial");
+                }
+                return "Something went wrong, check your inbox or contact Buurbak.";
+            }
 
             return "Reservation canceled! You can close this page now.";
-        } catch (IOException | InterruptedException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        } catch (IOException | InterruptedException | MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action went wrong, please contact the developers", e);
         }
     }
 
     @PostMapping(path = "/{id}/email/change-dates", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String changeReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
+    public String changeReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData, Authentication authentication) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
@@ -207,12 +223,16 @@ public class ReservationController {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.statusCode());
-            System.out.println(request);
+            if (response.statusCode() != 204) {
+                if (response.statusCode() == 401) {
+                    reservationEmailService.sendUnauthorizedErrorMail(htmlFormData.get("email"), "date change");
+                }
+                return "Something went wrong, check your inbox or contact Buurbak.";
+            }
 
             return "Reservation dates changed! You can close this page now.";
-        } catch (IOException | InterruptedException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        } catch (IOException | InterruptedException | MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action went wrong, please contact the developers", e);
         }
     }
 }

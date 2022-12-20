@@ -86,7 +86,7 @@ public class ReservationEmailService {
     }
 
     public void sendConfirmedMails(UUID reservationId, HttpServletRequest request, Customer renter, Customer owner) throws MessagingException {
-        emailService.sendHtmlMessage(renter.getEmail(), "", buildEmail(List.of(
+        emailService.sendHtmlMessage(renter.getEmail(), "Reservation confirmed", buildEmail(List.of(
                 "Reservation has been confirmed",
                 "Arrange the payment and appointment with the follow contact details:",
                 "Name: " + owner.getName(),
@@ -98,7 +98,7 @@ public class ReservationEmailService {
             put("Cancel Reservation", "cancel");
         }}, reservationId, request));
 
-        emailService.sendHtmlMessage(owner.getEmail(), "", buildEmail(List.of(
+        emailService.sendHtmlMessage(owner.getEmail(), "Reservation confirmed", buildEmail(List.of(
                 "Reservation has been confirmed",
                 "Arrange the payment and appointment with the follow contact details:",
                 "Name: " + renter.getName(),
@@ -111,41 +111,42 @@ public class ReservationEmailService {
         }}, reservationId, request));
     }
 
-    public void sendUnauthorizedErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "Error: Unauthorized to perform chosen action.",
+    public void sendUnauthorizedErrorMail(String email, String action) throws MessagingException {
+        emailService.sendHtmlMessage(email, "Reservation error: action unauthorized", buildEmail(List.of(
+                "Error: Reservation " + action + " didn't go through",
+                "Unauthorized to perform chosen action.",
                 "Please contact Buurbak."
         )));
     }
 
     public void sendDeniedErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "Error: Reservation was denied by the TrailerOwner"
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "Error: Reservation was already denied by the TrailerOwner"
         )));
     }
 
     public void sendRenterCancelledErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "Error: Reservation was cancelled by the Renter"
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "Error: Reservation was already cancelled by the Renter"
         )));
     }
 
     public void sendOwnerCancelledErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "Error: Reservation was cancelled by the Owner"
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "Error: Reservation was already cancelled by the Owner"
         )));
     }
 
     public void sendDatesErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "New dates of Reservation have to be in the future.",
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "New dates of Reservation can not be in the past",
                 "You could try again in the previous email."
         )));
     }
 
     public void sendOutdatedReservationMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "", buildEmail(List.of(
-                "Reservation action didn't go through, because the Reservation was already updated.",
+        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
+                "Reservation action didn't go through, because the Reservation is out of date",
                 "Check your inbox for the most recent information of the Reservation."
         )));
     }
@@ -162,10 +163,10 @@ public class ReservationEmailService {
         StringBuilder HtmlMessage = new StringBuilder();
         HtmlMessage.append(buildEmail(lines));
         HtmlMessage.append("<br><br>");
-        actions.forEach((action, endpoint) ->
-                HtmlMessage
+        actions.forEach((action, endpoint) -> HtmlMessage
                 .append("<form action=\"").append(buildLink(reservationId, request, endpoint)).append("\" method=\"post\">")
                 .append("  <input type=\"submit\" value=\"").append(action).append("\">")
+                .append("  <input type=\"hidden\" name=\"email\" value=\"").append(request.getUserPrincipal().getName()).append("\">")
                 .append("  <input type=\"hidden\" name=\"auth\" value=\"").append(request.getHeader("Authorization")).append("\">")
                 .append("</form><br>"));
         return HtmlMessage.toString();
