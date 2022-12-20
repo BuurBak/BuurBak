@@ -8,6 +8,8 @@ import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.service.ReservationService;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
 import com.buurbak.api.users.exception.CustomerNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,6 +29,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -129,58 +132,49 @@ public class ReservationController {
         }
     }
 
-    // Temporary GET requests for Reservation mail system.
-    // Needs to be replaced by front end mails, since authentication header is forced to be in query parameter instead of header.
+    // Temporary POST requests for Reservation mail system.
+    // At first, auth token was sent with html href in GET request query parameter
+    // Now, auth token is sent with html form in POST request hidden input field
+    // Not completely sure if auth Bearer token in request body is safe enough
     @PostMapping(path = "/{id}/email/confirm", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String confirmReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
-        System.out.println(htmlFormData);
-        return "Reservation confirmed! You can close this page now.";
+        try {
+            // Set the URI for the request
+            HttpClient client = HttpClient.newBuilder().build();
+            URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id + "/confirm");
+
+            // Create and send the request
+            HttpRequest request = HttpRequest.newBuilder()
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .uri(uri)
+                    .header("Authorization", htmlFormData.get("auth"))
+                    .build();
+
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            return "Reservation confirmed! You can close this page now.";
+        } catch (IOException | InterruptedException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        }
     }
 
     @PostMapping(path = "/{id}/email/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String cancelReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
         try {
-            System.out.println(htmlFormData);
-            HttpClient client = HttpClient.newBuilder().build();
-
             // Set the URI for the request
+            HttpClient client = HttpClient.newBuilder().build();
             URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id + "/confirm");
 
-            // Create the request
-            HttpRequest request2 = HttpRequest.newBuilder()
+            // Create and send the request
+            HttpRequest request = HttpRequest.newBuilder()
+                    .DELETE()
                     .uri(uri)
                     .header("Authorization", htmlFormData.get("auth"))
-                    .POST(HttpRequest.BodyPublishers.noBody())
                     .build();
 
-            // Send the request and get the response
-            HttpResponse<String> response = client.send(request2, HttpResponse.BodyHandlers.ofString());
-
-            // Print the response status code
-            System.out.println(response.statusCode());
+            client.send(request, HttpResponse.BodyHandlers.ofString());
 
             return "Reservation canceled! You can close this page now.";
-
-//            CloseableHttpClient httpClient = HttpClients.createDefault();
-//            HttpPost httpPost = new HttpPost("http://www.example.com/post");
-//            httpPost.setHeader("Content-Type", "application/json");
-//            httpPost.setEntity(new StringEntity(""));
-//            CloseableHttpResponse response2 = httpClient.execute(httpPost);
-//            HttpEntity entity = response2.getEntity();
-//            InputStream content = entity.getContent();
-//            httpClient.close();
-//            response2.close();
-//
-//            URL url = new URL("http://www.example.com/post");
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("POST");
-//            OutputStream requestBody = connection.getOutputStream();
-//            requestBody.write("{\"key\": \"value\"}".getBytes());
-//            requestBody.close();
-//            connection.setRequestProperty("Content-Type", "application/json");
-//            connection.connect();
-//            InputStream response3 = connection.getInputStream();
-//            connection.disconnect();
         } catch (IOException | InterruptedException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
         }
@@ -188,7 +182,37 @@ public class ReservationController {
 
     @PostMapping(path = "/{id}/email/change-dates", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String changeReservationRequest(@PathVariable UUID id, @RequestParam Map<String, String> htmlFormData) {
-        System.out.println(htmlFormData);
-        return "Reservation dates changed! You can close this page now.";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+
+            // Set the URI for the request
+            HttpClient client = HttpClient.newBuilder().build();
+            URI uri = URI.create("http://localhost:8000/api/v1/reservations/" + id);
+
+            // Create request body
+            Reservation reservation = reservationService.getReservation(id);
+            ReservationDTO body = new ReservationDTO();
+            body.setStartTime(LocalDateTime.parse(htmlFormData.get("startTime")));
+            body.setEndTime(LocalDateTime.parse(htmlFormData.get("endTime")));
+            body.setTrailerId(reservation.getTrailer().getId());
+            body.setConfirmed(reservation.isConfirmed());
+
+            // Create and send the request
+            HttpRequest request = HttpRequest.newBuilder()
+                    .PUT(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
+                    .uri(uri)
+                    .header("Authorization", htmlFormData.get("auth"))
+                    .header("Content-Type", "application/json")
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.statusCode());
+            System.out.println(request);
+
+            return "Reservation dates changed! You can close this page now.";
+        } catch (IOException | InterruptedException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action request went wrong, please contact the developers", e);
+        }
     }
 }

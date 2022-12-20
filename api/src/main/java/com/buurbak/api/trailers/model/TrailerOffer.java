@@ -45,6 +45,7 @@ public class TrailerOffer {
     @Column(nullable = false) private boolean available;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;

@@ -40,6 +40,7 @@ public class Reservation {
     private LocalDateTime confirmedAt;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
