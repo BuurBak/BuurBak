@@ -1,15 +1,16 @@
 package com.buurbak.api.trailers.exception;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-public class TrailerOfferNotFoundException extends RuntimeException {
+import javax.persistence.EntityNotFoundException;
 
-    private final String message;
-
+@Getter
+@Setter
+@NoArgsConstructor
+public class TrailerOfferNotFoundException extends EntityNotFoundException {
     public TrailerOfferNotFoundException(String message) {
         super(message);
-        this.message = message;
     }
 }

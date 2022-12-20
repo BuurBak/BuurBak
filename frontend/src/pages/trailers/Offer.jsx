@@ -1,6 +1,5 @@
 import { GoogleMap, MarkerF } from '@react-google-maps/api'
 import mapStyles from '../../data/mapStyles.js'
-import Marker from '../../data/images/marker.svg'
 import { useEffect, useState } from 'react'
 import '../../components/trailers/offer/Map.css'
 import { IoIosArrowBack, IoIosArrowForward, IoIosMenu } from 'react-icons/io'
@@ -108,7 +107,7 @@ export default function Offer() {
               onClick={() => setActiveTrailer(trailer)}
               position={{ lat: trailer?.lat, lng: trailer?.lng }}
               icon={{
-                url: Marker,
+                url: '/marker.svg',
                 scaledSize: new window.google.maps.Size(50, 50),
               }}
             />

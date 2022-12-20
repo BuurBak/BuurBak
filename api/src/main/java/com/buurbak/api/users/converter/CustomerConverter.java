@@ -1,7 +1,10 @@
 package com.buurbak.api.users.converter;
 
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
+import com.buurbak.api.users.dto.UpdateCustomerDTO;
 import com.buurbak.api.users.model.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -28,5 +31,22 @@ public class CustomerConverter {
                 .map(this::convertCustomerToPublicCustomerDTO)
                 .toList();
         return new PageImpl<>(publicCustomerDTOList, customerPage.getPageable(), customerPage.getTotalElements());
+    }
+
+    public ReturnReservationDTO convertReservationToReservationDTO (Reservation reservation) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(reservation, ReturnReservationDTO.class);
+    }
+
+    public Page<ReturnReservationDTO> convertReservationPageToReservationDTOPage(Page<Reservation> reservationPage){
+        List<ReturnReservationDTO> reservationDTOList = reservationPage
+                .stream()
+                .map(this::convertReservationToReservationDTO)
+                .toList();
+        return new PageImpl<>(reservationDTOList, reservationPage.getPageable(), reservationPage.getTotalElements());
+    }
+    public Customer convertUploadCustomerDTOToCustomer (UpdateCustomerDTO updateCustomerDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(updateCustomerDTO, Customer.class);
     }
 }

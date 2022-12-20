@@ -1,6 +1,7 @@
 package com.buurbak.api.users.dto;
 
 
+import com.buurbak.api.images.dto.PublicImageDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,7 @@ public class PrivateCustomerDTO {
         private String number;
         @Valid
         private PrivateAddressDTO address;
+
+        @Valid
+        private PublicImageDTO profilePicture;
 }

@@ -1,10 +1,14 @@
 package com.buurbak.api.trailers.service;
 
+import com.buurbak.api.trailers.dto.CreateTrailerOfferDTO;
 import com.buurbak.api.trailers.model.TrailerOffer;
 import com.buurbak.api.trailers.repository.TrailerOfferRepository;
+import com.buurbak.api.users.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,13 +23,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class TrailerOfferServiceTest {
-    @Mock
-    private TrailerOfferRepository trailerOfferRepository;
+    @Mock private TrailerOfferRepository trailerOfferRepository;
+    @Mock private TrailerTypeService trailerTypeService;
+    @Mock private CustomerService customerService;
 
     @InjectMocks
     private TrailerOfferService trailerOfferService;
@@ -96,5 +104,83 @@ class TrailerOfferServiceTest {
         assertEquals(trailerOfferList, result.getContent());
         verify(trailerOfferRepository, times(1)).findAll(pageable);
         verifyNoMoreInteractions(trailerOfferRepository);
+    }
+
+	@Test
+	void addTrailerOffer() {
+		EasyRandom easyRandom = new EasyRandom();
+		CreateTrailerOfferDTO trailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
+
+		trailerOfferService.addTrailerOffer(trailerOfferDTO, "lucabergman@yahoo.com");
+
+		ArgumentCaptor<TrailerOffer> trailerOfferArgumentCaptor = ArgumentCaptor.forClass(TrailerOffer.class);
+
+		verify(trailerOfferRepository).save(trailerOfferArgumentCaptor.capture());
+		TrailerOffer capturedTrailerOffer = trailerOfferArgumentCaptor.getValue();
+
+		assertThat(capturedTrailerOffer)
+                .hasFieldOrProperty("id")
+                .hasFieldOrProperty("trailerType")
+                .hasFieldOrProperty("owner")
+                .hasFieldOrPropertyWithValue("length", trailerOfferDTO.getLength())
+		        .hasFieldOrPropertyWithValue("height", trailerOfferDTO.getHeight())
+                .hasFieldOrPropertyWithValue("width", trailerOfferDTO.getWidth())
+		        .hasFieldOrPropertyWithValue("weight", trailerOfferDTO.getWeight())
+		        .hasFieldOrPropertyWithValue("capacity", trailerOfferDTO.getCapacity())
+		        .hasFieldOrPropertyWithValue("licensePlateNumber", trailerOfferDTO.getLicensePlateNumber())
+                .hasFieldOrPropertyWithValue("pickUpTimeStart", trailerOfferDTO.getPickUpTimeStart())
+		        .hasFieldOrPropertyWithValue("pickUpTimeEnd", trailerOfferDTO.getPickUpTimeEnd())
+                .hasFieldOrPropertyWithValue("dropOffTimeStart", trailerOfferDTO.getDropOffTimeStart())
+                .hasFieldOrPropertyWithValue("dropOffTimeEnd", trailerOfferDTO.getDropOffTimeEnd())
+                .hasFieldOrPropertyWithValue("latitude", trailerOfferDTO.getLatitude())
+                .hasFieldOrPropertyWithValue("longitude", trailerOfferDTO.getLongitude())
+                .hasFieldOrPropertyWithValue("price", trailerOfferDTO.getPrice())
+		        .hasFieldOrPropertyWithValue("available", trailerOfferDTO.isAvailable())
+		        .hasFieldOrProperty("createdAt")
+		        .hasFieldOrProperty("updatedAt");
+
+        assertNotEquals(trailerOfferDTO.getLatitude(), capturedTrailerOffer.getFakeLatitude());
+        assertNotEquals(trailerOfferDTO.getLongitude(), capturedTrailerOffer.getFakeLongitude());
+	}
+
+    @Test
+    void updateTrailerOffer() {
+        EasyRandom easyRandom = new EasyRandom();
+        TrailerOffer oldTrailerOffer = easyRandom.nextObject(TrailerOffer.class);
+        CreateTrailerOfferDTO newTrailerOfferDTO = easyRandom.nextObject(CreateTrailerOfferDTO.class);
+
+        when(trailerOfferRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(oldTrailerOffer));
+        when(customerService.findByUsername(any())).thenReturn(oldTrailerOffer.getOwner());
+
+        trailerOfferService.updateTrailerOffer(oldTrailerOffer.getId(), newTrailerOfferDTO, oldTrailerOffer.getOwner().getUsername());
+
+        ArgumentCaptor<TrailerOffer> trailerOfferArgumentCaptor = ArgumentCaptor.forClass(TrailerOffer.class);
+
+        verify(trailerOfferRepository).save(trailerOfferArgumentCaptor.capture());
+        TrailerOffer capturedTrailerOffer = trailerOfferArgumentCaptor.getValue();
+
+        assertThat(capturedTrailerOffer)
+                .hasFieldOrProperty("id")
+                .hasFieldOrProperty("trailerType")
+                .hasFieldOrProperty("owner")
+                .hasFieldOrPropertyWithValue("length", newTrailerOfferDTO.getLength())
+                .hasFieldOrPropertyWithValue("height", newTrailerOfferDTO.getHeight())
+                .hasFieldOrPropertyWithValue("width", newTrailerOfferDTO.getWidth())
+                .hasFieldOrPropertyWithValue("weight", newTrailerOfferDTO.getWeight())
+                .hasFieldOrPropertyWithValue("capacity", newTrailerOfferDTO.getCapacity())
+                .hasFieldOrPropertyWithValue("licensePlateNumber", newTrailerOfferDTO.getLicensePlateNumber())
+                .hasFieldOrPropertyWithValue("pickUpTimeStart", newTrailerOfferDTO.getPickUpTimeStart())
+                .hasFieldOrPropertyWithValue("pickUpTimeEnd", newTrailerOfferDTO.getPickUpTimeEnd())
+                .hasFieldOrPropertyWithValue("dropOffTimeStart", newTrailerOfferDTO.getDropOffTimeStart())
+                .hasFieldOrPropertyWithValue("dropOffTimeEnd", newTrailerOfferDTO.getDropOffTimeEnd())
+                .hasFieldOrPropertyWithValue("latitude", newTrailerOfferDTO.getLatitude())
+                .hasFieldOrPropertyWithValue("longitude", newTrailerOfferDTO.getLongitude())
+                .hasFieldOrPropertyWithValue("price", newTrailerOfferDTO.getPrice())
+                .hasFieldOrPropertyWithValue("available", newTrailerOfferDTO.isAvailable())
+                .hasFieldOrProperty("createdAt")
+                .hasFieldOrProperty("updatedAt");
+
+        assertNotEquals(newTrailerOfferDTO.getLatitude(), capturedTrailerOffer.getFakeLatitude());
+        assertNotEquals(newTrailerOfferDTO.getLongitude(), capturedTrailerOffer.getFakeLongitude());
     }
 }

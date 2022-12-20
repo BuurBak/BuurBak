@@ -1,5 +1,7 @@
 package com.buurbak.api.users.controller;
 
+import com.buurbak.api.reservations.dto.ReturnReservationDTO;
+import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.users.controller.specifcation.NotDeletedCustomerSpecification;
 import com.buurbak.api.users.converter.CustomerConverter;
 import com.buurbak.api.users.dto.PrivateCustomerDTO;
@@ -22,6 +24,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -86,12 +90,14 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
+    public void updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO, Authentication authentication) {
         try {
-            customerService.updateUser(id, updateCustomerDTO);
+            customerService.updateUser(id, updateCustomerDTO, authentication.getName());
         }
         catch (CustomerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find user in database", e);
+        } catch (AccessDeniedException accessDeniedExeption) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user doesn't have the permissions to change this user", accessDeniedExeption);
         }
     }
 
@@ -110,5 +116,18 @@ public class CustomerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
 
         }
+    }
+
+
+    @Operation(summary = "Return all reservations for a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+    })
+    @GetMapping(path = "/{id}/reservations")
+    @PreAuthorize("authentication.principal.id == #id or hasRole('ROLE_ADMIN')")
+    public Page<ReturnReservationDTO> getAllReservation(@PathVariable UUID id, @PageableDefault(size = 20, sort = "createdAt") Pageable pageable){
+        Page<Reservation> reservationPage = customerService.getAllReservations(id, pageable);
+        return customerConverter.convertReservationPageToReservationDTOPage(reservationPage);
     }
 }
