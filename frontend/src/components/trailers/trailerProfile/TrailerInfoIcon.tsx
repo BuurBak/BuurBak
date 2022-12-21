@@ -24,7 +24,7 @@ export default function TrailerInfoIcon({
           justifyContent="start"
           alignItems="center"
         >
-          <Typography variant="h6" textAlign="center">
+          <Typography variant="h6" fontSize={15} textAlign="center">
             {title}
           </Typography>
           <Typography variant="body2" textAlign="center">

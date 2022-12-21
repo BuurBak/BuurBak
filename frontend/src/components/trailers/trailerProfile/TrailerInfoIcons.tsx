@@ -14,7 +14,7 @@ export default function TrailerInfoIcons({
     <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
       <Box gridColumn={gridColumn}>
         <TrailerInfoIcon
-          icon={<GiWeight size={40} />}
+          icon={<GiWeight size={35} />}
           subHeader={`${trailer.capacity} kg`}
           title="Draagcapaciteit"
         />
