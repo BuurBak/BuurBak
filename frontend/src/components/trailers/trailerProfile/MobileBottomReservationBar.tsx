@@ -29,7 +29,7 @@ export default function MobileBottomReservationBar({
         variant="body1"
         color="primary.main"
       >
-        &euro;{price}
+        &euro;{price.toFixed(2)}
         <Typography variant="body1" fontSize={12}>
           /dag
         </Typography>
