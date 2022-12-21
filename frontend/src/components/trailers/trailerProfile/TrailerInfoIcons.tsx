@@ -15,43 +15,8 @@ export default function TrailerInfoIcons({
       <Box gridColumn={gridColumn}>
         <TrailerInfoIcon
           icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
-        />
-      </Box>
-      <Box gridColumn={gridColumn}>
-        <TrailerInfoIcon
-          icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
-        />
-      </Box>
-      <Box gridColumn={gridColumn}>
-        <TrailerInfoIcon
-          icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
-        />
-      </Box>
-      <Box gridColumn={gridColumn}>
-        <TrailerInfoIcon
-          icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
-        />
-      </Box>
-      <Box gridColumn={gridColumn}>
-        <TrailerInfoIcon
-          icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
-        />
-      </Box>
-      <Box gridColumn={gridColumn}>
-        <TrailerInfoIcon
-          icon={<TbArrowsLeftRight size={40} />}
-          subHeader={`${trailer.length} meter`}
-          title="Lengte"
+          subHeader={`${trailer.capacity} kg`}
+          title="Draagcapaciteit"
         />
       </Box>
     </Box>
