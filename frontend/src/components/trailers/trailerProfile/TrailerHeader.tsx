@@ -1,6 +1,6 @@
 import { TrailerOffer } from '../../../types/TrailerOffer'
 import { Box, Grid, Stack, Typography } from '@mui/material'
-import { TbCurrencyEuro, TbMapPin, TbStar } from 'react-icons/tb'
+import { TbCurrencyEuro, TbMapPin } from 'react-icons/tb'
 import React from 'react'
 import UnderTextHeader from './UnderTextHeader'
 import useMediumBreakpoint from '../../../hooks/use-medium-breakpoint'
@@ -25,15 +25,16 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
           {trailerOffer.trailerType.name}
         </Typography>
         <Grid container spacing={1}>
-          <Grid item xs>
-            <UnderTextHeader icon={<TbStar />} text="rating" />
-          </Grid>
+          {/*TODO implement rating*/}
+          {/*<Grid item xs>*/}
+          {/*  <UnderTextHeader icon={<TbStar />} text="rating" />*/}
+          {/*</Grid>*/}
 
           {matches ? (
             <Grid item xs>
               <UnderTextHeader
                 icon={<TbCurrencyEuro />}
-                text={trailerOffer.price}
+                text={trailerOffer.price.toFixed(2)}
               />
             </Grid>
           ) : null}
@@ -57,7 +58,7 @@ export default function TrailerHeader({ trailerOffer }: TrailerHeaderProps) {
         >
           <UnderTextHeader
             icon={<TbCurrencyEuro />}
-            text={trailerOffer.price}
+            text={trailerOffer.price.toFixed(2)}
             sx={{ color: 'primary.contrastText' }}
           />
         </Box>
