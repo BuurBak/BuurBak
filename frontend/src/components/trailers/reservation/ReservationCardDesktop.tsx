@@ -1,5 +1,4 @@
-import { Button, Card, CardActions, CardContent, Stack } from '@mui/material'
-import DateTimePicker from './DateTimePicker'
+import { Button, Card, CardActions, CardContent } from '@mui/material'
 import React from 'react'
 import ReservationForm from './ReservationForm'
 import { TrailerOffer } from '../../../types/TrailerOffer'
