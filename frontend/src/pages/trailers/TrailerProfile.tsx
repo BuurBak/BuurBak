@@ -12,6 +12,7 @@ import useMediumBreakpoint from '../../hooks/use-medium-breakpoint'
 import MobileBottomReservationBar from '../../components/trailers/trailerProfile/MobileBottomReservationBar'
 import TrailerInfoIcons from '../../components/trailers/trailerProfile/TrailerInfoIcons'
 import TrailerLocationMap from '../../components/trailers/trailerProfile/TrailerLocationMap'
+import ReservationCardDesktop from '../../components/trailers/reservation/ReservationCardDesktop'
 
 export default function TrailerProfile() {
   const matches = useMediumBreakpoint()
@@ -56,7 +57,7 @@ export default function TrailerProfile() {
                   <TrailerOwner trailerOffer={trailerOffer} />
                 </Grid>
                 <Grid item xs={12} order={{ xs: 1, md: 2 }}>
-                  <ReservationForm />
+                  <ReservationCardDesktop trailerOffer={trailerOffer} />
                 </Grid>
               </Grid>
             </Grid>
