@@ -3,9 +3,10 @@ package com.buurbak.api.reservations.service;
 import com.buurbak.api.email.service.ReservationEmailService;
 import com.buurbak.api.reservations.converter.ReservationConverter;
 import com.buurbak.api.reservations.dto.ReservationDTO;
-import com.buurbak.api.reservations.exception.ReservationAlreadyConfirmedException;
+import com.buurbak.api.reservations.exception.ReservationAlreadyProgressedException;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
 import com.buurbak.api.reservations.exception.ReservationRenterIsOwnerException;
+import com.buurbak.api.reservations.exception.ReservationTrailerChangedException;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -20,6 +21,9 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -36,49 +40,61 @@ public class ReservationService {
         return reservation;
     }
 
-    public Reservation addReservation(ReservationDTO reservationDTO, String username, HttpServletRequest request) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyConfirmedException, ReservationRenterIsOwnerException, MessagingException {
+    public Reservation addReservation(ReservationDTO reservationDTO, String username, HttpServletRequest request) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyProgressedException, ReservationRenterIsOwnerException, MessagingException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
         if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer))
-            throw new ReservationAlreadyConfirmedException();
+            throw new ReservationAlreadyProgressedException();
         if (customer == trailerOffer.getOwner()) throw new ReservationRenterIsOwnerException();
 
         Reservation reservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
         reservation.setRenter(customer);
         reservation.setTrailer(trailerOffer);
-        reservation.setCreatedAt(reservation.getCreatedAt());
 
         reservationRepository.save(reservation);
 
-        reservationEmailService.sendRequestMails(reservation.getId(), request, trailerOffer.getOwner().getEmail(), trailerOffer, customer, reservation.getStartTime(), reservation.getEndTime());
+        reservationEmailService.sendRequestMails(reservation.getId(), request, trailerOffer.getOwner().getEmail(), trailerOffer, customer, reservation.getStartTime(), reservation.getEndTime(), reservation.getUpdatedAt());
 
         return reservation;
     }
 
-    public void updateReservation(UUID reservationId, ReservationDTO reservationDTO) throws ReservationNotFoundException, TrailerOfferNotFoundException {
-        Customer renter = getReservation(reservationId).getRenter();
-        TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
+    public void updateReservation(UUID reservationId, ReservationDTO reservationDTO, LocalDateTime lastChanged) throws ReservationNotFoundException, ReservationTrailerChangedException {
+        Reservation reservation = getReservation(reservationId);
+        if (reservationDTO.getTrailerId() == reservation.getTrailer().getId()) throw new ReservationTrailerChangedException();
+        if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
 
-        Reservation newReservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
-        newReservation.setId(reservationId);
-        newReservation.setRenter(renter);
-        newReservation.setTrailer(trailerOffer);
-        reservationRepository.save(newReservation);
+        reservation.setStartTime(reservationDTO.getStartTime());
+        reservation.setEndTime(reservationDTO.getEndTime());
+        reservationRepository.save(reservation);
     }
 
-    public void deleteReservation(UUID reservationId) {
+    public void deleteReservation(UUID reservationId) throws ReservationNotFoundException {
         if(!reservationRepository.existsById(reservationId)) throw new ReservationNotFoundException();
 
         reservationRepository.deleteById(reservationId);
     }
 
-    public void confirmReservation(UUID id) {
+    public void confirmReservation(UUID id, LocalDateTime lastChanged) throws ReservationAlreadyProgressedException {
         Reservation reservation = getReservation(id);
+        if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
 
+        reservation.setConfirmed(true);
+        reservation.setConfirmedAt(LocalDateTime.now());
+        reservationRepository.save(reservation);
     }
 
-    public void denyReservation(UUID id) {
+    public void cancelReservation(UUID id, String username, LocalDateTime lastChanged) {
         Reservation reservation = getReservation(id);
+        if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
 
+        String actor = "";
+        if (Objects.equals(username, reservation.getRenter().getUsername())) actor = "renter";
+        if (Objects.equals(username, reservation.getTrailer().getOwner().getUsername())) actor = "owner";
+
+
+        reservation.setConfirmed(false);
+        reservation.setCanceledAt(LocalDateTime.now());
+        reservation.setCanceledBy(actor);
+        reservationRepository.save(reservation);
     }
 }

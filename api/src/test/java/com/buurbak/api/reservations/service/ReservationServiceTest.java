@@ -56,8 +56,6 @@ class ReservationServiceTest {
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("trailer", trailer);
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("startTime", reservationDTO.getStartTime());
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("endTime", reservationDTO.getEndTime());
-        assertThat(capturedReservation).hasFieldOrPropertyWithValue("confirmed", reservationDTO.isConfirmed());
-        assertThat(capturedReservation).hasFieldOrPropertyWithValue("confirmedAt", reservationDTO.getConfirmedAt());
         assertThat(capturedReservation).hasFieldOrProperty("createdAt");
         assertThat(capturedReservation).hasFieldOrProperty("updatedAt");
     }
@@ -72,7 +70,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId())).thenReturn(trailer);
 
-        reservationService.updateReservation(reservation.getId(), reservationDTO);
+        reservationService.updateReservation(reservation.getId(), reservationDTO, null);
         ArgumentCaptor<Reservation> reservationArgumentCaptor = ArgumentCaptor.forClass(Reservation.class);
         verify(reservationRepository).save(reservationArgumentCaptor.capture());
         Reservation capturedReservation = reservationArgumentCaptor.getValue();
@@ -82,8 +80,6 @@ class ReservationServiceTest {
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("trailer", trailer);
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("startTime", reservationDTO.getStartTime());
         assertThat(capturedReservation).hasFieldOrPropertyWithValue("endTime", reservationDTO.getEndTime());
-        assertThat(capturedReservation).hasFieldOrPropertyWithValue("confirmed", reservationDTO.isConfirmed());
-        assertThat(capturedReservation).hasFieldOrPropertyWithValue("confirmedAt", reservationDTO.getConfirmedAt());
         assertThat(capturedReservation).hasFieldOrProperty("createdAt");
         assertThat(capturedReservation).hasFieldOrProperty("updatedAt");
     }

@@ -22,8 +22,4 @@ public class ReservationDTO {
     private LocalDateTime startTime;
     @NotNull(message = "endTime may not be null") @Future(message = "endTime may only be in the future") @JsonAlias("end_time")
     private LocalDateTime endTime;
-    @NotNull(message = "confirmed may not be null")
-    boolean confirmed;
-    @Future(message = "confirmedAt may only be in the future") @JsonAlias("confirmed_at")
-    private LocalDateTime confirmedAt;
 }

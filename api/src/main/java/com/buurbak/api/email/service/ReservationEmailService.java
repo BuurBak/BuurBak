@@ -18,23 +18,23 @@ public class ReservationEmailService {
     @Autowired
     private EmailService emailService;
 
-    public void sendRequestMails(UUID reservationId, HttpServletRequest request, String ownerEmail, TrailerOffer trailerOffer, Customer renter, LocalDateTime from, LocalDateTime to) throws MessagingException {
+    public void sendRequestMails(UUID reservationId, HttpServletRequest request, String ownerEmail, TrailerOffer trailerOffer, Customer renter, LocalDateTime from, LocalDateTime to, LocalDateTime lastChanged) throws MessagingException {
         emailService.sendHtmlMessage(renter.getEmail(), "Reservation requested", buildEmail(List.of(
                 "Reservation for TrailerOffer: " + trailerOffer.getId() + " has been requested from " + from + " to " + to,
                 "Please wait for the TrailerOwner to confirm the reservation",
                 "or cancel/change the reservation below"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel");
-        }}, reservationId, request) +
-                buildDatesChanger(reservationId, request, from, to));
+            put("Cancel Reservation", "cancel?when=before-confirm");
+        }}, reservationId, request, lastChanged) +
+                buildDatesChanger(reservationId, request, from, to, lastChanged));
 
         emailService.sendHtmlMessage(ownerEmail, "Reservation requested", buildEmail(List.of(
                 renter.getName() + " wants to reserve your trailer from " + from + " to " + to,
                 "Confirm or deny the request below"
         ), new HashMap<String, String>() {{
             put("Confirm Reservation", "confirm");
-            put("Deny Reservation", "cancel");
-        }}, reservationId, request));
+            put("Deny Reservation", "cancel?when=before-confirm");
+        }}, reservationId, request, lastChanged));
     }
 
     public void sendRenterCancelMails(String renterEmail, String ownerEmail) throws MessagingException {
@@ -55,16 +55,16 @@ public class ReservationEmailService {
         emailService.sendHtmlMessage(ownerEmail, "Reservation cancelled", ownerCancelMail);
     }
 
-    public void sendDatesChangeMails(UUID reservationId, HttpServletRequest request, String renterEmail, String ownerEmail, LocalDateTime from, LocalDateTime to) throws MessagingException {
+    public void sendDatesChangeMails(UUID reservationId, HttpServletRequest request, String renterEmail, String ownerEmail, LocalDateTime from, LocalDateTime to, LocalDateTime lastChanged) throws MessagingException {
         emailService.sendHtmlMessage(ownerEmail, "Reservation dates changed", buildEmail(List.of(
                 "Dates of the Reservation have been changed to:",
                 "from " + from + " to " + to + " ",
                 "Please wait for the TrailerOwner to confirm the reservation",
                 "or cancel/change the reservation below"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel");
-        }}, reservationId, request) +
-                buildDatesChanger(reservationId, request, from, to));
+            put("Cancel Reservation", "cancel?when=before-confirm");
+        }}, reservationId, request, lastChanged) +
+                buildDatesChanger(reservationId, request, from, to, lastChanged));
 
         emailService.sendHtmlMessage(renterEmail, "Reservation dates changed", buildEmail(List.of(
                 "Dates of the Reservation have been changed to:",
@@ -72,8 +72,8 @@ public class ReservationEmailService {
                 "Confirm or deny the request below"
         ), new HashMap<String, String>() {{
             put("Confirm Reservation", "confirm");
-            put("Deny Reservation", "cancel");
-        }}, reservationId, request));
+            put("Deny Reservation", "cancel?when=before-confirm");
+        }}, reservationId, request, lastChanged));
     }
 
     public void sendDeniedMails(String renterEmail, String ownerEmail) throws MessagingException {
@@ -85,7 +85,7 @@ public class ReservationEmailService {
         emailService.sendHtmlMessage(ownerEmail, "Reservation denied", deniedMail);
     }
 
-    public void sendConfirmedMails(UUID reservationId, HttpServletRequest request, Customer renter, Customer owner) throws MessagingException {
+    public void sendConfirmedMails(UUID reservationId, HttpServletRequest request, Customer renter, Customer owner, LocalDateTime lastChanged) throws MessagingException {
         emailService.sendHtmlMessage(renter.getEmail(), "Reservation confirmed", buildEmail(List.of(
                 "Reservation has been confirmed",
                 "Arrange the payment and appointment with the follow contact details:",
@@ -95,8 +95,8 @@ public class ReservationEmailService {
                 "",
                 "If you've changed your mind about the Reservation, you can also cancel it with the link below:"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel");
-        }}, reservationId, request));
+            put("Cancel Reservation", "cancel?when=after-confirm");
+        }}, reservationId, request, lastChanged));
 
         emailService.sendHtmlMessage(owner.getEmail(), "Reservation confirmed", buildEmail(List.of(
                 "Reservation has been confirmed",
@@ -107,40 +107,8 @@ public class ReservationEmailService {
                 "",
                 "If you've changed your mind about the Reservation, you can also cancel it with the link below:"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel");
-        }}, reservationId, request));
-    }
-
-    public void sendUnauthorizedErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error: action unauthorized", buildEmail(List.of(
-                "Error: Unauthorized to perform chosen action.",
-                "Please try to log out and log in again."
-        )));
-    }
-
-    public void sendReservationNotFoundErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: Reservation was not found",
-                "Please contact Buurbak"
-        )));
-    }
-
-    public void sendDeniedErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: Reservation was already denied by the TrailerOwner"
-        )));
-    }
-
-    public void sendRenterCancelledErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: Reservation was already cancelled by the Renter"
-        )));
-    }
-
-    public void sendOwnerCancelledErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: Reservation was already cancelled by the Owner"
-        )));
+            put("Cancel Reservation", "cancel?when=after-confirm");
+        }}, reservationId, request, lastChanged));
     }
 
     public void sendDatesErrorMail(String email) throws MessagingException {
@@ -165,15 +133,16 @@ public class ReservationEmailService {
         return HtmlMessage.toString();
     }
 
-    private String buildEmail(List<String> lines, HashMap<String, String> actions, UUID reservationId, HttpServletRequest request) {
+    private String buildEmail(List<String> lines, HashMap<String, String> actions, UUID reservationId, HttpServletRequest request, LocalDateTime lastChanged) {
         StringBuilder HtmlMessage = new StringBuilder();
         HtmlMessage.append(buildEmail(lines));
         HtmlMessage.append("<br><br>");
         actions.forEach((action, endpoint) -> HtmlMessage
                 .append("<form action=\"").append(buildLink(reservationId, request, endpoint)).append("\" method=\"post\">")
                 .append("  <input type=\"submit\" value=\"").append(action).append("\">")
-                .append("  <input type=\"hidden\" name=\"email\" value=\"").append(request.getUserPrincipal().getName()).append("\">")
+                .append("  <input type=\"hidden\" name=\"baseLink\" value=\"").append(request.getRequestURL().toString().replace(request.getRequestURI(), "")).append("\">")
                 .append("  <input type=\"hidden\" name=\"auth\" value=\"").append(request.getHeader("Authorization")).append("\">")
+                .append("  <input type=\"hidden\" name=\"lastChanged\" value=\"").append(lastChanged).append("\">")
                 .append("</form><br>"));
         return HtmlMessage.toString();
     }
@@ -186,13 +155,15 @@ public class ReservationEmailService {
                 endpoint;
     }
 
-    private String buildDatesChanger(UUID reservationId, HttpServletRequest request, LocalDateTime from, LocalDateTime to) {
+    private String buildDatesChanger(UUID reservationId, HttpServletRequest request, LocalDateTime from, LocalDateTime to, LocalDateTime lastChanged) {
         return "<form action=\"" + buildLink(reservationId, request, "change-dates") + "\" method=\"post\">" +
                 "  <label for=\"startTime\">Start Time: </label>" +
                 "  <input type=\"datetime-local\" name=\"startTime\" value=\"" + from + "\" min=\"" + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES)  + "\"><br>" +
                 "  <label for=\"endTime\">End Time: </label>" +
                 "  <input type=\"datetime-local\" name=\"endTime\" value=\"" + to + "\" min=\"" + LocalDateTime.now().minusDays(1).truncatedTo(ChronoUnit.MINUTES)  + "\"><br>" +
+                "  <input type=\"hidden\" name=\"baseLink\" value=\"" + request.getRequestURL().toString().replace(request.getRequestURI(), "") + "\">" +
                 "  <input type=\"hidden\" name=\"auth\" value=\"" + request.getHeader("Authorization") + "\">" +
+                "  <input type=\"hidden\" name=\"lastChanged\" value=\"" + lastChanged + "\">" +
                 "  <input type=\"submit\" value=\"Change Reservation dates and times\">" +
                 "</form>";
     }
