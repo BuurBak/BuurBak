@@ -10,7 +10,7 @@ jobs:
     name: Firebase Deployment frontend
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build frontend
         working-directory: ./frontend
         run: npm ci && npm run build
