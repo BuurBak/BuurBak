@@ -46,5 +46,14 @@ public class Reservation {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
+    public Reservation(Customer renter, TrailerOffer trailer, LocalDateTime startTime, LocalDateTime endTime, Boolean confirmed, LocalDateTime confirmedAt, LocalDateTime canceledAt, String canceledBy) {
+        this.renter = renter;
+        this.trailer = trailer;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.confirmed = confirmed;
+        this.confirmedAt = confirmedAt;
+        this.canceledAt = canceledAt;
+        this.canceledBy = canceledBy;
+    }
 }

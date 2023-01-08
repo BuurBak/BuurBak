@@ -3,6 +3,7 @@ package com.buurbak.api.reservations.controller;
 import com.buurbak.api.email.service.ReservationEmailService;
 import com.buurbak.api.reservations.dto.ReservationDTO;
 import com.buurbak.api.reservations.exception.ReservationAlreadyProgressedException;
+import com.buurbak.api.reservations.exception.ReservationNegativeDateRangeException;
 import com.buurbak.api.reservations.exception.ReservationNotFoundException;
 import com.buurbak.api.reservations.exception.ReservationRenterIsOwnerException;
 import com.buurbak.api.reservations.model.Reservation;
@@ -69,7 +70,7 @@ public class ReservationController {
         } catch (ReservationRenterIsOwnerException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ReservationOwner cannot rent their own Trailer", e);
         } catch (MessagingException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Email could not be send", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail went wrong, please contact the developers", e);
         }
     }
 
@@ -82,15 +83,17 @@ public class ReservationController {
     })
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime lastChanged) {
+    public void updateReservation(@PathVariable UUID id, @Valid @RequestBody ReservationDTO reservationDTO, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime lastChanged, HttpServletRequest request) {
         try {
-            reservationService.updateReservation(id, reservationDTO, lastChanged);
+            reservationService.updateReservation(id, reservationDTO, lastChanged, request);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         } catch (TrailerOfferNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find trailer in database", e);
         } catch (ReservationAlreadyProgressedException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Reservation has already progressed", e);
+        } catch (MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail went wrong, please contact the developers", e);
         }
     }
 
@@ -101,6 +104,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
     })
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrailerOffer(@PathVariable UUID id) {
@@ -110,18 +114,21 @@ public class ReservationController {
         catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         }
-
     }
 
     @PutMapping(path = "/{id}/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void confirmReservation(@PathVariable UUID id, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime lastChanged) {
+    public void confirmReservation(@PathVariable UUID id, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime lastChanged, HttpServletRequest request) {
         try {
-            reservationService.confirmReservation(id, lastChanged);
+            reservationService.confirmReservation(id, lastChanged, request);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         } catch (ReservationAlreadyProgressedException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Reservation has already progressed", e);
+        } catch (ReservationNegativeDateRangeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation start time has to be before end time", e);
+        } catch (MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail went wrong, please contact the developers", e);
         }
     }
 
@@ -129,12 +136,13 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void denyReservation(@PathVariable UUID id, Authentication authentication, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime lastChanged) {
         try {
-            System.out.println(lastChanged);
             reservationService.cancelReservation(id, authentication.getName(), lastChanged);
         } catch (ReservationNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find reservation in database", e);
         } catch (ReservationAlreadyProgressedException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Reservation has already progressed", e);
+        } catch (MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail went wrong, please contact the developers", e);
         }
     }
 
@@ -169,7 +177,6 @@ public class ReservationController {
         try {
             // Set the URI for the request
             HttpClient client = HttpClient.newBuilder().build();
-            System.out.println(htmlFormData.get("lastChanged"));
             URI uri = URI.create(htmlFormData.get("baseLink") + "/api/v1/reservations/" + id + "/cancel?lastChanged=" + htmlFormData.get("lastChanged"));
 
             // Create and send the request
@@ -178,8 +185,6 @@ public class ReservationController {
                     .uri(uri)
                     .header("Authorization", htmlFormData.get("auth"))
                     .build();
-
-            System.out.println(request);
 
             int statusCode = client.send(request, HttpResponse.BodyHandlers.ofString()).statusCode();
             if (statusCode == 204) return "Reservation canceled! You can close this page now.";
@@ -216,6 +221,7 @@ public class ReservationController {
 
             int statusCode = client.send(request, HttpResponse.BodyHandlers.ofString()).statusCode();
             if (statusCode == 204) return "Reservation dates changed! You can close this page now.";
+            if (statusCode == 400) return "Make sure the dates are in the future and the end time comes after the start time. You could try again in the previous email.";
             return returnEmailErrorResponses(statusCode);
         } catch (IOException | InterruptedException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sending mail action went wrong, please contact the developers", e);
@@ -226,11 +232,11 @@ public class ReservationController {
         System.out.println(statusCode);
         if (statusCode == 401) {
             return "Error: Unauthorized to perform chosen action. Please contact Buurbak.";
-        }else if (statusCode == 403) {
-            return "Error: Reservation has already proceeded to the next step or has been changed. Please check your inbox for more recent information.";
+        } else if (statusCode == 403) {
+            return "Error: Reservation has already been changed, cancelled or proceeded to the next step. Please check your inbox for more recent information.";
         } else if (statusCode == 404) {
-            return "Error: Reservation was not found. Please contact Buurbak";
+            return "Error: Reservation was not found. Please contact Buurbak.";
         }
         return "Something went wrong, check your inbox or contact Buurbak.";
-    };
+    }
 }

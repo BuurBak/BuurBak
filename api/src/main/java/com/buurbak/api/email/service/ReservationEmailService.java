@@ -24,7 +24,7 @@ public class ReservationEmailService {
                 "Please wait for the TrailerOwner to confirm the reservation",
                 "or cancel/change the reservation below"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel?when=before-confirm");
+            put("Cancel Reservation", "cancel");
         }}, reservationId, request, lastChanged) +
                 buildDatesChanger(reservationId, request, from, to, lastChanged));
 
@@ -33,7 +33,7 @@ public class ReservationEmailService {
                 "Confirm or deny the request below"
         ), new HashMap<String, String>() {{
             put("Confirm Reservation", "confirm");
-            put("Deny Reservation", "cancel?when=before-confirm");
+            put("Deny Reservation", "cancel");
         }}, reservationId, request, lastChanged));
     }
 
@@ -72,7 +72,7 @@ public class ReservationEmailService {
                 "Confirm or deny the request below"
         ), new HashMap<String, String>() {{
             put("Confirm Reservation", "confirm");
-            put("Deny Reservation", "cancel?when=before-confirm");
+            put("Deny Reservation", "cancel");
         }}, reservationId, request, lastChanged));
     }
 
@@ -85,44 +85,27 @@ public class ReservationEmailService {
         emailService.sendHtmlMessage(ownerEmail, "Reservation denied", deniedMail);
     }
 
-    public void sendConfirmedMails(UUID reservationId, HttpServletRequest request, Customer renter, Customer owner, LocalDateTime lastChanged) throws MessagingException {
-        emailService.sendHtmlMessage(renter.getEmail(), "Reservation confirmed", buildEmail(List.of(
+    public void sendConfirmedMails(UUID reservationId, HttpServletRequest request, Customer renter, Customer owner, UUID trailerOfferId, LocalDateTime from, LocalDateTime to, LocalDateTime lastChanged) throws MessagingException {
+        sendConfirmedMail(reservationId, request, renter, trailerOfferId, from, to, lastChanged);
+        sendConfirmedMail(reservationId, request, owner, trailerOfferId, from, to, lastChanged);
+    }
+
+    public void sendConfirmedMail(UUID reservationId, HttpServletRequest request, Customer actor, UUID trailerOfferId, LocalDateTime from, LocalDateTime to, LocalDateTime lastChanged) throws MessagingException {
+        emailService.sendHtmlMessage(actor.getEmail(), "Reservation confirmed", buildEmail(List.of(
                 "Reservation has been confirmed",
+                "---",
+                "Trailer = " + trailerOfferId,
+                "Time frame = " + from + " - " + to,
+                "---",
                 "Arrange the payment and appointment with the follow contact details:",
-                "Name: " + owner.getName(),
-                "Email: " + owner.getEmail(),
-                "Phone number: " + owner.getNumber(),
+                "Name: " + actor.getName(),
+                "Email: " + actor.getEmail(),
+                "Phone number: " + actor.getNumber(),
                 "",
                 "If you've changed your mind about the Reservation, you can also cancel it with the link below:"
         ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel?when=after-confirm");
+            put("Cancel Reservation", "cancel");
         }}, reservationId, request, lastChanged));
-
-        emailService.sendHtmlMessage(owner.getEmail(), "Reservation confirmed", buildEmail(List.of(
-                "Reservation has been confirmed",
-                "Arrange the payment and appointment with the follow contact details:",
-                "Name: " + renter.getName(),
-                "Email: " + renter.getEmail(),
-                "Phone number: " + renter.getNumber(),
-                "",
-                "If you've changed your mind about the Reservation, you can also cancel it with the link below:"
-        ), new HashMap<String, String>() {{
-            put("Cancel Reservation", "cancel?when=after-confirm");
-        }}, reservationId, request, lastChanged));
-    }
-
-    public void sendDatesErrorMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: New dates of Reservation can not be in the past",
-                "You could try again in the previous email."
-        )));
-    }
-
-    public void sendOutdatedReservationMail(String email) throws MessagingException {
-        emailService.sendHtmlMessage(email, "Reservation error", buildEmail(List.of(
-                "Error: Reservation is out of date",
-                "Check your inbox for the most recent information of the Reservation."
-        )));
     }
 
     private String buildEmail(List<String> lines) {

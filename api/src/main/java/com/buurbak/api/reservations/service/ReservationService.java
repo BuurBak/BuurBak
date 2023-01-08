@@ -3,10 +3,7 @@ package com.buurbak.api.reservations.service;
 import com.buurbak.api.email.service.ReservationEmailService;
 import com.buurbak.api.reservations.converter.ReservationConverter;
 import com.buurbak.api.reservations.dto.ReservationDTO;
-import com.buurbak.api.reservations.exception.ReservationAlreadyProgressedException;
-import com.buurbak.api.reservations.exception.ReservationNotFoundException;
-import com.buurbak.api.reservations.exception.ReservationRenterIsOwnerException;
-import com.buurbak.api.reservations.exception.ReservationTrailerChangedException;
+import com.buurbak.api.reservations.exception.*;
 import com.buurbak.api.reservations.model.Reservation;
 import com.buurbak.api.reservations.repository.ReservationRepository;
 import com.buurbak.api.trailers.exception.TrailerOfferNotFoundException;
@@ -43,8 +40,7 @@ public class ReservationService {
     public Reservation addReservation(ReservationDTO reservationDTO, String username, HttpServletRequest request) throws CustomerNotFoundException, TrailerOfferNotFoundException, ReservationAlreadyProgressedException, ReservationRenterIsOwnerException, MessagingException {
         Customer customer = customerService.findByUsername(username);
         TrailerOffer trailerOffer = trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId());
-        if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer))
-            throw new ReservationAlreadyProgressedException();
+        if (reservationRepository.existsByTrailerAndConfirmedTrue(trailerOffer)) throw new ReservationAlreadyProgressedException();
         if (customer == trailerOffer.getOwner()) throw new ReservationRenterIsOwnerException();
 
         Reservation reservation = ReservationConverter.convertReservationDTOtoReservation(reservationDTO);
@@ -58,14 +54,18 @@ public class ReservationService {
         return reservation;
     }
 
-    public void updateReservation(UUID reservationId, ReservationDTO reservationDTO, LocalDateTime lastChanged) throws ReservationNotFoundException, ReservationTrailerChangedException {
+    public void updateReservation(UUID reservationId, ReservationDTO reservationDTO, LocalDateTime lastChanged, HttpServletRequest request) throws ReservationNotFoundException, ReservationTrailerChangedException, MessagingException {
         Reservation reservation = getReservation(reservationId);
         if (reservationDTO.getTrailerId() == reservation.getTrailer().getId()) throw new ReservationTrailerChangedException();
         if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
+        if (Boolean.FALSE.equals(reservation.getConfirmed())) throw new ReservationAlreadyProgressedException();
+        if (reservation.getStartTime().isAfter(reservation.getEndTime())) throw new ReservationNegativeDateRangeException();
 
         reservation.setStartTime(reservationDTO.getStartTime());
         reservation.setEndTime(reservationDTO.getEndTime());
         reservationRepository.save(reservation);
+
+        reservationEmailService.sendDatesChangeMails(reservationId, request, reservation.getRenter().getEmail(), reservation.getTrailer().getOwner().getEmail(), reservation.getStartTime(), reservation.getEndTime(), reservation.getUpdatedAt());
     }
 
     public void deleteReservation(UUID reservationId) throws ReservationNotFoundException {
@@ -74,23 +74,43 @@ public class ReservationService {
         reservationRepository.deleteById(reservationId);
     }
 
-    public void confirmReservation(UUID id, LocalDateTime lastChanged) throws ReservationAlreadyProgressedException {
+    public void confirmReservation(UUID id, LocalDateTime lastChanged, HttpServletRequest request) throws ReservationAlreadyProgressedException, MessagingException {
         Reservation reservation = getReservation(id);
         if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
+        if (Boolean.FALSE.equals(reservation.getConfirmed())) throw new ReservationAlreadyProgressedException();
 
         reservation.setConfirmed(true);
         reservation.setConfirmedAt(LocalDateTime.now());
         reservationRepository.save(reservation);
+
+        reservationEmailService.sendConfirmedMails(id, request, reservation.getRenter(), reservation.getTrailer().getOwner(), reservation.getTrailer().getId(), reservation.getStartTime(), reservation.getEndTime(), reservation.getUpdatedAt());
     }
 
-    public void cancelReservation(UUID id, String username, LocalDateTime lastChanged) {
+    public void cancelReservation(UUID id, String username, LocalDateTime lastChanged) throws MessagingException {
         Reservation reservation = getReservation(id);
+
         if (!lastChanged.truncatedTo(ChronoUnit.SECONDS).equals(reservation.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS))) throw new ReservationAlreadyProgressedException();
+        if (Boolean.FALSE.equals(reservation.getConfirmed())) throw new ReservationAlreadyProgressedException();
+
+        String renterEmail = reservation.getRenter().getUsername();
+        String ownerEmail = reservation.getTrailer().getOwner().getUsername();
+        System.out.println(username);
+        System.out.println(renterEmail);
+        System.out.println(ownerEmail);
 
         String actor = "";
-        if (Objects.equals(username, reservation.getRenter().getUsername())) actor = "renter";
-        if (Objects.equals(username, reservation.getTrailer().getOwner().getUsername())) actor = "owner";
-
+        if (Objects.equals(username, renterEmail)) actor = "renter";
+        if (Objects.equals(username, ownerEmail)) actor = "owner";
+        
+        if (reservation.getConfirmed() == null) {
+            reservationEmailService.sendDeniedMails(renterEmail, ownerEmail);
+        } else {
+            if (actor.equals("renter")) {
+                reservationEmailService.sendRenterCancelMails(renterEmail, ownerEmail);
+            } else if (actor.equals("owner")) {
+                reservationEmailService.sendOwnerCancelMails(renterEmail, ownerEmail);
+            }
+        }
 
         reservation.setConfirmed(false);
         reservation.setCanceledAt(LocalDateTime.now());

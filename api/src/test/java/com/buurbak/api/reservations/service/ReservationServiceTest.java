@@ -61,7 +61,7 @@ class ReservationServiceTest {
     }
 
     @Test
-    void shouldUpdateReservation() {
+    void shouldUpdateReservation() throws MessagingException {
         EasyRandom easyRandom = new EasyRandom();
         Reservation reservation = easyRandom.nextObject(Reservation.class);
         ReservationDTO reservationDTO = easyRandom.nextObject(ReservationDTO.class);
@@ -70,7 +70,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         when(trailerOfferService.getTrailerOffer(reservationDTO.getTrailerId())).thenReturn(trailer);
 
-        reservationService.updateReservation(reservation.getId(), reservationDTO, null);
+        reservationService.updateReservation(reservation.getId(), reservationDTO, null, null);
         ArgumentCaptor<Reservation> reservationArgumentCaptor = ArgumentCaptor.forClass(Reservation.class);
         verify(reservationRepository).save(reservationArgumentCaptor.capture());
         Reservation capturedReservation = reservationArgumentCaptor.getValue();
