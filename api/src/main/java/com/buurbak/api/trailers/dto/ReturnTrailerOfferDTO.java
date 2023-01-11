@@ -1,5 +1,6 @@
 package com.buurbak.api.trailers.dto;
 
+import com.buurbak.api.images.dto.PublicImageDTO;
 import com.buurbak.api.security.dto.ReturnAddressCityDTO;
 import com.buurbak.api.users.dto.PublicCustomerDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.UUID;
 
 @Getter
@@ -86,4 +88,7 @@ public class ReturnTrailerOfferDTO {
 
     @Past
     private LocalDateTime updatedAt;
+
+    @Valid
+    private Collection<PublicImageDTO> trailerOfferPictures;
 }

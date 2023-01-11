@@ -37,8 +37,11 @@ public class TrailerOffer {
     @JoinColumn(nullable = false)
     private Customer owner;
 
-    @OneToMany
-    @JoinColumn
+    @ManyToMany
+    @JoinTable(
+            name = "trailer_offer_images",
+            joinColumns = @JoinColumn(name = "trailer_offer_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
     private Collection<Image> trailerOfferPictures = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

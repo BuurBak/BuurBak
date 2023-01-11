@@ -78,6 +78,7 @@ public class RandomDataGenerator implements CommandLineRunner {
                 .randomize(named("password"), new Hallo123PasswordRandomizer())
                 .randomize(named("iban"), new CreditCardNumberRandomizer())
                 .randomize(named("roles"), new UserRoleRandomizer(userRole))
+                .randomize(named("profilePicture"), new SkipRandomizer())
                 .seed(123L)
                 .objectPoolSize(100)
                 .randomizationDepth(5)
@@ -130,6 +131,7 @@ public class RandomDataGenerator implements CommandLineRunner {
         // Build TrailerOffer
         trailerOffer = new EasyRandom(new EasyRandomParameters()
                 .randomize(named("id"), new SkipRandomizer())
+                .randomize(named("trailerOfferPictures"), new SkipRandomizer())
                 .randomize(named("owner"), new TrailerOwnerRandomizer(customers))
                 .randomize(named("trailerType").and(inClass(TrailerOffer.class)), new TrailerTypeRandomizer())
                 .randomize(named("trailerType").and(inClass(CreateTrailerOfferDTO.class)), new TrailerTypeStringRandomizer())

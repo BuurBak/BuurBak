@@ -24,6 +24,7 @@ public class CreateTrailerOfferDTO{
     @JsonAlias("trailer_type")
     private String trailerType;
 
+    @Valid
     private CreateAddressDTO address;
 
     @Positive(message = "Length may only be a positive number above 0")

@@ -1,6 +1,7 @@
 package com.buurbak.api.trailers.service;
 
 import com.buurbak.api.email.service.ContactExchangeEmailService;
+import com.buurbak.api.images.dto.PublicImageDTO;
 import com.buurbak.api.images.model.Image;
 import com.buurbak.api.images.service.ImageService;
 import com.buurbak.api.trailers.converter.TrailerOfferConverter;
@@ -46,6 +47,12 @@ public class TrailerOfferService {
         Customer customer = customerService.findByUsername(username);
         TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
+        Collection<Image> imagesList = new ArrayList<>();
+
+        for(UUID imageId : createTrailerOfferDTO.getTrailerOfferPictures()) {
+            imagesList.add(imageService.findById(imageId));
+        }
+
         double pi = Math.PI;
         double earth = 6378.137;  //radius of the earth in kilometer
         double m = (1 / ((2 * pi / 360) * earth)) / 1000;  //1 meter in degree
@@ -63,6 +70,8 @@ public class TrailerOfferService {
         trailerOffer.setFakeLongitude(new_longitude);
         trailerOffer.setOwner(customer);
 
+        trailerOffer.setTrailerOfferPictures(imagesList);
+
         return trailerOfferRepository.save(trailerOffer);
     }
 
@@ -75,20 +84,22 @@ public class TrailerOfferService {
 
             TrailerType trailerType = trailerTypeService.findByName(createTrailerOfferDTO.getTrailerType());
 
-            Collection<UUID> uuidList = new ArrayList<>();
-            uuidList.addAll(createTrailerOfferDTO.getTrailerOfferPictures());
-            System.out.println(uuidList);
+            Collection<Image> imagesList = new ArrayList<>();
+
+            for(UUID imageId : createTrailerOfferDTO.getTrailerOfferPictures()) {
+                imagesList.add(imageService.findById(imageId));
+            }
 
             TrailerOffer newTrailerOffer = new TrailerOfferConverter().convertTrailerOfferDTOtoTrailerOffer(createTrailerOfferDTO);
             newTrailerOffer.setId(trailerId);
-//            newTrailerOffer.setTrailerOfferPictures(uuidList);
+            newTrailerOffer.setTrailerOfferPictures(imagesList);
             newTrailerOffer.setTrailerType(trailerType);
             newTrailerOffer.setCreatedAt(trailerOffer.getCreatedAt());
 
+            newTrailerOffer.setTrailerOfferPictures(imagesList);
+
             newTrailerOffer.setOwner(trailerOffer.getOwner());
             trailerOfferRepository.save(newTrailerOffer);
-
-
 
     }
 

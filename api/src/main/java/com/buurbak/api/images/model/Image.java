@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.UUID;
 
 @Entity
@@ -21,9 +22,8 @@ public class Image {
     @GeneratedValue
     private UUID id;
 
-//    @ManyToOne
-//    @JoinColumn(nullable = false)
-//    private TrailerOffer trailerOffer;
+    @ManyToMany(mappedBy = "trailerOfferPictures")
+    private Collection <TrailerOffer> trailerOffers;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
