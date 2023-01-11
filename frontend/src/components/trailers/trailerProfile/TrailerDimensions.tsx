@@ -16,17 +16,17 @@ export function TrailerDimensions(props: {
       divider={<Divider orientation="vertical" variant="middle" flexItem />}
     >
       <TrailerInfoIcon
-        icon={<TbArrowsLeftRight size={40} />}
+        icon={<TbArrowsLeftRight size={35} />}
         subHeader={`${props.length} meter`}
         title="Lengte"
       />
       <TrailerInfoIcon
-        icon={<TbArrowsLeftRight size={40} />}
+        icon={<TbArrowsLeftRight size={35} />}
         subHeader={`${props.width} meter`}
         title="Breedte"
       />
       <TrailerInfoIcon
-        icon={<GiWeight size={40} />}
+        icon={<GiWeight size={35} />}
         subHeader={`${props.weight} kilogram`}
         title="Gewicht"
       />
